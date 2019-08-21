@@ -33,7 +33,6 @@ namespace InAndOut.Controllers
 
         public string getAttenDetails(int empId)
         {
-            Console.WriteLine("farhan");
             return Common.Serialize(BLLModel.getAttendenceDetails(empId));
         }
         #endregion
