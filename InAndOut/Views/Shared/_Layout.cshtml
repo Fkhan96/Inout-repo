@@ -1,0 +1,104 @@
+﻿@using InAndOut.Helper.Custom;
+@using InAndOut.Helper.General;
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>In & Out</title>
+    <link href="~/Content/animate.css" rel="stylesheet" />
+    <link href="~/Content/datatables.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/library.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Content/style.css" rel="stylesheet" />
+    <link href="~/css/plugin/toastr/toastr.min.css" rel="stylesheet" />
+    <link href="~/css/plugin/sweetalert/sweetalert.css" rel="stylesheet" />
+
+    <script src="@Url.Content("~/Scripts/jquery-3.4.1.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/datatables.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/Custom/sweetalert.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/Plugins/fullcalendar/moment.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/Custom/helper.js")"></script>
+    <script src="@Url.Content("~/Scripts/Custom/GenericLib.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.easing.1.3.js")"></script>
+    <script src="@Url.Content("~/Scripts/Custom/toastr.js")"></script>
+
+
+
+
+</head>
+<body>
+    <nav id="slide-menu">
+        <div class="profile">
+            <img src="~/images/User-img.png" />
+            <h4>Username</h4>
+            <h6>ID:0125445</h6>
+        </div>
+        <ul class="nav" id="side-menu">
+            <li class="">
+                <a href="/Employee/Index">
+                    <i class="fa fa-user">
+                    </i>
+                    <span class="nav-label">Employee</span>
+                </a>
+            </li>
+            <li>
+                <a href="/Attendance/Index">
+                    <i class="fa fa-home" aria-hidden="true">
+                    </i>
+                    <span class="nav-label">Attendance</span>
+                </a>
+            </li>
+            <li>
+                <a href="/PaymentGeneration/Index">
+                    <i class="fa fa-line-chart" aria-hidden="true">
+                    </i>
+                    <span>Payment Generation</span>
+                </a>
+            </li>
+            <li>
+                <a href="/Setting/Index">
+                    <i class="fa fa-wrench" aria-hidden="true">
+                    </i>
+                    <span class="nav-label">Settings</span>
+                </a>
+            </li>
+            
+            <li><a href="#"><i class="fa fa-line-chart" aria-hidden="true"></i> Nav Items</a></li>
+            <li><a href="#"><i class="fa fa-line-chart" aria-hidden="true"></i> Nav Items</a></li>
+        </ul>
+    </nav>
+
+    <!-- Content panel -->
+    <div id="main-body">
+        <div class="header">
+            <div class="menu-trigger"></div>
+            <div class="logo"><img src="~/images/logo-fixed.png" /></div>
+        </div>
+        <div class="content-area">
+            <ul class="nav navbar-top-links navbar-left">
+                <li>
+
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+    <script src="~/Scripts/library.js"></script>
+
+    @RenderSection("scripts", required: false)
+
+</body>
+
+</html>
+

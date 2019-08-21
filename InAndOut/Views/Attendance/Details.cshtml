@@ -1,0 +1,74 @@
+﻿@{
+    ViewBag.Title = "Attendence Details Per Employee";
+}
+<br />
+
+
+<link rel="stylesheet" type="text/css" href="~/Content/datatables.min.css">
+<link href="~/css/plugin/sweetalert/sweetalert.css" rel="stylesheet" />
+<link href="~/css/plugin/dropzone/basic.css" rel="stylesheet" />
+<link href="~/css/plugin/dropzone/dropzone.css" rel="stylesheet" />
+<link href="~/css/custom/File.css" rel="stylesheet" />
+
+
+<div class="box">
+    <div class="box-header">
+        <div class="row">
+            <div class="col-xs-2"> <h3 class="box-title"><i class="fa fa-group"></i>Attendance Details Per Employee</h3></div>
+            <div class="col-xs-10"></div>
+        </div><!-- /.box-header -->
+    </div>
+    <!-- form start -->
+
+    <div class="box-body">
+        <div style="padding-bottom:10px;" class="row" data-type="filter">
+            <div class="col-sm-4 hide-add-button">
+                <h5>
+                    <a href="#" onclick="return Add(this)">
+                        <i class="fa fa-plus"></i>
+                        Add a New
+                    </a>
+                </h5>
+            </div>
+            <div class="col-sm-3 text-center">
+            </div>
+        </div><!-- row -->
+        <table id="listAttEmptb" class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Employee Name</th>
+                    <th>Check-in Time</th>
+                    <th>Check-out Time</th>
+                    <th>Time off</th>
+                    <th>InActive</th>
+                    <th>Vocational Time off</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div><!-- Body -->
+
+</div><!-- /.box -->
+@section scripts {
+    <script src="~/Scripts/Custom/AttendenceDetail.js"></script>
+    <script src="~/Scripts/Plugins/datepicker/bootstrap-datepicker.js"></script>
+    <script src="~/Scripts/Custom/uniquevalidation.js"></script>
+    <script src="~/Scripts/Custom/File.js"></script>
+    <script>
+        $(document).ready(function () {
+            Trigger();
+        });
+    </script>
+}
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,188 @@
+﻿@{
+    ViewBag.Title = "Employee";
+}
+<link href="~/css/plugin/dropzone/basic.css" rel="stylesheet" />
+<link href="~/css/plugin/dropzone/dropzone.css" rel="stylesheet" />
+<link href="~/css/custom/File.css" rel="stylesheet" />
+
+<div class="box">
+    <div class="box-header">
+        <div class="row">
+            <div class="col-xs-2"> <h3 class="box-title"><i class="fa fa-group"></i> Employee</h3></div>
+            <div class="col-xs-10"></div>
+        </div><!-- /.box-header -->
+    </div>
+    <!-- form start -->
+
+    <div class="box-body">
+        <div style="padding-bottom:10px;" class="row" data-type="filter">
+            <div class="col-sm-4 hide-add-button">
+                <h5>
+                    <a href="#" onclick="return Add(this)">
+                        <i class="fa fa-plus"></i>
+                        Add a New
+                    </a>
+                </h5>
+            </div>
+            <div class="col-sm-3 text-center">
+            </div>
+        </div><!-- row -->
+        <table id="listtb" class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Profile Picture</th>
+                    <th>Name</th>
+                    <th>Emp Biometrics</th>
+                    <th class="">Action</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div><!-- Body -->
+
+    <div class="modal fade admin-modal" id="modalAdd" tabindex="-1" role="basic" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title"> Add Employee</h4>
+                </div>
+
+                <div class="modal-body" data-type="modal">
+                    <div class="row rowmargin">
+                        <div class="container">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <img id='img-upload' src="../images/dummy.jpg" style="width:15%;height:15%" name="UserPictureUrl" />
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <span class="btn btn-default btn-file">
+                                                Browse… <input type="file" id="imgInp">
+                                            </span>
+                                        </span>
+                                        <input type="text" class="form-control" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row rowmargin">
+                        <div class="col-lg-4">
+                            Self Id *
+                            <input type="text" class="form-control" name="SelfId"/>
+                        </div>
+                    </div>
+                    <div class="row rowmargin">
+                        <div class="col-lg-4">
+                            Name *
+                            <input type="text" class="form-control" name="Name" required />
+                        </div>
+                        <div class="col-lg-4">
+                            Father Name *
+                            <input type="text" class="form-control" name="FatherName" required />
+                        </div>
+                        <div class="col-lg-4">
+                            Designation *
+                            <input type="text" class="form-control" name="Designation" required />
+                        </div>
+                    </div>
+                    <div class="row rowmargin">
+                        <div class="col-lg-4">
+                            Salary *
+                            <input type="text" class="form-control" name="Salary" required />
+                        </div>
+                        <div class="col-lg-4">
+                            Job Type *
+                            <input type="text" class="form-control" name="JobType" required />
+                        </div>
+                        <div class="col-lg-4">
+                            Blood Group *
+                            <input type="text" class="form-control" name="BloodGroup" required />
+                        </div>
+                    </div>
+                    <div class="row rowmargin">
+                        <div class="col-lg-4">
+                            Shift *
+                            <input type="text" class="form-control" name="Shift" required />
+                        </div>
+                        <div class="col-lg-4">
+                            Address *
+                            <input type="text" class="form-control" name="Address" required />
+                        </div>
+                        <div class="col-lg-4">
+                            Late Deduction *
+                            <input type="text" class="form-control" name="LateDeduction" required />
+                        </div>
+                    </div>
+                    <div class="row rowmargin">
+                        <div class="col-lg-4">
+                            Joining Date *
+                            <div class="input-group date JoiningDate" data-provide="datepicker">
+                                <input type="text" name="JoiningDate" data-type="date" required class="form-control">
+                                <div class="input-group-addon">
+                                    <span class="glyphicon glyphicon-th"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            Contact Number *
+                            <input type="text" class="form-control" name="ContactNumber" required />
+                        </div>
+                        <div class="col-lg-4">
+                            Emergency Contact *
+                            <input type="text" class="form-control" name="EmergencyContact" required />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" class="btn btn-default Addtbt" onclick="return Submit(this)">OK</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- /.add employee -->
+
+</div><!-- /.box -->
+
+<div class="modal fade admin-modal" id="modalView" tabindex="-1" role="basic" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title"> Employee Details</h4>
+            </div>
+
+            <div class="modal-body" data-type="modal">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <input type="button" class="form-control btn btn-success" value="Employee Details" id="employeedetails" onclick="return Details($(this));" />
+                    </div>
+                    <div class="col-lg-6">
+                        <input type="button" class="form-control btn btn-success" value="Attendance Details" id="attendancedetails" onclick="return AttDetails($(this));"/>
+                    </div>
+                </div>
+                <br />
+                <div class="modal-footer">
+                    @*<a href="#" class="btn btn-default Addtbt" onclick="return Submit(this)">OK</a>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- /.view details -->
+
+@section scripts {
+    <script src="~/Scripts/Custom/EmployeeList.js"></script>
+    <script src="~/scripts/plugins/datepicker/bootstrap-datepicker.js"></script>
+    <script src="~/Scripts/Custom/uniquevalidation.js"></script>
+    <script src="~/Scripts/Custom/File.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            Trigger();
+        });
+    </script>
+}
+
+
+
+

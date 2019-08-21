@@ -1,0 +1,161 @@
+﻿@{
+    ViewBag.Title = "Setting Index";
+}
+
+<link href="~/css/plugin/iCheck/custom.css" rel="stylesheet" />
+
+
+<div class="box" id="updateSettingdiv">
+    <div class="box-header">
+        <div class="row">
+            <div class="col-xs-2">
+                <h2 class="box-title">
+                    <i class="fa fa-wrench">
+                    </i> Settings
+                </h2>
+            </div>
+            <div class="col-xs-10"></div>
+        </div><!-- /.box-header -->
+    </div>
+    <div class="box-body">
+        <br />
+        <div class="row">
+            <div class="col-lg-2">
+                <h3>
+                    <span id="companyId" data-companyId="1">Shift</span>
+                </h3>
+            </div>
+        </div>
+        <br />
+        <div id="updateShiftSetting">
+            <div>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <label>
+                            Morning
+                        </label>
+                    </div>
+                    <div class="col-lg-5">
+                        <input type="checkbox" name="morning" class="i-checks">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <label>
+                            Afternoon
+                        </label>
+                    </div>
+                    <div class="col-lg-5">
+                        <input type="checkbox" name="afternoon" class="i-checks" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <label>
+                            Evening
+                        </label>
+                    </div>
+                    <div class="col-lg-5">
+                        <input type="checkbox" name="evening" class="i-checks" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <label>
+                            Night
+                        </label>
+                    </div>
+                    <div class="col-lg-5">
+                        <input type="checkbox" name="night" class="i-checks" />
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-lg-1">
+
+                    </div>
+                    <div class="col-lg-3">
+                        <input type="button" class="btn btn-success" value="Update Shift Settings" id="1" onclick="return UpdateSetting(this)" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-2">
+                <h3>
+                    <span>Salary Deduction</span>
+                </h3>
+            </div>
+        </div>
+        <br />
+        <div id="updateSalarySetting">
+            <div class="row">
+                <div class="col-lg-3">
+                    <label>
+                        1 Day salary deduct =
+                    </label>
+                </div>
+                <div class="col-lg-3">
+                    <input type="text" placeholder="i.e: 1" name="NoOfDays" />
+                </div>
+                <div class="col-lg-3">
+                    <label>
+                        No of Days
+                    </label>
+                </div>
+            </div>
+
+            <br />
+            <div class="row">
+                <div class="col-lg-3">
+                    <label>
+                        1 Day salary deduct =
+                    </label>
+                </div>
+                <div class="col-lg-3">
+                    <input type="text" placeholder="i.e: 1" name="NoOfHalfDays" />
+                </div>
+                <div class="col-lg-3">
+                    <label>
+                        No of half Days
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        <br />
+        <div class="row">
+            <div class="col-lg-1">
+
+            </div>
+            <div class="col-lg-3">
+                <input type="button" class="btn btn-success" value="Update Salary Deduction Settings" id="1" onclick="return UpdateSalarySetting(this)" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+
+    <script src="~/Scripts/Custom/Setting.js"></script>
+    <script src="~/Scripts/Custom/uniquevalidation.js"></script>
+    <script src="~/Scripts/Plugins/iCheck/icheck.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            Trigger();
+        });
+    </script>
+    <script>
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green'
+        });
+    </script>
+
+}
+
+
+

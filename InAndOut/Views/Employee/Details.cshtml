@@ -1,0 +1,211 @@
+﻿@{
+    ViewBag.Title = "Employee Details";
+}
+<link href="~/css/custom/File.css" rel="stylesheet" />
+<br />
+<div id="empDetailModal">
+    <div class="row">
+        <div class="col-lg-3">
+            <label>
+                Profile Picture
+            </label>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <img id='user-pic' src="../images/dummy.jpg" style="width:50%;height:50%" name="UserPictureUrl" />
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <span class="btn btn-default btn-file">
+                            Browse… <input type="file" id="imgEmpDetails" class="empupdate">
+                        </span>
+                    </span>
+                    <input type="text" class="form-control" readonly>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="form-group">
+                <label>Self Id</label>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="form-group">
+                <input type="text" name="SelfId" class="empupdate"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="form-group">
+                <label>Name</label>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="form-group">
+                <input type="text" name="Name" class="empupdate" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="form-group">
+                <label>Father Name</label>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="form-group">
+                <input type="text" name="FatherName" class="empupdate" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="form-group">
+                <label>Designation</label>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="form-group">
+                <input type="text" name="Designation" class="empupdate" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="form-group">
+                <label>Salary</label>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="form-group">
+                <input type="text" name="Salary" class="empupdate" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="form-group">
+                <label>Job Type</label>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="form-group">
+                <input type="text" name="JobType" class="empupdate" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="form-group">
+                <label>Blood Group</label>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="form-group">
+                <input type="text" name="BloodGroup" class="empupdate" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="form-group">
+                <label>Shift</label>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="form-group">
+                <input type="text" name="Shift" class="empupdate" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="form-group">
+                <label>Address</label>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="form-group">
+                <input type="text" name="Address" class="empupdate" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="form-group">
+                <label>Late Deduction</label>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="form-group">
+                <input type="text" name="LateDeduction" class="empupdate" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="form-group">
+                <label>Joining Date</label>
+                    
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="form-group">
+                <div class="input-group date JoiningDate" data-provide="datepicker">
+                    <input type="text" name="JoiningDate" data-type="date" required class="form-control empupdate" readonly>
+                    <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-th"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="form-group">
+                <label>Contact Number</label>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="form-group">
+                <input type="text" name="ContactNumber" class="empupdate" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="form-group">
+                <label>Emergency Contact</label>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="form-group">
+                <input type="text" name="EmergencyContact" class="empupdate" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            
+        </div>
+        <div class="col-lg-3">
+            <div class="form-group">
+                <input type="button" class="btn-success" value="Update" id="btnupdateemp" disabled/>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+<script src="~/Scripts/Custom/EmployeeDetail.js"></script>
+<script src="~/Scripts/Plugins/datepicker/bootstrap-datepicker.js"></script>
+<script src="~/Scripts/Custom/File.js"></script>
+<script>
+    $(document).ready(function () {
+        Trigger();
+    });
+</script>
+}
+
