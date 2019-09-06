@@ -15,7 +15,6 @@
     });
 
     $('input[name="daterange"]').on('showCalendar.daterangepicker', function (ev, picker, start, end) {
-        debugger
         var startDate = picker.startDate.format('MM/DD/YYYY');
         var endDate = picker.endDate.format('MM/DD/YYYY');
         $('#attdaterange').val(startDate + ' - ' + endDate);
@@ -28,7 +27,7 @@ var oTable;
 
 
 
-function ActiontdHtml(item) { debugger
+function ActiontdHtml(item) { 
     var td = $('<td>');
     //  if (getCurrentPageRole("edit"))
     $(td).append('<span class="pad"><a href="#" class="tblView fa fa-eye" style="font-size:200%; padding: 0px 10px 5px 0px;" onclick="return View(' + item.EmpID + ');" data-toggle="tooltip" data-placement="top" title="View"></a></span>');

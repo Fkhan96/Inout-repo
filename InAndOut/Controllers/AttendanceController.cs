@@ -37,7 +37,5 @@ namespace InAndOut.Controllers
         }
         #endregion
 
-        
-
     }
 }

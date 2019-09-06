@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "AttDetails";
+    ViewBag.Title = "Payment Details";
 }
 
 <h2>AttDetails</h2>
@@ -7,7 +7,7 @@
 <div class="box">
     <div class="box-header">
         <div class="row">
-            <div class="col-xs-2"> <h3 class="box-title"><i class="fa fa-group"></i>Attendance Details Per Employee</h3></div>
+            <div class="col-xs-2"> <h3 class="box-title"><i class="fa fa-group"></i>Payment Details Per Employee</h3></div>
             <div class="col-xs-10"></div>
         </div><!-- /.box-header -->
     </div>
@@ -15,13 +15,16 @@
 
     <div class="box-body">
         <div class="row">
-            <div class="col-lg-9">
+            <div class="col-lg-7">
+            </div>
+            <div class="col-lg-3">
+                <input value="Generate Pay" type="button" class="btn btn-success"/>
             </div>
             <div class="col-lg-2">
                 <input type="text" id="attdetailrange" name="daterange" value="01/01/2018 - 01/15/2018" />
             </div>
         </div>
-        <table id="listAttEmptb" class="table table-bordered table-striped table-hover">
+        <table id="listPaymentEmptb" class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
                     <th>#</th>
@@ -30,7 +33,6 @@
                     <th>Check-out Time</th>
                     <th>Time off</th>
                     <th>Status</th>
-                    <th>Action</th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -39,7 +41,7 @@
 
 </div><!-- /.box -->
 @section scripts {
-    <script src="~/Scripts/Custom/AttendenceDetail.js"></script>
+<script src="~/Scripts/Custom/PaymentGenerationDetail.js"></script>
     <script src="~/Scripts/Plugins/datepicker/daterangepicker.min.js"></script>
     <script src="~/Scripts/Custom/uniquevalidation.js"></script>
     <script src="~/Scripts/Custom/constant.js"></script>

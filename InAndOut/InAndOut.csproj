@@ -169,13 +169,14 @@
     <Compile Include="Controllers\AttendanceController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
-    <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PaymentGenerationController.cs" />
     <Compile Include="Controllers\SettingController.cs" />
+    <Compile Include="DTO\ShiftDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\Custom\AttendanceSearchViewModel.cs" />
+    <Compile Include="Helper\Custom\PaymentSearchViewModel.cs" />
     <Compile Include="Helper\Custom\String2.cs" />
     <Compile Include="Helper\Custom\tblAcessRight.cs" />
     <Compile Include="Helper\Custom\tblddl.cs" />
@@ -196,6 +197,9 @@
     <Compile Include="Models\AttendanceModel.cs" />
     <Compile Include="Models\BLLModel.cs" />
     <Compile Include="Models\Company.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CompanyShift.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DBModel.Context.cs">
@@ -222,6 +226,7 @@
     <Compile Include="Models\menuitem.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PaymentModel.cs" />
     <Compile Include="Models\role.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
@@ -245,6 +250,7 @@
     <Content Include="Content\animate.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\clockpicker.css" />
     <Content Include="Content\datatables.css" />
     <Content Include="Content\datatables.min.css" />
     <Content Include="Content\library.css" />
@@ -292,6 +298,8 @@
       <DependentUpon>DBModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Custom\PaymentGenerationDetail.js" />
+    <Content Include="Scripts\Plugins\clockPicker\clockpicker.js" />
     <Content Include="Scripts\Custom\AttendanceList.js" />
     <Content Include="Scripts\Custom\AttendenceDetail.js" />
     <Content Include="Scripts\Custom\bootstrap-notify.min.js" />
@@ -371,10 +379,10 @@
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Employee\Details.cshtml" />
     <Content Include="Views\Attendance\Index.cshtml" />
-    <Content Include="Views\Attendance\Details.cshtml" />
     <Content Include="Views\Setting\Index.cshtml" />
     <Content Include="Views\Attendance\AttDetails.cshtml" />
     <Content Include="Views\PaymentGeneration\Index.cshtml" />
+    <Content Include="Views\PaymentGeneration\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

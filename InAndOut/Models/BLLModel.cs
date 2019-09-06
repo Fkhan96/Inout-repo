@@ -1,8 +1,10 @@
-﻿using InAndOut.Helper.General;
+﻿using InAndOut.DTO;
+using InAndOut.Helper.General;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -11,7 +13,6 @@ namespace InAndOut.Models
     public class BLLModel
     {
         #region Employee
-
         public static Object getlist_Employee()
         {
             var empList = new object();
@@ -93,10 +94,8 @@ namespace InAndOut.Models
                 db.SaveChanges();
             }
         }
-        
+
         #endregion
-        
-        
 
         #endregion
 
@@ -113,7 +112,6 @@ namespace InAndOut.Models
         #endregion
 
         #region Attendance
-
         public static Object getlist_Attendance()
         {
             var attList = new object();
@@ -164,7 +162,7 @@ namespace InAndOut.Models
             }
             return attDetails;
         }
-            
+
         #endregion
 
         #region Setting
@@ -176,47 +174,74 @@ namespace InAndOut.Models
             {
                 try
                 {
-                   setting = db.Shifts.Join(db.SalaryDeductions,
-                        u => u.FK_CompanyID,
-                        x => x.FK_CompanyID,
-                        (u, x) => new { u, x }).
-                        Where(y => y.u.FK_CompanyID == FK_CompanyID).
-                        FirstOrDefault();
-
-                    //setting = db.Shifts.Where(x => x.FK_CompanyID == FK_CompanyID);
-                    //setting = db.Shifts.Where(x => x.FK_CompanyID == FK_CompanyID).FirstOrDefault();
+                    setting = db.CompanyShifts.Join(db.SalaryDeductions,
+                         u => u.FK_CompanyID,
+                         x => x.FK_CompanyID,
+                         (u, x) => new { u, x }).
+                         Where(y => y.u.FK_CompanyID == FK_CompanyID).
+                         ToList();
                 }
                 catch (Exception ex) { }
-                return setting;
+                return Common.Serialize(setting);
             }
         }
 
-        public static void add_shift(Shift data)
+        #region Shift
+        public static async Task add_shiftAsync(ShiftDTO data)
         {
             using (DBContext db = new DBContext())
             {
-                db.Shifts.Add(data);
-                db.SaveChanges();
+
+                var Company = db.Companies.Where(x => x.CompanyID == data.FK_CompanyID).FirstOrDefault();
+                if (!ReferenceEquals(Company, null))
+                {
+                    foreach (var shift in data.shiftSetting)
+                    {
+                        db.CompanyShifts.Add(new CompanyShift()
+                        {
+                            FK_CompanyID = Company.CompanyID,
+                            StartTime = shift.StartTime,
+                            EndTime = shift.EndTime,
+                            FK_ShiftID = (int)shift.ShiftType,
+                            IsSet = shift.IsSet
+                        });
+                    }
+                }
+                await db.SaveChangesAsync();
+                //db.Shifts.Add(data);
+                //db.SaveChanges();
             }
         }
 
-        public static void edit_shift(Shift data)
+        public static async Task edit_shiftAsync(ShiftDTO data)
         {
             try
             {
                 using (DBContext db = new DBContext())
                 {
-                    var entity = db.Shifts.Where(x => x.FK_CompanyID == data.FK_CompanyID).FirstOrDefault();
-                    entity.Morning = data.Morning;
-                    entity.Afternoon = data.Afternoon;
-                    entity.Evening = data.Evening;
-                    entity.Night = data.Night;
-                    db.SaveChanges();
+                    var Company = db.Companies.Where(x => x.CompanyID == data.FK_CompanyID).FirstOrDefault();
+                    if (!ReferenceEquals(Company, null))
+                    {
+                        foreach (var shift in data.shiftSetting)
+                        {
+                            var companyShift = db.CompanyShifts.FirstOrDefault(x => x.FK_CompanyID == Company.CompanyID && x.FK_ShiftID == (int)shift.ShiftType);
+                            if (companyShift != null)
+                            {
+                                companyShift.StartTime = shift.StartTime;
+                                companyShift.EndTime = shift.EndTime;
+                                companyShift.IsSet = shift.IsSet;
+                            }
+                        }
+                    }
+                    await db.SaveChangesAsync();
                 }
             }
             catch (Exception ex) {  }
         }
+        #endregion
 
+        #region Salary Deduction
+        
         public static void add_Salary(SalaryDeduction data)
         {
             using (DBContext db = new DBContext())
@@ -242,11 +267,12 @@ namespace InAndOut.Models
         }
         #endregion
 
+        #endregion
+
         public static bool isRecordAlreadyExist(string table, string column, string value, string ignorecondition)
         {
             using (DBContext db = new DBContext())
             {
-                //string query = "Select 1 from " + table + " where " + column + "=@value and " + ignorecondition;
                 string query = "Select 1 from " + table + " where " + column + "=" + value + "and " + ignorecondition;
                 var result = db.Database.SqlQuery<List<int>>(query, new SqlParameter("value", value));
                 return result.Count() > 0 ? true : false;
@@ -278,4 +304,4 @@ namespace InAndOut.Models
         }
         #endregion
     }
-}
+}   

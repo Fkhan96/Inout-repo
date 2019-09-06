@@ -3,8 +3,7 @@
 }
 
 <link href="~/css/plugin/iCheck/custom.css" rel="stylesheet" />
-
-
+<link rel="stylesheet" href="~/Content/clockpicker.css" />
 <div class="box" id="updateSettingdiv">
     <div class="box-header">
         <div class="row">
@@ -22,7 +21,7 @@
         <div class="row">
             <div class="col-lg-2">
                 <h3>
-                    <span id="companyId" data-companyId="1">Shift</span>
+                    <span id="companyId" data-companyid="1">Shift</span>
                 </h3>
             </div>
         </div>
@@ -30,44 +29,110 @@
         <div id="updateShiftSetting">
             <div>
                 <div class="row">
-                    <div class="col-lg-3">
+                    <div class="col-lg-4 col-md-4 col-sm-4">
                         <label>
                             Morning
                         </label>
                     </div>
-                    <div class="col-lg-5">
-                        <input type="checkbox" name="morning" class="i-checks">
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <input type="checkbox" name="Morning" class="i-checks">
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3">
+                        <div class="input-group clockpicker hidden" id="morning-start-time">
+                            <input type="text" name="morning_start_time" class="form-control" placeholder="Start Time">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-time"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3">
+                        <div class="input-group clockpicker hidden" id="morning-end-time">
+                            <input type="text" name="morning_end_time" class="form-control" placeholder="End Time">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-time"></span>
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-3">
+                    <div class="col-lg-4 col-md-4 col-sm-4">
                         <label>
                             Afternoon
                         </label>
                     </div>
-                    <div class="col-lg-5">
-                        <input type="checkbox" name="afternoon" class="i-checks" />
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <input type="checkbox" name="Afternoon" class="i-checks" />
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3">
+                        <div class="input-group clockpicker hidden" id="afternoon-start-time">
+                            <input type="text" name="afternoon_start_time" class="form-control" placeholder="Start Time">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-time"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3">
+                        <div class="input-group clockpicker hidden" id="afternoon-end-time">
+                            <input type="text" name="afternoon_end_time" class="form-control" placeholder="End Time">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-time"></span>
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-3">
+                    <div class="col-lg-4 col-md-4 col-sm-4">
                         <label>
                             Evening
                         </label>
                     </div>
-                    <div class="col-lg-5">
-                        <input type="checkbox" name="evening" class="i-checks" />
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <input type="checkbox" name="Evening" class="i-checks" />
                     </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3">
+                        <div class="input-group clockpicker hidden" id="evening-start-time">
+                            <input type="text" name="evening_start_time" class="form-control" placeholder="Start Time">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-time"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3">
+                        <div class="input-group clockpicker hidden" id="evening-end-time">
+                            <input type="text" name="evening_end_time" class="form-control" placeholder="End Time">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-time"></span>
+                            </span>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="row">
-                    <div class="col-lg-3">
+                    <div class="col-lg-4 col-md-4 col-sm-4">
                         <label>
                             Night
                         </label>
                     </div>
-                    <div class="col-lg-5">
-                        <input type="checkbox" name="night" class="i-checks" />
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <input type="checkbox" name="Night" class="i-checks" />
                     </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3">
+                        <div class="input-group clockpicker hidden" id="night-start-time">
+                            <input type="text" name="night_start_time" class="form-control" placeholder="Start Time">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-time"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3">
+                        <div class="input-group clockpicker hidden" id="night-end-time">
+                            <input type="text" name="night_end_time" class="form-control" placeholder="End Time">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-time"></span>
+                            </span>
+                        </div>
+                    </div>
+
                 </div>
                 <br />
                 <div class="row">
@@ -138,15 +203,20 @@
 </div>
 
 @section scripts {
-
+    <script src="~/Scripts/Plugins/clockPicker/clockpicker.js"></script>
     <script src="~/Scripts/Custom/Setting.js"></script>
     <script src="~/Scripts/Custom/uniquevalidation.js"></script>
     <script src="~/Scripts/Plugins/iCheck/icheck.min.js"></script>
-
+    
     <script>
         $(document).ready(function () {
+            bindDateTime();
+            $('.i-checks').on('ifChanged', function (event) {
+                checkBoxClick(event.target);
+            });
             Trigger();
         });
+
     </script>
     <script>
         $('.i-checks').iCheck({

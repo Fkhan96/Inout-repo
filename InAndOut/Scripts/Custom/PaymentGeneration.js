@@ -43,8 +43,10 @@ function ActiontdHtml(item) {
     return $(td).html();
 }
 
-function View(e) {
+function View(e) { debugger
     var id = e;
-    window.location.href = "/Attendance/AttDetails?id=" + id;
+    //var currentDate = moment().format("MM/DD/YYYY");
+    //var previousMonthDate = moment().subtract(31, "days").format("MM/DD/YYYY");
+    window.location.href = "/PaymentGeneration/Details?id=" + id ;
 
 }

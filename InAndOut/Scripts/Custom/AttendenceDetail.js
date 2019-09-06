@@ -2,7 +2,7 @@
     DateFilter();
     getList();
 
-    $('input[name="daterange"]').daterangepicker({
+    $('#attdetailrange').daterangepicker({
         opens: 'right'
     }, function (start, end, label) {
         console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
@@ -13,17 +13,13 @@
         getList();
     });
 
-    $('input[name="daterange"]').on('showCalendar.daterangepicker', function (ev, picker, start, end) {
-        debugger
+    $('#attdetailrange').on('showCalendar.daterangepicker', function (ev, picker, start, end) {
         var startDate = picker.startDate.format('MM/DD/YYYY');
         var endDate = picker.endDate.format('MM/DD/YYYY');
-        $('#attdaterange').val(startDate + ' - ' + endDate);
+        $('#attdetailrange').val(startDate + ' - ' + endDate);
     });
 
 }
-
-
-
 
 var data = [];
 var activeid;
@@ -32,7 +28,7 @@ var oTable;
 function getList() {
     var myUrl = "/Attendance/getAttenDetails";
     var mydata = { empid: getParameterByName("id") };
-    XHRPOSTRequest(myUrl, mydata, function (result) {
+    XHRGETRequest(myUrl, mydata, function (result) {
         data = result;
         if (oTable) { oTable.fnDestroy() }
         $('#listAttEmptb tbody').html('');

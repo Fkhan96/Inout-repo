@@ -16,8 +16,8 @@ namespace InAndOut.Models
     {
         public Company()
         {
+            this.CompanyShifts = new HashSet<CompanyShift>();
             this.SalaryDeductions = new HashSet<SalaryDeduction>();
-            this.Shifts = new HashSet<Shift>();
         }
     
         public int CompanyID { get; set; }
@@ -25,7 +25,7 @@ namespace InAndOut.Models
         public Nullable<int> SelfId { get; set; }
         public byte[] PictureUrl { get; set; }
     
+        public virtual ICollection<CompanyShift> CompanyShifts { get; set; }
         public virtual ICollection<SalaryDeduction> SalaryDeductions { get; set; }
-        public virtual ICollection<Shift> Shifts { get; set; }
     }
 }

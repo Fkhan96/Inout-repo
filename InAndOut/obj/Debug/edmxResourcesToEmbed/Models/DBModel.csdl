@@ -1,5 +1,71 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="InOutModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="DBContext" annotation:LazyLoadingEnabled="true">
+    <FunctionImport Name="AttendanceDetails" ReturnType="Collection(InOutModel.AttendanceDetails_Result)">
+      <Parameter Name="StartDate" Mode="In" Type="DateTimeOffset" />
+      <Parameter Name="EndDate" Mode="In" Type="DateTimeOffset" />
+    </FunctionImport>
+    <EntitySet Name="AttDetails" EntityType="InOutModel.AttDetail" />
+    <EntitySet Name="Companies" EntityType="InOutModel.Company" />
+    <EntitySet Name="CompanyShifts" EntityType="InOutModel.CompanyShift" />
+    <EntitySet Name="Employees" EntityType="InOutModel.Employee" />
+    <EntitySet Name="menuitems" EntityType="InOutModel.menuitem" />
+    <EntitySet Name="roles" EntityType="InOutModel.role" />
+    <EntitySet Name="role_access" EntityType="InOutModel.role_access" />
+    <EntitySet Name="SalaryDeductions" EntityType="InOutModel.SalaryDeduction" />
+    <EntitySet Name="Shifts" EntityType="InOutModel.Shift" />
+    <EntitySet Name="users" EntityType="InOutModel.user" />
+    <AssociationSet Name="FK_AttDetail_Employee" Association="InOutModel.FK_AttDetail_Employee">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="AttDetail" EntitySet="AttDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CompanyShift_Company1" Association="InOutModel.FK_CompanyShift_Company1">
+      <End Role="Company" EntitySet="Companies" />
+      <End Role="CompanyShift" EntitySet="CompanyShifts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SalaryDeduction_Company" Association="InOutModel.FK_SalaryDeduction_Company">
+      <End Role="Company" EntitySet="Companies" />
+      <End Role="SalaryDeduction" EntitySet="SalaryDeductions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CompanyShift_Company" Association="InOutModel.FK_CompanyShift_Company">
+      <End Role="Shift" EntitySet="Shifts" />
+      <End Role="CompanyShift" EntitySet="CompanyShifts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RoleAccess_MenuItem" Association="InOutModel.FK_RoleAccess_MenuItem">
+      <End Role="menuitem" EntitySet="menuitems" />
+      <End Role="role_access" EntitySet="role_access" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RoleAccess_Role" Association="InOutModel.FK_RoleAccess_Role">
+      <End Role="role" EntitySet="roles" />
+      <End Role="role_access" EntitySet="role_access" />
+    </AssociationSet>
+    <AssociationSet Name="FK_users_role" Association="InOutModel.FK_users_role">
+      <End Role="role" EntitySet="roles" />
+      <End Role="user" EntitySet="users" />
+    </AssociationSet>
+  </EntityContainer>
+  <ComplexType Name="AttendanceDetails_Result">
+    <Property Type="Int32" Name="EmpID" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="true" MaxLength="255" />
+    <Property Type="Int32" Name="AttDetailsID" Nullable="false" />
+    <Property Type="DateTimeOffset" Name="CheckinTime" Nullable="true" />
+    <Property Type="DateTimeOffset" Name="CheckoutTime" Nullable="true" />
+    <Property Type="Int32" Name="TimeOff" Nullable="true" />
+    <Property Type="Boolean" Name="Status" Nullable="true" />
+  </ComplexType>
+  <EntityType Name="AttDetail">
+    <Key>
+      <PropertyRef Name="AttDetailsID" />
+    </Key>
+    <Property Name="AttDetailsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FK_EmpID" Type="Int32" Nullable="false" />
+    <Property Name="CheckinTime" Type="DateTime" Precision="3" />
+    <Property Name="CheckoutTime" Type="DateTime" Precision="3" />
+    <Property Name="TimeOff" Type="Int32" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Employee" Relationship="InOutModel.FK_AttDetail_Employee" FromRole="AttDetail" ToRole="Employee" />
+  </EntityType>
   <EntityType Name="Company">
     <Key>
       <PropertyRef Name="CompanyID" />
@@ -8,8 +74,21 @@
     <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <Property Name="SelfId" Type="Int32" />
     <Property Name="PictureUrl" Type="Binary" MaxLength="Max" FixedLength="false" />
-    <NavigationProperty Name="SalaryDeductions" Relationship="Self.FK_SalaryDeduction_Company" FromRole="Company" ToRole="SalaryDeduction" />
-    <NavigationProperty Name="Shifts" Relationship="Self.FK_Shift_Company" FromRole="Company" ToRole="Shift" />
+    <NavigationProperty Name="CompanyShifts" Relationship="InOutModel.FK_CompanyShift_Company1" FromRole="Company" ToRole="CompanyShift" />
+    <NavigationProperty Name="SalaryDeductions" Relationship="InOutModel.FK_SalaryDeduction_Company" FromRole="Company" ToRole="SalaryDeduction" />
+  </EntityType>
+  <EntityType Name="CompanyShift">
+    <Key>
+      <PropertyRef Name="CompanyShiftId" />
+    </Key>
+    <Property Name="CompanyShiftId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FK_CompanyID" Type="Int32" Nullable="false" />
+    <Property Name="FK_ShiftID" Type="Int32" Nullable="false" />
+    <Property Name="StartTime" Type="Time" Precision="7" />
+    <Property Name="EndTime" Type="Time" Precision="7" />
+    <Property Name="IsSet" Type="Boolean" />
+    <NavigationProperty Name="Company" Relationship="InOutModel.FK_CompanyShift_Company1" FromRole="CompanyShift" ToRole="Company" />
+    <NavigationProperty Name="Shift" Relationship="InOutModel.FK_CompanyShift_Company" FromRole="CompanyShift" ToRole="Shift" />
   </EntityType>
   <EntityType Name="Employee">
     <Key>
@@ -41,18 +120,18 @@
       <PropertyRef Name="menuitemid" />
     </Key>
     <Property Name="menuitemid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="menuitem_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="menuitem_url" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="role_access" Relationship="Self.FK_RoleAccess_MenuItem" FromRole="menuitem" ToRole="role_access" />
+    <Property Name="menuitem_name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="menuitem_url" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="role_access" Relationship="InOutModel.FK_RoleAccess_MenuItem" FromRole="menuitem" ToRole="role_access" />
   </EntityType>
   <EntityType Name="role">
     <Key>
       <PropertyRef Name="roleid" />
     </Key>
     <Property Name="roleid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="rolename" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="role_access" Relationship="Self.FK_RoleAccess_Role" FromRole="role" ToRole="role_access" />
-    <NavigationProperty Name="users" Relationship="Self.FK_users_role" FromRole="role" ToRole="users" />
+    <Property Name="rolename" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="role_access" Relationship="InOutModel.FK_RoleAccess_Role" FromRole="role" ToRole="role_access" />
+    <NavigationProperty Name="users" Relationship="InOutModel.FK_users_role" FromRole="role" ToRole="user" />
   </EntityType>
   <EntityType Name="role_access">
     <Key>
@@ -62,8 +141,8 @@
     <Property Name="menuitemid" Type="Int32" Nullable="false" />
     <Property Name="roleid" Type="Int32" Nullable="false" />
     <Property Name="has_access" Type="Boolean" Nullable="false" />
-    <NavigationProperty Name="menuitem" Relationship="Self.FK_RoleAccess_MenuItem" FromRole="role_access" ToRole="menuitem" />
-    <NavigationProperty Name="role" Relationship="Self.FK_RoleAccess_Role" FromRole="role_access" ToRole="role" />
+    <NavigationProperty Name="menuitem" Relationship="InOutModel.FK_RoleAccess_MenuItem" FromRole="role_access" ToRole="menuitem" />
+    <NavigationProperty Name="role" Relationship="InOutModel.FK_RoleAccess_Role" FromRole="role_access" ToRole="role" />
   </EntityType>
   <EntityType Name="SalaryDeduction">
     <Key>
@@ -73,163 +152,28 @@
     <Property Name="FK_CompanyID" Type="Int32" Nullable="false" />
     <Property Name="NoOfDays" Type="Int32" />
     <Property Name="NoOfHalfDays" Type="Int32" />
-    <NavigationProperty Name="Company" Relationship="Self.FK_SalaryDeduction_Company" FromRole="SalaryDeduction" ToRole="Company" />
+    <NavigationProperty Name="Company" Relationship="InOutModel.FK_SalaryDeduction_Company" FromRole="SalaryDeduction" ToRole="Company" />
   </EntityType>
   <EntityType Name="Shift">
     <Key>
       <PropertyRef Name="ShiftID" />
     </Key>
     <Property Name="ShiftID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="FK_CompanyID" Type="Int32" Nullable="false" />
-    <Property Name="Morning" Type="Boolean" Nullable="false" />
-    <Property Name="Afternoon" Type="Boolean" Nullable="false" />
-    <Property Name="Evening" Type="Boolean" Nullable="false" />
-    <Property Name="Night" Type="Boolean" Nullable="false" />
-    <NavigationProperty Name="Company" Relationship="Self.FK_Shift_Company" FromRole="Shift" ToRole="Company" />
+    <Property Name="ShiftName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="CompanyShifts" Relationship="InOutModel.FK_CompanyShift_Company" FromRole="Shift" ToRole="CompanyShift" />
   </EntityType>
   <EntityType Name="user">
     <Key>
       <PropertyRef Name="user_id" />
     </Key>
     <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="username" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="username" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="password" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
     <Property Name="contact" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <Property Name="type" Type="Int32" Nullable="false" />
     <Property Name="roleID" Type="Int32" />
-    <NavigationProperty Name="role" Relationship="Self.FK_users_role" FromRole="users" ToRole="role" />
-  </EntityType>
-  <Association Name="FK_SalaryDeduction_Company">
-    <End Role="Company" Type="Self.Company" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="SalaryDeduction" Type="Self.SalaryDeduction" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Company">
-        <PropertyRef Name="CompanyID" />
-      </Principal>
-      <Dependent Role="SalaryDeduction">
-        <PropertyRef Name="FK_CompanyID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Shift_Company">
-    <End Role="Company" Type="Self.Company" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="Shift" Type="Self.Shift" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Company">
-        <PropertyRef Name="CompanyID" />
-      </Principal>
-      <Dependent Role="Shift">
-        <PropertyRef Name="FK_CompanyID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_RoleAccess_MenuItem">
-    <End Role="menuitem" Type="Self.menuitem" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="role_access" Type="Self.role_access" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="menuitem">
-        <PropertyRef Name="menuitemid" />
-      </Principal>
-      <Dependent Role="role_access">
-        <PropertyRef Name="menuitemid" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_RoleAccess_Role">
-    <End Role="role" Type="Self.role" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="role_access" Type="Self.role_access" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="role">
-        <PropertyRef Name="roleid" />
-      </Principal>
-      <Dependent Role="role_access">
-        <PropertyRef Name="roleid" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_users_role">
-    <End Role="role" Type="Self.role" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="users" Type="Self.user" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="role">
-        <PropertyRef Name="roleid" />
-      </Principal>
-      <Dependent Role="users">
-        <PropertyRef Name="roleID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <EntityContainer Name="DBContext" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="Companies" EntityType="Self.Company" />
-    <EntitySet Name="Employees" EntityType="Self.Employee" />
-    <EntitySet Name="menuitems" EntityType="Self.menuitem" />
-    <EntitySet Name="roles" EntityType="Self.role" />
-    <EntitySet Name="role_access" EntityType="Self.role_access" />
-    <EntitySet Name="SalaryDeductions" EntityType="Self.SalaryDeduction" />
-    <EntitySet Name="Shifts" EntityType="Self.Shift" />
-    <EntitySet Name="users" EntityType="Self.user" />
-    <AssociationSet Name="FK_SalaryDeduction_Company" Association="Self.FK_SalaryDeduction_Company">
-      <End Role="Company" EntitySet="Companies" />
-      <End Role="SalaryDeduction" EntitySet="SalaryDeductions" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Shift_Company" Association="Self.FK_Shift_Company">
-      <End Role="Company" EntitySet="Companies" />
-      <End Role="Shift" EntitySet="Shifts" />
-    </AssociationSet>
-    <AssociationSet Name="FK_RoleAccess_MenuItem" Association="Self.FK_RoleAccess_MenuItem">
-      <End Role="menuitem" EntitySet="menuitems" />
-      <End Role="role_access" EntitySet="role_access" />
-    </AssociationSet>
-    <AssociationSet Name="FK_RoleAccess_Role" Association="Self.FK_RoleAccess_Role">
-      <End Role="role" EntitySet="roles" />
-      <End Role="role_access" EntitySet="role_access" />
-    </AssociationSet>
-    <AssociationSet Name="FK_users_role" Association="Self.FK_users_role">
-      <End Role="role" EntitySet="roles" />
-      <End Role="users" EntitySet="users" />
-    </AssociationSet>
-    <FunctionImport Name="AttendanceDetails" ReturnType="Collection(InOutModel.AttendanceDetails_Result)">
-      <Parameter Name="StartDate" Mode="In" Type="DateTimeOffset" />
-      <Parameter Name="EndDate" Mode="In" Type="DateTimeOffset" />
-    </FunctionImport>
-    <EntitySet Name="AttDetails" EntityType="InOutModel.AttDetail" />
-    <AssociationSet Name="FK_AttDetail_Employee" Association="InOutModel.FK_AttDetail_Employee">
-      <End Role="Employee" EntitySet="Employees" />
-      <End Role="AttDetail" EntitySet="AttDetails" />
-    </AssociationSet>
-  </EntityContainer>
-  <ComplexType Name="AttendanceDetails_Result">
-    <Property Type="Int32" Name="EmpID" Nullable="false" />
-    <Property Type="String" Name="Name" Nullable="true" MaxLength="255" />
-    <Property Type="Int32" Name="AttDetailsID" Nullable="false" />
-    <Property Type="DateTimeOffset" Name="CheckinTime" Nullable="true" />
-    <Property Type="DateTimeOffset" Name="CheckoutTime" Nullable="true" />
-    <Property Type="Int32" Name="TimeOff" Nullable="true" />
-    <Property Type="Boolean" Name="Status" Nullable="true" />
-  </ComplexType>
-  <EntityType Name="AttDetail">
-    <Key>
-      <PropertyRef Name="AttDetailsID" />
-    </Key>
-    <Property Name="AttDetailsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="FK_EmpID" Type="Int32" Nullable="false" />
-    <Property Name="CheckinTime" Type="DateTime" Precision="3" />
-    <Property Name="CheckoutTime" Type="DateTime" Precision="3" />
-    <Property Name="TimeOff" Type="Int32" />
-    <Property Name="Status" Type="Boolean" />
-    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="Employee" Relationship="InOutModel.FK_AttDetail_Employee" FromRole="AttDetail" ToRole="Employee" />
+    <NavigationProperty Name="role" Relationship="InOutModel.FK_users_role" FromRole="user" ToRole="role" />
   </EntityType>
   <Association Name="FK_AttDetail_Employee">
     <End Type="InOutModel.Employee" Role="Employee" Multiplicity="1">
@@ -242,6 +186,90 @@
       </Principal>
       <Dependent Role="AttDetail">
         <PropertyRef Name="FK_EmpID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CompanyShift_Company1">
+    <End Type="InOutModel.Company" Role="Company" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="InOutModel.CompanyShift" Role="CompanyShift" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="CompanyID" />
+      </Principal>
+      <Dependent Role="CompanyShift">
+        <PropertyRef Name="FK_CompanyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SalaryDeduction_Company">
+    <End Type="InOutModel.Company" Role="Company" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="InOutModel.SalaryDeduction" Role="SalaryDeduction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="CompanyID" />
+      </Principal>
+      <Dependent Role="SalaryDeduction">
+        <PropertyRef Name="FK_CompanyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CompanyShift_Company">
+    <End Type="InOutModel.Shift" Role="Shift" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="InOutModel.CompanyShift" Role="CompanyShift" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shift">
+        <PropertyRef Name="ShiftID" />
+      </Principal>
+      <Dependent Role="CompanyShift">
+        <PropertyRef Name="FK_ShiftID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RoleAccess_MenuItem">
+    <End Type="InOutModel.menuitem" Role="menuitem" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="InOutModel.role_access" Role="role_access" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="menuitem">
+        <PropertyRef Name="menuitemid" />
+      </Principal>
+      <Dependent Role="role_access">
+        <PropertyRef Name="menuitemid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RoleAccess_Role">
+    <End Type="InOutModel.role" Role="role" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="InOutModel.role_access" Role="role_access" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="role">
+        <PropertyRef Name="roleid" />
+      </Principal>
+      <Dependent Role="role_access">
+        <PropertyRef Name="roleid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_users_role">
+    <End Type="InOutModel.role" Role="role" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="InOutModel.user" Role="user" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="role">
+        <PropertyRef Name="roleid" />
+      </Principal>
+      <Dependent Role="user">
+        <PropertyRef Name="roleID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

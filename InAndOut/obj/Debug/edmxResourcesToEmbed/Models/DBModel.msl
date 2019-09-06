@@ -1,103 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="InOutModelStoreContainer" CdmEntityContainer="DBContext">
-    <EntitySetMapping Name="Companies">
-      <EntityTypeMapping TypeName="InOutModel.Company">
-        <MappingFragment StoreEntitySet="Company">
-          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="SelfId" ColumnName="SelfId" />
-          <ScalarProperty Name="PictureUrl" ColumnName="PictureUrl" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Employees">
-      <EntityTypeMapping TypeName="InOutModel.Employee">
-        <MappingFragment StoreEntitySet="Employee">
-          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-          <ScalarProperty Name="FatherName" ColumnName="FatherName" />
-          <ScalarProperty Name="Emp_Biometrics" ColumnName="Emp_Biometrics" />
-          <ScalarProperty Name="Designation" ColumnName="Designation" />
-          <ScalarProperty Name="Salary" ColumnName="Salary" />
-          <ScalarProperty Name="JobType" ColumnName="JobType" />
-          <ScalarProperty Name="BloodGroup" ColumnName="BloodGroup" />
-          <ScalarProperty Name="Shift" ColumnName="Shift" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
-          <ScalarProperty Name="LateDeduction" ColumnName="LateDeduction" />
-          <ScalarProperty Name="JoiningDate" ColumnName="JoiningDate" />
-          <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
-          <ScalarProperty Name="EmergencyContact" ColumnName="EmergencyContact" />
-          <ScalarProperty Name="OverTime" ColumnName="OverTime" />
-          <ScalarProperty Name="Bonus" ColumnName="Bonus" />
-          <ScalarProperty Name="UserPictureUrl" ColumnName="UserPictureUrl" />
-          <ScalarProperty Name="SelfId" ColumnName="SelfId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="menuitems">
-      <EntityTypeMapping TypeName="InOutModel.menuitem">
-        <MappingFragment StoreEntitySet="menuitem">
-          <ScalarProperty Name="menuitemid" ColumnName="menuitemid" />
-          <ScalarProperty Name="menuitem_name" ColumnName="menuitem_name" />
-          <ScalarProperty Name="menuitem_url" ColumnName="menuitem_url" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="roles">
-      <EntityTypeMapping TypeName="InOutModel.role">
-        <MappingFragment StoreEntitySet="role">
-          <ScalarProperty Name="roleid" ColumnName="roleid" />
-          <ScalarProperty Name="rolename" ColumnName="rolename" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="role_access">
-      <EntityTypeMapping TypeName="InOutModel.role_access">
-        <MappingFragment StoreEntitySet="role_access">
-          <ScalarProperty Name="role_accessid" ColumnName="role_accessid" />
-          <ScalarProperty Name="menuitemid" ColumnName="menuitemid" />
-          <ScalarProperty Name="roleid" ColumnName="roleid" />
-          <ScalarProperty Name="has_access" ColumnName="has_access" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="SalaryDeductions">
-      <EntityTypeMapping TypeName="InOutModel.SalaryDeduction">
-        <MappingFragment StoreEntitySet="SalaryDeduction">
-          <ScalarProperty Name="SalaryDeductionID" ColumnName="SalaryDeductionID" />
-          <ScalarProperty Name="FK_CompanyID" ColumnName="FK_CompanyID" />
-          <ScalarProperty Name="NoOfDays" ColumnName="NoOfDays" />
-          <ScalarProperty Name="NoOfHalfDays" ColumnName="NoOfHalfDays" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Shifts">
-      <EntityTypeMapping TypeName="InOutModel.Shift">
-        <MappingFragment StoreEntitySet="Shift">
-          <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
-          <ScalarProperty Name="FK_CompanyID" ColumnName="FK_CompanyID" />
-          <ScalarProperty Name="Morning" ColumnName="Morning" />
-          <ScalarProperty Name="Afternoon" ColumnName="Afternoon" />
-          <ScalarProperty Name="Evening" ColumnName="Evening" />
-          <ScalarProperty Name="Night" ColumnName="Night" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="users">
-      <EntityTypeMapping TypeName="InOutModel.user">
-        <MappingFragment StoreEntitySet="users">
-          <ScalarProperty Name="user_id" ColumnName="user_id" />
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="username" ColumnName="username" />
-          <ScalarProperty Name="password" ColumnName="password" />
-          <ScalarProperty Name="contact" ColumnName="contact" />
-          <ScalarProperty Name="type" ColumnName="type" />
-          <ScalarProperty Name="roleID" ColumnName="roleID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="AttendanceDetails" FunctionName="InOutModel.Store.AttendanceDetails">
       <ResultMapping>
         <ComplexTypeMapping TypeName="InOutModel.AttendanceDetails_Result">
@@ -121,6 +24,111 @@
           <ScalarProperty Name="CheckinTime" ColumnName="CheckinTime" />
           <ScalarProperty Name="FK_EmpID" ColumnName="FK_EmpID" />
           <ScalarProperty Name="AttDetailsID" ColumnName="AttDetailsID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Companies">
+      <EntityTypeMapping TypeName="InOutModel.Company">
+        <MappingFragment StoreEntitySet="Company">
+          <ScalarProperty Name="PictureUrl" ColumnName="PictureUrl" />
+          <ScalarProperty Name="SelfId" ColumnName="SelfId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CompanyShifts">
+      <EntityTypeMapping TypeName="InOutModel.CompanyShift">
+        <MappingFragment StoreEntitySet="CompanyShift">
+          <ScalarProperty Name="IsSet" ColumnName="IsSet" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="FK_ShiftID" ColumnName="FK_ShiftID" />
+          <ScalarProperty Name="FK_CompanyID" ColumnName="FK_CompanyID" />
+          <ScalarProperty Name="CompanyShiftId" ColumnName="CompanyShiftId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employees">
+      <EntityTypeMapping TypeName="InOutModel.Employee">
+        <MappingFragment StoreEntitySet="Employee">
+          <ScalarProperty Name="SelfId" ColumnName="SelfId" />
+          <ScalarProperty Name="UserPictureUrl" ColumnName="UserPictureUrl" />
+          <ScalarProperty Name="Bonus" ColumnName="Bonus" />
+          <ScalarProperty Name="OverTime" ColumnName="OverTime" />
+          <ScalarProperty Name="EmergencyContact" ColumnName="EmergencyContact" />
+          <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+          <ScalarProperty Name="JoiningDate" ColumnName="JoiningDate" />
+          <ScalarProperty Name="LateDeduction" ColumnName="LateDeduction" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Shift" ColumnName="Shift" />
+          <ScalarProperty Name="BloodGroup" ColumnName="BloodGroup" />
+          <ScalarProperty Name="JobType" ColumnName="JobType" />
+          <ScalarProperty Name="Salary" ColumnName="Salary" />
+          <ScalarProperty Name="Designation" ColumnName="Designation" />
+          <ScalarProperty Name="Emp_Biometrics" ColumnName="Emp_Biometrics" />
+          <ScalarProperty Name="FatherName" ColumnName="FatherName" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="menuitems">
+      <EntityTypeMapping TypeName="InOutModel.menuitem">
+        <MappingFragment StoreEntitySet="menuitem">
+          <ScalarProperty Name="menuitem_url" ColumnName="menuitem_url" />
+          <ScalarProperty Name="menuitem_name" ColumnName="menuitem_name" />
+          <ScalarProperty Name="menuitemid" ColumnName="menuitemid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="roles">
+      <EntityTypeMapping TypeName="InOutModel.role">
+        <MappingFragment StoreEntitySet="role">
+          <ScalarProperty Name="rolename" ColumnName="rolename" />
+          <ScalarProperty Name="roleid" ColumnName="roleid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="role_access">
+      <EntityTypeMapping TypeName="InOutModel.role_access">
+        <MappingFragment StoreEntitySet="role_access">
+          <ScalarProperty Name="has_access" ColumnName="has_access" />
+          <ScalarProperty Name="roleid" ColumnName="roleid" />
+          <ScalarProperty Name="menuitemid" ColumnName="menuitemid" />
+          <ScalarProperty Name="role_accessid" ColumnName="role_accessid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SalaryDeductions">
+      <EntityTypeMapping TypeName="InOutModel.SalaryDeduction">
+        <MappingFragment StoreEntitySet="SalaryDeduction">
+          <ScalarProperty Name="NoOfHalfDays" ColumnName="NoOfHalfDays" />
+          <ScalarProperty Name="NoOfDays" ColumnName="NoOfDays" />
+          <ScalarProperty Name="FK_CompanyID" ColumnName="FK_CompanyID" />
+          <ScalarProperty Name="SalaryDeductionID" ColumnName="SalaryDeductionID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Shifts">
+      <EntityTypeMapping TypeName="InOutModel.Shift">
+        <MappingFragment StoreEntitySet="Shifts">
+          <ScalarProperty Name="ShiftName" ColumnName="ShiftName" />
+          <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="users">
+      <EntityTypeMapping TypeName="InOutModel.user">
+        <MappingFragment StoreEntitySet="users">
+          <ScalarProperty Name="roleID" ColumnName="roleID" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="contact" ColumnName="contact" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
