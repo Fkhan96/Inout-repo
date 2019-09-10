@@ -25,7 +25,7 @@ namespace InAndOut.Models
                     SqlParameter.Add(new SqlParameter("@StartDate", model.startDate == null || model.startDate == DateTime.MinValue ? (object)SqlDateTime.Null : model.startDate));
                     SqlParameter.Add(new SqlParameter("@EndDate", model.endDate == null || model.endDate == DateTime.MinValue ? (object)SqlDateTime.Null : model.endDate.AddDays(1)));
 
-                    Result = context.Database.SqlQuery<AttendanceViewModel>("exec [dbo].[AttendanceDetails]  @startDate,@endDate",
+                    Result = context.Database.SqlQuery<AttendanceViewModel>("exec [dbo].[AttendanceDetails]  @StartDate,@EndDate",
                       SqlParameter.ToArray()).ToList();
                     #endregion
 

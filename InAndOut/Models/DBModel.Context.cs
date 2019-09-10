@@ -20,7 +20,6 @@ namespace InAndOut.Models
         public DBContext()
             : base("name=DBContext")
         {
-            this.Configuration.LazyLoadingEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -50,6 +49,23 @@ namespace InAndOut.Models
                 new ObjectParameter("EndDate", typeof(System.DateTimeOffset));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<AttendanceDetails_Result>("AttendanceDetails", startDateParameter, endDateParameter);
+        }
+    
+        public virtual ObjectResult<GetPaymentDetailsByEmpId_Result> GetPaymentDetailsByEmpId(Nullable<int> empId, Nullable<System.DateTimeOffset> startDate, Nullable<System.DateTimeOffset> endDate)
+        {
+            var empIdParameter = empId.HasValue ?
+                new ObjectParameter("EmpId", empId) :
+                new ObjectParameter("EmpId", typeof(int));
+    
+            var startDateParameter = startDate.HasValue ?
+                new ObjectParameter("StartDate", startDate) :
+                new ObjectParameter("StartDate", typeof(System.DateTimeOffset));
+    
+            var endDateParameter = endDate.HasValue ?
+                new ObjectParameter("EndDate", endDate) :
+                new ObjectParameter("EndDate", typeof(System.DateTimeOffset));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetPaymentDetailsByEmpId_Result>("GetPaymentDetailsByEmpId", empIdParameter, startDateParameter, endDateParameter);
         }
     }
 }

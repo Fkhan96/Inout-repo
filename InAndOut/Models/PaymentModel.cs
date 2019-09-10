@@ -11,7 +11,7 @@ namespace InAndOut.Models
 {
     public class PaymentModel
     {
-        public static Result<PaymentViewModel> GetAttendanceFilter(PaymentSearchViewModel model)
+        public static Result<PaymentViewModel> GetPaymentDateFilter(PaymentSearchViewModel model)
         {
             try
             {
@@ -21,11 +21,11 @@ namespace InAndOut.Models
                     List<PaymentViewModel> Result = new List<PaymentViewModel>();
                     List<SqlParameter> SqlParameter = new List<SqlParameter>();
 
-                    SqlParameter.Add(new SqlParameter("@EmpID", model.EmpID == null ? (object)DBNull.Value : model.EmpID));
+                    SqlParameter.Add(new SqlParameter("@EmpID", model.EmpID == null ? (object)SqlInt32.Null : model.EmpID));
                     SqlParameter.Add(new SqlParameter("@StartDate", model.startDate == null || model.startDate == DateTime.MinValue ? (object)SqlDateTime.Null : model.startDate));
                     SqlParameter.Add(new SqlParameter("@EndDate", model.endDate == null || model.endDate == DateTime.MinValue ? (object)SqlDateTime.Null : model.endDate.AddDays(1)));
 
-                    Result = context.Database.SqlQuery<PaymentViewModel>("exec [dbo].[AttendanceDetails]  @startDate,@endDate",
+                    Result = context.Database.SqlQuery<PaymentViewModel>("exec [dbo].[GetPaymentDetailsByEmpId]  @EmpID,@startDate,@endDate",
                       SqlParameter.ToArray()).ToList();
                     #endregion
 

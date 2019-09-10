@@ -54,7 +54,7 @@ function getSetting() {
     var myurl = "/Setting/GetList";
     var myData = {};
     myData["FK_CompanyID"] = $('#companyId').attr('data-companyId');
-    XHRPOSTRequest(myurl, myData, function (result) {
+    XHRGETRequest(myurl, myData, function (result) {
         if (result.length > 0) {
             result.forEach(function (each) {
                 var checkElement = 'input[name="' + each.u.Shift.ShiftName + '"]';

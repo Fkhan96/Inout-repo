@@ -132,5 +132,18 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="GetPaymentDetailsByEmpId" FunctionName="InOutModel.Store.GetPaymentDetailsByEmpId">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="InOutModel.GetPaymentDetailsByEmpId_Result">
+          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="AttDetailsID" ColumnName="AttDetailsID" />
+          <ScalarProperty Name="CheckinTime" ColumnName="CheckinTime" />
+          <ScalarProperty Name="CheckoutTime" ColumnName="CheckoutTime" />
+          <ScalarProperty Name="TimeOff" ColumnName="TimeOff" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

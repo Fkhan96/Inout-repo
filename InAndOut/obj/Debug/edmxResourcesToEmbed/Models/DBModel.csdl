@@ -43,6 +43,11 @@
       <End Role="role" EntitySet="roles" />
       <End Role="user" EntitySet="users" />
     </AssociationSet>
+    <FunctionImport Name="GetPaymentDetailsByEmpId" ReturnType="Collection(InOutModel.GetPaymentDetailsByEmpId_Result)">
+      <Parameter Name="EmpId" Mode="In" Type="Int32" />
+      <Parameter Name="StartDate" Mode="In" Type="DateTimeOffset" />
+      <Parameter Name="EndDate" Mode="In" Type="DateTimeOffset" />
+    </FunctionImport>
   </EntityContainer>
   <ComplexType Name="AttendanceDetails_Result">
     <Property Type="Int32" Name="EmpID" Nullable="false" />
@@ -273,4 +278,13 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <ComplexType Name="GetPaymentDetailsByEmpId_Result">
+    <Property Type="Int32" Name="EmpID" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="true" MaxLength="255" />
+    <Property Type="Int32" Name="AttDetailsID" Nullable="false" />
+    <Property Type="DateTime" Name="CheckinTime" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="CheckoutTime" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="TimeOff" Nullable="true" />
+    <Property Type="Boolean" Name="Status" Nullable="true" />
+  </ComplexType>
 </Schema>

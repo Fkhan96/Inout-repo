@@ -210,6 +210,11 @@
     <Parameter Name="StartDate" Type="datetimeoffset" Mode="In" />
     <Parameter Name="EndDate" Type="datetimeoffset" Mode="In" />
   </Function>
+  <Function Name="GetPaymentDetailsByEmpId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EmpId" Type="int" Mode="In" />
+    <Parameter Name="StartDate" Type="datetimeoffset" Mode="In" />
+    <Parameter Name="EndDate" Type="datetimeoffset" Mode="In" />
+  </Function>
   <EntityContainer Name="InOutModelStoreContainer">
     <EntitySet Name="AttDetail" EntityType="Self.AttDetail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
