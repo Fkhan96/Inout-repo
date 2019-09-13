@@ -20,6 +20,7 @@
     });
 }
 
+var data = [];
 var oTable;
 
 function DateFilter() {

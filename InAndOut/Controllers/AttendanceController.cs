@@ -24,17 +24,18 @@ namespace InAndOut.Controllers
         }
         #endregion
 
-        #region Attendance Details by employee id
+        #region Get Attendance Details against Employee
         public ActionResult AttDetails()
         {
-            ViewBag.data = getAttenDetails(Convert.ToInt32(Request["id"]));
             return View();
         }
 
-        public string getAttenDetails(int empId)
+        #region Get Attendance Details for current Month By Date filter
+        public string GetAttendanceDetails(PaymentSearchViewModel model)
         {
-            return Common.Serialize(BLLModel.getAttendenceDetails(empId));
+            return Common.Serialize(PaymentModel.GetPaymentDateFilter(model));
         }
+        #endregion
         #endregion
 
     }
