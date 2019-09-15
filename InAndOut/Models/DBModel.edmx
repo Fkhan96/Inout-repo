@@ -50,7 +50,6 @@
           <Property Name="Salary" Type="money" />
           <Property Name="JobType" Type="varchar" MaxLength="255" />
           <Property Name="BloodGroup" Type="varchar" MaxLength="255" />
-          <Property Name="Shift" Type="varchar" MaxLength="255" />
           <Property Name="Address" Type="varchar" MaxLength="255" />
           <Property Name="LateDeduction" Type="money" />
           <Property Name="JoiningDate" Type="datetimeoffset" Precision="7" />
@@ -60,6 +59,8 @@
           <Property Name="Bonus" Type="bit" />
           <Property Name="UserPictureUrl" Type="varbinary(max)" />
           <Property Name="SelfId" Type="int" />
+          <Property Name="FK_CompanyID" Type="int" Nullable="false" />
+          <Property Name="FK_CompanyShiftID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="menuitem">
           <Key>
@@ -155,6 +156,32 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Employee_Company">
+          <End Role="Company" Type="Self.Company" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="FK_CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_CompanyShift">
+          <End Role="CompanyShift" Type="Self.CompanyShift" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyShift">
+              <PropertyRef Name="CompanyShiftId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="FK_CompanyShiftID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_RoleAccess_MenuItem">
           <End Role="menuitem" Type="Self.menuitem" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -243,6 +270,14 @@
             <End Role="Company" EntitySet="Company" />
             <End Role="CompanyShift" EntitySet="CompanyShift" />
           </AssociationSet>
+          <AssociationSet Name="FK_Employee_Company" Association="Self.FK_Employee_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_CompanyShift" Association="Self.FK_Employee_CompanyShift">
+            <End Role="CompanyShift" EntitySet="CompanyShift" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
           <AssociationSet Name="FK_RoleAccess_MenuItem" Association="Self.FK_RoleAccess_MenuItem">
             <End Role="menuitem" EntitySet="menuitem" />
             <End Role="role_access" EntitySet="role_access" />
@@ -272,17 +307,12 @@
           <EntitySet Name="AttDetails" EntityType="InOutModel.AttDetail" />
           <EntitySet Name="Companies" EntityType="InOutModel.Company" />
           <EntitySet Name="CompanyShifts" EntityType="InOutModel.CompanyShift" />
-          <EntitySet Name="Employees" EntityType="InOutModel.Employee" />
           <EntitySet Name="menuitems" EntityType="InOutModel.menuitem" />
           <EntitySet Name="roles" EntityType="InOutModel.role" />
           <EntitySet Name="role_access" EntityType="InOutModel.role_access" />
           <EntitySet Name="SalaryDeductions" EntityType="InOutModel.SalaryDeduction" />
           <EntitySet Name="Shifts" EntityType="InOutModel.Shift" />
           <EntitySet Name="users" EntityType="InOutModel.user" />
-          <AssociationSet Name="FK_AttDetail_Employee" Association="InOutModel.FK_AttDetail_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="AttDetail" EntitySet="AttDetails" />
-          </AssociationSet>
           <AssociationSet Name="FK_CompanyShift_Company1" Association="InOutModel.FK_CompanyShift_Company1">
             <End Role="Company" EntitySet="Companies" />
             <End Role="CompanyShift" EntitySet="CompanyShifts" />
@@ -312,6 +342,19 @@
             <Parameter Name="StartDate" Mode="In" Type="DateTimeOffset" />
             <Parameter Name="EndDate" Mode="In" Type="DateTimeOffset" />
           </FunctionImport>
+          <EntitySet Name="Employees" EntityType="InOutModel.Employee" />
+          <AssociationSet Name="FK_AttDetail_Employee" Association="InOutModel.FK_AttDetail_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="AttDetail" EntitySet="AttDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Company" Association="InOutModel.FK_Employee_Company">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_CompanyShift" Association="InOutModel.FK_Employee_CompanyShift">
+            <End Role="CompanyShift" EntitySet="CompanyShifts" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="AttendanceDetails_Result">
           <Property Type="Int32" Name="EmpID" Nullable="false" />
@@ -345,6 +388,7 @@
           <Property Name="PictureUrl" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="CompanyShifts" Relationship="InOutModel.FK_CompanyShift_Company1" FromRole="Company" ToRole="CompanyShift" />
           <NavigationProperty Name="SalaryDeductions" Relationship="InOutModel.FK_SalaryDeduction_Company" FromRole="Company" ToRole="SalaryDeduction" />
+          <NavigationProperty Name="Employees" Relationship="InOutModel.FK_Employee_Company" FromRole="Company" ToRole="Employee" />
         </EntityType>
         <EntityType Name="CompanyShift">
           <Key>
@@ -358,31 +402,7 @@
           <Property Name="IsSet" Type="Boolean" />
           <NavigationProperty Name="Company" Relationship="InOutModel.FK_CompanyShift_Company1" FromRole="CompanyShift" ToRole="Company" />
           <NavigationProperty Name="Shift" Relationship="InOutModel.FK_CompanyShift_Company" FromRole="CompanyShift" ToRole="Shift" />
-        </EntityType>
-        <EntityType Name="Employee">
-          <Key>
-            <PropertyRef Name="EmpID" />
-          </Key>
-          <Property Name="EmpID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="FatherName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="Emp_Biometrics" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="Designation" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="Salary" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="JobType" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="BloodGroup" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="Shift" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="LateDeduction" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="JoiningDate" Type="DateTimeOffset" Precision="7" />
-          <Property Name="ContactNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="EmergencyContact" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="OverTime" Type="Boolean" />
-          <Property Name="Bonus" Type="Boolean" />
-          <Property Name="UserPictureUrl" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="SelfId" Type="Int32" />
-          <NavigationProperty Name="AttDetails" Relationship="InOutModel.FK_AttDetail_Employee" FromRole="Employee" ToRole="AttDetail" />
+          <NavigationProperty Name="Employees" Relationship="InOutModel.FK_Employee_CompanyShift" FromRole="CompanyShift" ToRole="Employee" />
         </EntityType>
         <EntityType Name="menuitem">
           <Key>
@@ -444,20 +464,6 @@
           <Property Name="roleID" Type="Int32" />
           <NavigationProperty Name="role" Relationship="InOutModel.FK_users_role" FromRole="user" ToRole="role" />
         </EntityType>
-        <Association Name="FK_AttDetail_Employee">
-          <End Type="InOutModel.Employee" Role="Employee" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="InOutModel.AttDetail" Role="AttDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="EmpID" />
-            </Principal>
-            <Dependent Role="AttDetail">
-              <PropertyRef Name="FK_EmpID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_CompanyShift_Company1">
           <End Type="InOutModel.Company" Role="Company" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -551,6 +557,74 @@
           <Property Type="Int32" Name="TimeOff" Nullable="true" />
           <Property Type="Boolean" Name="Status" Nullable="true" />
         </ComplexType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmpID" />
+          </Key>
+          <Property Name="EmpID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="FatherName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Emp_Biometrics" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Designation" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Salary" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="JobType" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="BloodGroup" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="LateDeduction" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="JoiningDate" Type="DateTimeOffset" Precision="7" />
+          <Property Name="ContactNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="EmergencyContact" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="OverTime" Type="Boolean" />
+          <Property Name="Bonus" Type="Boolean" />
+          <Property Name="UserPictureUrl" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="SelfId" Type="Int32" />
+          <Property Name="FK_CompanyID" Type="Int32" Nullable="false" />
+          <Property Name="FK_CompanyShiftID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AttDetails" Relationship="InOutModel.FK_AttDetail_Employee" FromRole="Employee" ToRole="AttDetail" />
+          <NavigationProperty Name="Company" Relationship="InOutModel.FK_Employee_Company" FromRole="Employee" ToRole="Company" />
+          <NavigationProperty Name="CompanyShift" Relationship="InOutModel.FK_Employee_CompanyShift" FromRole="Employee" ToRole="CompanyShift" />
+        </EntityType>
+        <Association Name="FK_AttDetail_Employee">
+          <End Type="InOutModel.Employee" Role="Employee" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="InOutModel.AttDetail" Role="AttDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmpID" />
+            </Principal>
+            <Dependent Role="AttDetail">
+              <PropertyRef Name="FK_EmpID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Company">
+          <End Type="InOutModel.Company" Role="Company" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="InOutModel.Employee" Role="Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="FK_CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_CompanyShift">
+          <End Type="InOutModel.CompanyShift" Role="CompanyShift" Multiplicity="1" />
+          <End Type="InOutModel.Employee" Role="Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyShift">
+              <PropertyRef Name="CompanyShiftId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="FK_CompanyShiftID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -602,31 +676,6 @@
                 <ScalarProperty Name="FK_ShiftID" ColumnName="FK_ShiftID" />
                 <ScalarProperty Name="FK_CompanyID" ColumnName="FK_CompanyID" />
                 <ScalarProperty Name="CompanyShiftId" ColumnName="CompanyShiftId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Employees">
-            <EntityTypeMapping TypeName="InOutModel.Employee">
-              <MappingFragment StoreEntitySet="Employee">
-                <ScalarProperty Name="SelfId" ColumnName="SelfId" />
-                <ScalarProperty Name="UserPictureUrl" ColumnName="UserPictureUrl" />
-                <ScalarProperty Name="Bonus" ColumnName="Bonus" />
-                <ScalarProperty Name="OverTime" ColumnName="OverTime" />
-                <ScalarProperty Name="EmergencyContact" ColumnName="EmergencyContact" />
-                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
-                <ScalarProperty Name="JoiningDate" ColumnName="JoiningDate" />
-                <ScalarProperty Name="LateDeduction" ColumnName="LateDeduction" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="Shift" ColumnName="Shift" />
-                <ScalarProperty Name="BloodGroup" ColumnName="BloodGroup" />
-                <ScalarProperty Name="JobType" ColumnName="JobType" />
-                <ScalarProperty Name="Salary" ColumnName="Salary" />
-                <ScalarProperty Name="Designation" ColumnName="Designation" />
-                <ScalarProperty Name="Emp_Biometrics" ColumnName="Emp_Biometrics" />
-                <ScalarProperty Name="FatherName" ColumnName="FatherName" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="EmpID" ColumnName="EmpID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -701,6 +750,32 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="InOutModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="FK_CompanyShiftID" ColumnName="FK_CompanyShiftID" />
+                <ScalarProperty Name="FK_CompanyID" ColumnName="FK_CompanyID" />
+                <ScalarProperty Name="SelfId" ColumnName="SelfId" />
+                <ScalarProperty Name="UserPictureUrl" ColumnName="UserPictureUrl" />
+                <ScalarProperty Name="Bonus" ColumnName="Bonus" />
+                <ScalarProperty Name="OverTime" ColumnName="OverTime" />
+                <ScalarProperty Name="EmergencyContact" ColumnName="EmergencyContact" />
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="JoiningDate" ColumnName="JoiningDate" />
+                <ScalarProperty Name="LateDeduction" ColumnName="LateDeduction" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="BloodGroup" ColumnName="BloodGroup" />
+                <ScalarProperty Name="JobType" ColumnName="JobType" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="Emp_Biometrics" ColumnName="Emp_Biometrics" />
+                <ScalarProperty Name="FatherName" ColumnName="FatherName" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

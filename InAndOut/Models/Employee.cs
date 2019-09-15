@@ -28,7 +28,6 @@ namespace InAndOut.Models
         public Nullable<decimal> Salary { get; set; }
         public string JobType { get; set; }
         public string BloodGroup { get; set; }
-        public string Shift { get; set; }
         public string Address { get; set; }
         public Nullable<decimal> LateDeduction { get; set; }
         public Nullable<System.DateTimeOffset> JoiningDate { get; set; }
@@ -38,7 +37,11 @@ namespace InAndOut.Models
         public Nullable<bool> Bonus { get; set; }
         public byte[] UserPictureUrl { get; set; }
         public Nullable<int> SelfId { get; set; }
+        public int FK_CompanyID { get; set; }
+        public int FK_CompanyShiftID { get; set; }
     
         public virtual ICollection<AttDetail> AttDetails { get; set; }
+        public virtual Company Company { get; set; }
+        public virtual CompanyShift CompanyShift { get; set; }
     }
 }

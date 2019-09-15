@@ -170,6 +170,7 @@
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\PaymentGenerationController.cs" />
+    <Compile Include="Controllers\PerformanceController.cs" />
     <Compile Include="Controllers\SettingController.cs" />
     <Compile Include="DTO\ShiftDTO.cs" />
     <Compile Include="Global.asax.cs">
@@ -230,6 +231,7 @@
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PaymentModel.cs" />
+    <Compile Include="Models\PerformanceModel.cs" />
     <Compile Include="Models\role.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
@@ -302,6 +304,7 @@
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Custom\PaymentGenerationDetail.js" />
+    <Content Include="Scripts\Custom\Performance.js" />
     <Content Include="Scripts\Plugins\clockPicker\clockpicker.js" />
     <Content Include="Scripts\Custom\AttendanceList.js" />
     <Content Include="Scripts\Custom\AttendenceDetail.js" />
@@ -386,6 +389,7 @@
     <Content Include="Views\Attendance\AttDetails.cshtml" />
     <Content Include="Views\PaymentGeneration\Index.cshtml" />
     <Content Include="Views\PaymentGeneration\Details.cshtml" />
+    <Content Include="Views\Performance\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

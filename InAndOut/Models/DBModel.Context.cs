@@ -30,13 +30,13 @@ namespace InAndOut.Models
         public virtual DbSet<AttDetail> AttDetails { get; set; }
         public virtual DbSet<Company> Companies { get; set; }
         public virtual DbSet<CompanyShift> CompanyShifts { get; set; }
-        public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<menuitem> menuitems { get; set; }
         public virtual DbSet<role> roles { get; set; }
         public virtual DbSet<role_access> role_access { get; set; }
         public virtual DbSet<SalaryDeduction> SalaryDeductions { get; set; }
         public virtual DbSet<Shift> Shifts { get; set; }
         public virtual DbSet<user> users { get; set; }
+        public virtual DbSet<Employee> Employees { get; set; }
     
         public virtual ObjectResult<AttendanceDetails_Result> AttendanceDetails(Nullable<System.DateTimeOffset> startDate, Nullable<System.DateTimeOffset> endDate)
         {

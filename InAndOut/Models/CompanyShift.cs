@@ -14,6 +14,11 @@ namespace InAndOut.Models
     
     public partial class CompanyShift
     {
+        public CompanyShift()
+        {
+            this.Employees = new HashSet<Employee>();
+        }
+    
         public int CompanyShiftId { get; set; }
         public int FK_CompanyID { get; set; }
         public int FK_ShiftID { get; set; }
@@ -23,5 +28,6 @@ namespace InAndOut.Models
     
         public virtual Company Company { get; set; }
         public virtual Shift Shift { get; set; }
+        public virtual ICollection<Employee> Employees { get; set; }
     }
 }
