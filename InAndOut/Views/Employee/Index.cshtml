@@ -104,7 +104,21 @@
                     <div class="row rowmargin">
                         <div class="col-lg-4">
                             Shift *
-                            <input type="text" class="form-control" name="Shift" required />
+                            <select name="FK_ShiftID" class="form-control">
+                                <option value="1">Morning</option>
+                                <option value="2">Afternoon</option>
+                                <option value="3">Evening</option>
+                                <option value="4">Night</option>
+
+                            </select>
+                            @*  <input type="text" class="form-control" name="Shift" required />*@
+                        </div>
+                        <div class="col-lg-4">
+                            Company *
+                            <select name="FK_CompanyID" class="form-control">
+                                <option value="1">abc</option>
+                            </select>
+                            @*  <input type="text" class="form-control" name="Shift" required />*@
                         </div>
                         <div class="col-lg-4">
                             Address *

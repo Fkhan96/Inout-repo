@@ -65,3 +65,41 @@ function getPayment() {
         oTable = $('#listPaymentEmptb').dataTable({ "destroy": true });
     });
 }
+
+function GeneratePaySlip() {
+    var startDate = $('#paymentdetailrange').val().split('-')[0].trim();
+    var endDate = $('#paymentdetailrange').val().split('-')[1].trim();
+    var empId = getParameterByName("id");
+    var Parameters = {
+        EmpId: empId,
+        startDate: startDate,
+        endDate: endDate
+    };
+
+    var myurl = "/PaymentGeneration/GeneratePaySlip";
+    var oReq = new XMLHttpRequest();
+    // The Endpoint of your server 
+
+    var URLToPDF = myurl + "?" + "EmpId=" + Parameters.EmpId + "&startDate=" + Parameters.startDate + "&endDate=" + Parameters.endDate;
+
+    // Configure XMLHttpRequest
+    oReq.open("GET", URLToPDF, true);
+
+    // Important to use the blob response type
+    oReq.responseType = "blob";
+
+    // When the file request finishes
+    // Is up to you, the configuration for error events etc.
+    oReq.onload = function () {
+        // Once the file is downloaded, open a new window with the PDF
+        // Remember to allow the POP-UPS in your browser
+        var file = new Blob([oReq.response], {
+            type: 'application/pdf'
+        });
+
+        // Generate file download directly in the browser !
+        saveAs(file, Parameters.EmpId + "_PaySlip.pdf");
+    };
+
+    oReq.send();
+}

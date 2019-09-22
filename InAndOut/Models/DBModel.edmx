@@ -60,7 +60,7 @@
           <Property Name="UserPictureUrl" Type="varbinary(max)" />
           <Property Name="SelfId" Type="int" />
           <Property Name="FK_CompanyID" Type="int" Nullable="false" />
-          <Property Name="FK_CompanyShiftID" Type="int" Nullable="false" />
+          <Property Name="FK_ShiftID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="menuitem">
           <Key>
@@ -94,6 +94,7 @@
           <Property Name="FK_CompanyID" Type="int" Nullable="false" />
           <Property Name="NoOfDays" Type="int" />
           <Property Name="NoOfHalfDays" Type="int" />
+          <Property Name="NoOfLateDays" Type="int" />
         </EntityType>
         <EntityType Name="Shifts">
           <Key>
@@ -170,15 +171,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Employee_CompanyShift">
-          <End Role="CompanyShift" Type="Self.CompanyShift" Multiplicity="1" />
+        <Association Name="FK_Employee_Shift">
+          <End Role="Shifts" Type="Self.Shifts" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="CompanyShift">
-              <PropertyRef Name="CompanyShiftId" />
+            <Principal Role="Shifts">
+              <PropertyRef Name="ShiftID" />
             </Principal>
             <Dependent Role="Employee">
-              <PropertyRef Name="FK_CompanyShiftID" />
+              <PropertyRef Name="FK_ShiftID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -274,8 +277,8 @@
             <End Role="Company" EntitySet="Company" />
             <End Role="Employee" EntitySet="Employee" />
           </AssociationSet>
-          <AssociationSet Name="FK_Employee_CompanyShift" Association="Self.FK_Employee_CompanyShift">
-            <End Role="CompanyShift" EntitySet="CompanyShift" />
+          <AssociationSet Name="FK_Employee_Shift" Association="Self.FK_Employee_Shift">
+            <End Role="Shifts" EntitySet="Shifts" />
             <End Role="Employee" EntitySet="Employee" />
           </AssociationSet>
           <AssociationSet Name="FK_RoleAccess_MenuItem" Association="Self.FK_RoleAccess_MenuItem">
@@ -304,27 +307,10 @@
             <Parameter Name="StartDate" Mode="In" Type="DateTimeOffset" />
             <Parameter Name="EndDate" Mode="In" Type="DateTimeOffset" />
           </FunctionImport>
-          <EntitySet Name="AttDetails" EntityType="InOutModel.AttDetail" />
-          <EntitySet Name="Companies" EntityType="InOutModel.Company" />
-          <EntitySet Name="CompanyShifts" EntityType="InOutModel.CompanyShift" />
           <EntitySet Name="menuitems" EntityType="InOutModel.menuitem" />
           <EntitySet Name="roles" EntityType="InOutModel.role" />
           <EntitySet Name="role_access" EntityType="InOutModel.role_access" />
-          <EntitySet Name="SalaryDeductions" EntityType="InOutModel.SalaryDeduction" />
-          <EntitySet Name="Shifts" EntityType="InOutModel.Shift" />
           <EntitySet Name="users" EntityType="InOutModel.user" />
-          <AssociationSet Name="FK_CompanyShift_Company1" Association="InOutModel.FK_CompanyShift_Company1">
-            <End Role="Company" EntitySet="Companies" />
-            <End Role="CompanyShift" EntitySet="CompanyShifts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SalaryDeduction_Company" Association="InOutModel.FK_SalaryDeduction_Company">
-            <End Role="Company" EntitySet="Companies" />
-            <End Role="SalaryDeduction" EntitySet="SalaryDeductions" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CompanyShift_Company" Association="InOutModel.FK_CompanyShift_Company">
-            <End Role="Shift" EntitySet="Shifts" />
-            <End Role="CompanyShift" EntitySet="CompanyShifts" />
-          </AssociationSet>
           <AssociationSet Name="FK_RoleAccess_MenuItem" Association="InOutModel.FK_RoleAccess_MenuItem">
             <End Role="menuitem" EntitySet="menuitems" />
             <End Role="role_access" EntitySet="role_access" />
@@ -342,17 +328,34 @@
             <Parameter Name="StartDate" Mode="In" Type="DateTimeOffset" />
             <Parameter Name="EndDate" Mode="In" Type="DateTimeOffset" />
           </FunctionImport>
+          <EntitySet Name="AttDetails" EntityType="InOutModel.AttDetail" />
+          <EntitySet Name="Companies" EntityType="InOutModel.Company" />
+          <EntitySet Name="CompanyShifts" EntityType="InOutModel.CompanyShift" />
           <EntitySet Name="Employees" EntityType="InOutModel.Employee" />
+          <EntitySet Name="SalaryDeductions" EntityType="InOutModel.SalaryDeduction" />
+          <EntitySet Name="Shifts" EntityType="InOutModel.Shift" />
           <AssociationSet Name="FK_AttDetail_Employee" Association="InOutModel.FK_AttDetail_Employee">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="AttDetail" EntitySet="AttDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CompanyShift_Company1" Association="InOutModel.FK_CompanyShift_Company1">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="CompanyShift" EntitySet="CompanyShifts" />
           </AssociationSet>
           <AssociationSet Name="FK_Employee_Company" Association="InOutModel.FK_Employee_Company">
             <End Role="Company" EntitySet="Companies" />
             <End Role="Employee" EntitySet="Employees" />
           </AssociationSet>
-          <AssociationSet Name="FK_Employee_CompanyShift" Association="InOutModel.FK_Employee_CompanyShift">
+          <AssociationSet Name="FK_SalaryDeduction_Company" Association="InOutModel.FK_SalaryDeduction_Company">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="SalaryDeduction" EntitySet="SalaryDeductions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CompanyShift_Company" Association="InOutModel.FK_CompanyShift_Company">
+            <End Role="Shift" EntitySet="Shifts" />
             <End Role="CompanyShift" EntitySet="CompanyShifts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Shift" Association="InOutModel.FK_Employee_Shift">
+            <End Role="Shift" EntitySet="Shifts" />
             <End Role="Employee" EntitySet="Employees" />
           </AssociationSet>
           </EntityContainer>
@@ -365,45 +368,6 @@
           <Property Type="Int32" Name="TimeOff" Nullable="true" />
           <Property Type="Boolean" Name="Status" Nullable="true" />
         </ComplexType>
-        <EntityType Name="AttDetail">
-          <Key>
-            <PropertyRef Name="AttDetailsID" />
-          </Key>
-          <Property Name="AttDetailsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FK_EmpID" Type="Int32" Nullable="false" />
-          <Property Name="CheckinTime" Type="DateTime" Precision="3" />
-          <Property Name="CheckoutTime" Type="DateTime" Precision="3" />
-          <Property Name="TimeOff" Type="Int32" />
-          <Property Name="Status" Type="Boolean" />
-          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Employee" Relationship="InOutModel.FK_AttDetail_Employee" FromRole="AttDetail" ToRole="Employee" />
-        </EntityType>
-        <EntityType Name="Company">
-          <Key>
-            <PropertyRef Name="CompanyID" />
-          </Key>
-          <Property Name="CompanyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="SelfId" Type="Int32" />
-          <Property Name="PictureUrl" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <NavigationProperty Name="CompanyShifts" Relationship="InOutModel.FK_CompanyShift_Company1" FromRole="Company" ToRole="CompanyShift" />
-          <NavigationProperty Name="SalaryDeductions" Relationship="InOutModel.FK_SalaryDeduction_Company" FromRole="Company" ToRole="SalaryDeduction" />
-          <NavigationProperty Name="Employees" Relationship="InOutModel.FK_Employee_Company" FromRole="Company" ToRole="Employee" />
-        </EntityType>
-        <EntityType Name="CompanyShift">
-          <Key>
-            <PropertyRef Name="CompanyShiftId" />
-          </Key>
-          <Property Name="CompanyShiftId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FK_CompanyID" Type="Int32" Nullable="false" />
-          <Property Name="FK_ShiftID" Type="Int32" Nullable="false" />
-          <Property Name="StartTime" Type="Time" Precision="7" />
-          <Property Name="EndTime" Type="Time" Precision="7" />
-          <Property Name="IsSet" Type="Boolean" />
-          <NavigationProperty Name="Company" Relationship="InOutModel.FK_CompanyShift_Company1" FromRole="CompanyShift" ToRole="Company" />
-          <NavigationProperty Name="Shift" Relationship="InOutModel.FK_CompanyShift_Company" FromRole="CompanyShift" ToRole="Shift" />
-          <NavigationProperty Name="Employees" Relationship="InOutModel.FK_Employee_CompanyShift" FromRole="CompanyShift" ToRole="Employee" />
-        </EntityType>
         <EntityType Name="menuitem">
           <Key>
             <PropertyRef Name="menuitemid" />
@@ -433,24 +397,6 @@
           <NavigationProperty Name="menuitem" Relationship="InOutModel.FK_RoleAccess_MenuItem" FromRole="role_access" ToRole="menuitem" />
           <NavigationProperty Name="role" Relationship="InOutModel.FK_RoleAccess_Role" FromRole="role_access" ToRole="role" />
         </EntityType>
-        <EntityType Name="SalaryDeduction">
-          <Key>
-            <PropertyRef Name="SalaryDeductionID" />
-          </Key>
-          <Property Name="SalaryDeductionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FK_CompanyID" Type="Int32" Nullable="false" />
-          <Property Name="NoOfDays" Type="Int32" />
-          <Property Name="NoOfHalfDays" Type="Int32" />
-          <NavigationProperty Name="Company" Relationship="InOutModel.FK_SalaryDeduction_Company" FromRole="SalaryDeduction" ToRole="Company" />
-        </EntityType>
-        <EntityType Name="Shift">
-          <Key>
-            <PropertyRef Name="ShiftID" />
-          </Key>
-          <Property Name="ShiftID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ShiftName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="CompanyShifts" Relationship="InOutModel.FK_CompanyShift_Company" FromRole="Shift" ToRole="CompanyShift" />
-        </EntityType>
         <EntityType Name="user">
           <Key>
             <PropertyRef Name="user_id" />
@@ -464,48 +410,6 @@
           <Property Name="roleID" Type="Int32" />
           <NavigationProperty Name="role" Relationship="InOutModel.FK_users_role" FromRole="user" ToRole="role" />
         </EntityType>
-        <Association Name="FK_CompanyShift_Company1">
-          <End Type="InOutModel.Company" Role="Company" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="InOutModel.CompanyShift" Role="CompanyShift" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Company">
-              <PropertyRef Name="CompanyID" />
-            </Principal>
-            <Dependent Role="CompanyShift">
-              <PropertyRef Name="FK_CompanyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SalaryDeduction_Company">
-          <End Type="InOutModel.Company" Role="Company" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="InOutModel.SalaryDeduction" Role="SalaryDeduction" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Company">
-              <PropertyRef Name="CompanyID" />
-            </Principal>
-            <Dependent Role="SalaryDeduction">
-              <PropertyRef Name="FK_CompanyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CompanyShift_Company">
-          <End Type="InOutModel.Shift" Role="Shift" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="InOutModel.CompanyShift" Role="CompanyShift" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Shift">
-              <PropertyRef Name="ShiftID" />
-            </Principal>
-            <Dependent Role="CompanyShift">
-              <PropertyRef Name="FK_ShiftID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_RoleAccess_MenuItem">
           <End Type="InOutModel.menuitem" Role="menuitem" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -557,6 +461,44 @@
           <Property Type="Int32" Name="TimeOff" Nullable="true" />
           <Property Type="Boolean" Name="Status" Nullable="true" />
         </ComplexType>
+        <EntityType Name="AttDetail">
+          <Key>
+            <PropertyRef Name="AttDetailsID" />
+          </Key>
+          <Property Name="AttDetailsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FK_EmpID" Type="Int32" Nullable="false" />
+          <Property Name="CheckinTime" Type="DateTime" Precision="3" />
+          <Property Name="CheckoutTime" Type="DateTime" Precision="3" />
+          <Property Name="TimeOff" Type="Int32" />
+          <Property Name="Status" Type="Boolean" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Employee" Relationship="InOutModel.FK_AttDetail_Employee" FromRole="AttDetail" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="CompanyID" />
+          </Key>
+          <Property Name="CompanyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="SelfId" Type="Int32" />
+          <Property Name="PictureUrl" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="CompanyShifts" Relationship="InOutModel.FK_CompanyShift_Company1" FromRole="Company" ToRole="CompanyShift" />
+          <NavigationProperty Name="Employees" Relationship="InOutModel.FK_Employee_Company" FromRole="Company" ToRole="Employee" />
+          <NavigationProperty Name="SalaryDeductions" Relationship="InOutModel.FK_SalaryDeduction_Company" FromRole="Company" ToRole="SalaryDeduction" />
+        </EntityType>
+        <EntityType Name="CompanyShift">
+          <Key>
+            <PropertyRef Name="CompanyShiftId" />
+          </Key>
+          <Property Name="CompanyShiftId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FK_CompanyID" Type="Int32" Nullable="false" />
+          <Property Name="FK_ShiftID" Type="Int32" Nullable="false" />
+          <Property Name="StartTime" Type="Time" Precision="7" />
+          <Property Name="EndTime" Type="Time" Precision="7" />
+          <Property Name="IsSet" Type="Boolean" />
+          <NavigationProperty Name="Company" Relationship="InOutModel.FK_CompanyShift_Company1" FromRole="CompanyShift" ToRole="Company" />
+          <NavigationProperty Name="Shift" Relationship="InOutModel.FK_CompanyShift_Company" FromRole="CompanyShift" ToRole="Shift" />
+        </EntityType>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="EmpID" />
@@ -580,10 +522,30 @@
           <Property Name="UserPictureUrl" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="SelfId" Type="Int32" />
           <Property Name="FK_CompanyID" Type="Int32" Nullable="false" />
-          <Property Name="FK_CompanyShiftID" Type="Int32" Nullable="false" />
+          <Property Name="FK_ShiftID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AttDetails" Relationship="InOutModel.FK_AttDetail_Employee" FromRole="Employee" ToRole="AttDetail" />
           <NavigationProperty Name="Company" Relationship="InOutModel.FK_Employee_Company" FromRole="Employee" ToRole="Company" />
-          <NavigationProperty Name="CompanyShift" Relationship="InOutModel.FK_Employee_CompanyShift" FromRole="Employee" ToRole="CompanyShift" />
+          <NavigationProperty Name="Shift" Relationship="InOutModel.FK_Employee_Shift" FromRole="Employee" ToRole="Shift" />
+        </EntityType>
+        <EntityType Name="SalaryDeduction">
+          <Key>
+            <PropertyRef Name="SalaryDeductionID" />
+          </Key>
+          <Property Name="SalaryDeductionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FK_CompanyID" Type="Int32" Nullable="false" />
+          <Property Name="NoOfDays" Type="Int32" />
+          <Property Name="NoOfHalfDays" Type="Int32" />
+          <Property Name="NoOfLateDays" Type="Int32" />
+          <NavigationProperty Name="Company" Relationship="InOutModel.FK_SalaryDeduction_Company" FromRole="SalaryDeduction" ToRole="Company" />
+        </EntityType>
+        <EntityType Name="Shift">
+          <Key>
+            <PropertyRef Name="ShiftID" />
+          </Key>
+          <Property Name="ShiftID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ShiftName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CompanyShifts" Relationship="InOutModel.FK_CompanyShift_Company" FromRole="Shift" ToRole="CompanyShift" />
+          <NavigationProperty Name="Employees" Relationship="InOutModel.FK_Employee_Shift" FromRole="Shift" ToRole="Employee" />
         </EntityType>
         <Association Name="FK_AttDetail_Employee">
           <End Type="InOutModel.Employee" Role="Employee" Multiplicity="1">
@@ -596,6 +558,20 @@
             </Principal>
             <Dependent Role="AttDetail">
               <PropertyRef Name="FK_EmpID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CompanyShift_Company1">
+          <End Type="InOutModel.Company" Role="Company" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="InOutModel.CompanyShift" Role="CompanyShift" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyID" />
+            </Principal>
+            <Dependent Role="CompanyShift">
+              <PropertyRef Name="FK_CompanyID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -613,15 +589,45 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Employee_CompanyShift">
-          <End Type="InOutModel.CompanyShift" Role="CompanyShift" Multiplicity="1" />
+        <Association Name="FK_SalaryDeduction_Company">
+          <End Type="InOutModel.Company" Role="Company" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="InOutModel.SalaryDeduction" Role="SalaryDeduction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyID" />
+            </Principal>
+            <Dependent Role="SalaryDeduction">
+              <PropertyRef Name="FK_CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CompanyShift_Company">
+          <End Type="InOutModel.Shift" Role="Shift" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="InOutModel.CompanyShift" Role="CompanyShift" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shift">
+              <PropertyRef Name="ShiftID" />
+            </Principal>
+            <Dependent Role="CompanyShift">
+              <PropertyRef Name="FK_ShiftID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Shift">
+          <End Type="InOutModel.Shift" Role="Shift" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="InOutModel.Employee" Role="Employee" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="CompanyShift">
-              <PropertyRef Name="CompanyShiftId" />
+            <Principal Role="Shift">
+              <PropertyRef Name="ShiftID" />
             </Principal>
             <Dependent Role="Employee">
-              <PropertyRef Name="FK_CompanyShiftID" />
+              <PropertyRef Name="FK_ShiftID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -634,6 +640,59 @@
           <FunctionImportMapping FunctionImportName="AttendanceDetails" FunctionName="InOutModel.Store.AttendanceDetails">
             <ResultMapping>
               <ComplexTypeMapping TypeName="InOutModel.AttendanceDetails_Result">
+                <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="AttDetailsID" ColumnName="AttDetailsID" />
+                <ScalarProperty Name="CheckinTime" ColumnName="CheckinTime" />
+                <ScalarProperty Name="CheckoutTime" ColumnName="CheckoutTime" />
+                <ScalarProperty Name="TimeOff" ColumnName="TimeOff" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="menuitems">
+            <EntityTypeMapping TypeName="InOutModel.menuitem">
+              <MappingFragment StoreEntitySet="menuitem">
+                <ScalarProperty Name="menuitem_url" ColumnName="menuitem_url" />
+                <ScalarProperty Name="menuitem_name" ColumnName="menuitem_name" />
+                <ScalarProperty Name="menuitemid" ColumnName="menuitemid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="roles">
+            <EntityTypeMapping TypeName="InOutModel.role">
+              <MappingFragment StoreEntitySet="role">
+                <ScalarProperty Name="rolename" ColumnName="rolename" />
+                <ScalarProperty Name="roleid" ColumnName="roleid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="role_access">
+            <EntityTypeMapping TypeName="InOutModel.role_access">
+              <MappingFragment StoreEntitySet="role_access">
+                <ScalarProperty Name="has_access" ColumnName="has_access" />
+                <ScalarProperty Name="roleid" ColumnName="roleid" />
+                <ScalarProperty Name="menuitemid" ColumnName="menuitemid" />
+                <ScalarProperty Name="role_accessid" ColumnName="role_accessid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="InOutModel.user">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="roleID" ColumnName="roleID" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="contact" ColumnName="contact" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetPaymentDetailsByEmpId" FunctionName="InOutModel.Store.GetPaymentDetailsByEmpId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="InOutModel.GetPaymentDetailsByEmpId_Result">
                 <ScalarProperty Name="EmpID" ColumnName="EmpID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="AttDetailsID" ColumnName="AttDetailsID" />
@@ -679,81 +738,10 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="menuitems">
-            <EntityTypeMapping TypeName="InOutModel.menuitem">
-              <MappingFragment StoreEntitySet="menuitem">
-                <ScalarProperty Name="menuitem_url" ColumnName="menuitem_url" />
-                <ScalarProperty Name="menuitem_name" ColumnName="menuitem_name" />
-                <ScalarProperty Name="menuitemid" ColumnName="menuitemid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="roles">
-            <EntityTypeMapping TypeName="InOutModel.role">
-              <MappingFragment StoreEntitySet="role">
-                <ScalarProperty Name="rolename" ColumnName="rolename" />
-                <ScalarProperty Name="roleid" ColumnName="roleid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="role_access">
-            <EntityTypeMapping TypeName="InOutModel.role_access">
-              <MappingFragment StoreEntitySet="role_access">
-                <ScalarProperty Name="has_access" ColumnName="has_access" />
-                <ScalarProperty Name="roleid" ColumnName="roleid" />
-                <ScalarProperty Name="menuitemid" ColumnName="menuitemid" />
-                <ScalarProperty Name="role_accessid" ColumnName="role_accessid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SalaryDeductions">
-            <EntityTypeMapping TypeName="InOutModel.SalaryDeduction">
-              <MappingFragment StoreEntitySet="SalaryDeduction">
-                <ScalarProperty Name="NoOfHalfDays" ColumnName="NoOfHalfDays" />
-                <ScalarProperty Name="NoOfDays" ColumnName="NoOfDays" />
-                <ScalarProperty Name="FK_CompanyID" ColumnName="FK_CompanyID" />
-                <ScalarProperty Name="SalaryDeductionID" ColumnName="SalaryDeductionID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Shifts">
-            <EntityTypeMapping TypeName="InOutModel.Shift">
-              <MappingFragment StoreEntitySet="Shifts">
-                <ScalarProperty Name="ShiftName" ColumnName="ShiftName" />
-                <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="users">
-            <EntityTypeMapping TypeName="InOutModel.user">
-              <MappingFragment StoreEntitySet="users">
-                <ScalarProperty Name="roleID" ColumnName="roleID" />
-                <ScalarProperty Name="type" ColumnName="type" />
-                <ScalarProperty Name="contact" ColumnName="contact" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="username" ColumnName="username" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="user_id" ColumnName="user_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GetPaymentDetailsByEmpId" FunctionName="InOutModel.Store.GetPaymentDetailsByEmpId">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="InOutModel.GetPaymentDetailsByEmpId_Result">
-                <ScalarProperty Name="EmpID" ColumnName="EmpID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="AttDetailsID" ColumnName="AttDetailsID" />
-                <ScalarProperty Name="CheckinTime" ColumnName="CheckinTime" />
-                <ScalarProperty Name="CheckoutTime" ColumnName="CheckoutTime" />
-                <ScalarProperty Name="TimeOff" ColumnName="TimeOff" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="InOutModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
-                <ScalarProperty Name="FK_CompanyShiftID" ColumnName="FK_CompanyShiftID" />
+                <ScalarProperty Name="FK_ShiftID" ColumnName="FK_ShiftID" />
                 <ScalarProperty Name="FK_CompanyID" ColumnName="FK_CompanyID" />
                 <ScalarProperty Name="SelfId" ColumnName="SelfId" />
                 <ScalarProperty Name="UserPictureUrl" ColumnName="UserPictureUrl" />
@@ -773,6 +761,25 @@
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SalaryDeductions">
+            <EntityTypeMapping TypeName="InOutModel.SalaryDeduction">
+              <MappingFragment StoreEntitySet="SalaryDeduction">
+                <ScalarProperty Name="NoOfLateDays" ColumnName="NoOfLateDays" />
+                <ScalarProperty Name="NoOfHalfDays" ColumnName="NoOfHalfDays" />
+                <ScalarProperty Name="NoOfDays" ColumnName="NoOfDays" />
+                <ScalarProperty Name="FK_CompanyID" ColumnName="FK_CompanyID" />
+                <ScalarProperty Name="SalaryDeductionID" ColumnName="SalaryDeductionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Shifts">
+            <EntityTypeMapping TypeName="InOutModel.Shift">
+              <MappingFragment StoreEntitySet="Shifts">
+                <ScalarProperty Name="ShiftName" ColumnName="ShiftName" />
+                <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

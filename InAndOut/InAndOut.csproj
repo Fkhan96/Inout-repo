@@ -42,6 +42,9 @@
     <Reference Include="DocumentFormat.OpenXml">
       <HintPath>..\packages\DocumentFormat.OpenXml.2.9.1\lib\net40\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
+    <Reference Include="itextsharp">
+      <HintPath>..\..\..\Downloads\Microsoft.SkypeApp_kzf8qxf38zg5c!App\All\ReportiTextSharp\Bin\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -231,6 +234,7 @@
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PaymentModel.cs" />
+    <Compile Include="Models\PdfGeneration.cs" />
     <Compile Include="Models\PerformanceModel.cs" />
     <Compile Include="Models\role.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
@@ -242,6 +246,7 @@
     <Compile Include="Models\SalaryDeduction.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SettingModel.cs" />
     <Compile Include="Models\Shift.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>

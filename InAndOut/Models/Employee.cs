@@ -38,10 +38,10 @@ namespace InAndOut.Models
         public byte[] UserPictureUrl { get; set; }
         public Nullable<int> SelfId { get; set; }
         public int FK_CompanyID { get; set; }
-        public int FK_CompanyShiftID { get; set; }
+        public int FK_ShiftID { get; set; }
     
         public virtual ICollection<AttDetail> AttDetails { get; set; }
         public virtual Company Company { get; set; }
-        public virtual CompanyShift CompanyShift { get; set; }
+        public virtual Shift Shift { get; set; }
     }
 }

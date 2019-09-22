@@ -18,6 +18,7 @@ namespace InAndOut.Models
         public int FK_CompanyID { get; set; }
         public Nullable<int> NoOfDays { get; set; }
         public Nullable<int> NoOfHalfDays { get; set; }
+        public Nullable<int> NoOfLateDays { get; set; }
     
         public virtual Company Company { get; set; }
     }

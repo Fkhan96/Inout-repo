@@ -18,7 +18,7 @@
             <div class="col-lg-7">
             </div>
             <div class="col-lg-3">
-                <input value="Generate Pay" type="button" class="btn btn-success"/>
+                <input value="Generate Pay" type="button" class="btn btn-success" onclick="return GeneratePaySlip(this)" />
             </div>
             <div class="col-lg-2">
                 <input type="text" id="paymentdetailrange" name="daterange" value="01/01/2018 - 01/15/2018" />
@@ -41,7 +41,8 @@
 
 </div><!-- /.box -->
 @section scripts {
-<script src="~/Scripts/Custom/PaymentGenerationDetail.js"></script>
+    <script src="~/Scripts/Plugins/FileSaver.js"></script>
+    <script src="~/Scripts/Custom/PaymentGenerationDetail.js"></script>
     <script src="~/Scripts/Plugins/datepicker/daterangepicker.min.js"></script>
     <script src="~/Scripts/Custom/uniquevalidation.js"></script>
     <script src="~/Scripts/Custom/constant.js"></script>

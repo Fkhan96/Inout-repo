@@ -1,5 +1,6 @@
 ﻿function Trigger() {
-    getSetting();
+    getShift();
+    getSalaryDeduction();
 }
 
 function bindDateTime() {
@@ -50,40 +51,46 @@ function checkBoxClick(target) {
     }
 
 }
-function getSetting() {
-    var myurl = "/Setting/GetList";
+
+function getShift() {
+    var myurl = "/Setting/GetShift";
     var myData = {};
     myData["FK_CompanyID"] = $('#companyId').attr('data-companyId');
-    XHRGETRequest(myurl, myData, function (result) {
+    XHRGETRequest(myurl, myData, function (result) { 
         if (result.length > 0) {
             result.forEach(function (each) {
-                var checkElement = 'input[name="' + each.u.Shift.ShiftName + '"]';
+                var shiftName = getEnumName(Shifts, each.FK_ShiftID)
+                var checkElement = 'input[name="' + shiftName + '"]';
                 var target = {
-                    checked: each.u.IsSet,
-                    name: each.u.Shift.ShiftName
+                    checked: each.IsSet,
+                    name: shiftName
                 }
                 checkBoxClick(target);
-                if (each.u.IsSet) {
+                if (each.IsSet) {
                     $(checkElement).iCheck('check');
-                    $('input[name=' + each.u.Shift.ShiftName.toLowerCase() + '_start_time')[0].value = (each.u.StartTime != null) ? each.u.StartTime : '';
-                    $('input[name=' + each.u.Shift.ShiftName.toLowerCase() + '_end_time')[0].value = (each.u.EndTime != null) ? each.u.EndTime : '';
-
+                    $('input[name=' + shiftName.toLowerCase() + '_start_time')[0].value = (each.StartTime != null) ? each.StartTime : '';
+                    $('input[name=' + shiftName.toLowerCase() + '_end_time')[0].value = (each.EndTime != null) ? each.EndTime : '';
                 }
                 else {
                     $(checkElement).iCheck('uncheck');
                 }
             });
         }
-      
-        if (result.length > 0) {
-            $('input[name="NoOfDays"]').val(result[0].x.NoOfDays);
-            $('input[name="NoOfHalfDays"]').val(result[0].x.NoOfHalfDays);
-        }
-
     });
 }
 
-
+function getSalaryDeduction() {
+    var myurl = "/Setting/GetSalaryDeduction";
+    var myData = {};
+    myData["FK_CompanyID"] = $('#companyId').attr('data-companyId');
+    XHRGETRequest(myurl, myData, function (result) {
+        if (result != null) {
+            $('input[name="NoOfDays"]').val(result.NoOfDays);
+            $('input[name="NoOfHalfDays"]').val(result.NoOfHalfDays);
+            $('input[name="NoOfLateDays"]').val(result.NoOfLateDays);
+        }
+    });
+}
 
 function isRecordAlreadyExists(tableName, columnName, columnValue, ignorecondition) {
     var mydata = {};

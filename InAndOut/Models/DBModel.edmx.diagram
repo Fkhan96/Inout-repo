@@ -5,25 +5,25 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="ae83759453154d2f964778a62a98d4a9" Name="Diagram1">
-        <EntityTypeShape EntityType="InOutModel.AttDetail" Width="1.5" PointX="8" PointY="8.5" />
-        <EntityTypeShape EntityType="InOutModel.Company" Width="1.5" PointX="5.75" PointY="4" />
-        <EntityTypeShape EntityType="InOutModel.CompanyShift" Width="1.5" PointX="8" PointY="0.75" />
         <EntityTypeShape EntityType="InOutModel.menuitem" Width="1.5" PointX="0.75" PointY="1.25" />
         <EntityTypeShape EntityType="InOutModel.role" Width="1.5" PointX="0.75" PointY="4.25" />
         <EntityTypeShape EntityType="InOutModel.role_access" Width="1.5" PointX="3" PointY="3" />
-        <EntityTypeShape EntityType="InOutModel.SalaryDeduction" Width="1.5" PointX="8" PointY="4" />
-        <EntityTypeShape EntityType="InOutModel.Shift" Width="1.5" PointX="5.75" PointY="1.375" />
         <EntityTypeShape EntityType="InOutModel.user" Width="1.5" PointX="3" PointY="6.75" />
-        <AssociationConnector Association="InOutModel.FK_CompanyShift_Company1" />
-        <AssociationConnector Association="InOutModel.FK_SalaryDeduction_Company" />
-        <AssociationConnector Association="InOutModel.FK_CompanyShift_Company" />
         <AssociationConnector Association="InOutModel.FK_RoleAccess_MenuItem" />
         <AssociationConnector Association="InOutModel.FK_RoleAccess_Role" />
         <AssociationConnector Association="InOutModel.FK_users_role" />
-        <EntityTypeShape EntityType="InOutModel.Employee" Width="1.5" PointX="10.25" PointY="0.875" />
+        <EntityTypeShape EntityType="InOutModel.AttDetail" Width="1.5" PointX="9.875" PointY="10" />
+        <EntityTypeShape EntityType="InOutModel.Company" Width="1.5" PointX="5.375" PointY="6" />
+        <EntityTypeShape EntityType="InOutModel.CompanyShift" Width="1.5" PointX="10.625" PointY="6" />
+        <EntityTypeShape EntityType="InOutModel.Employee" Width="1.5" PointX="7.625" PointY="4.5" />
+        <EntityTypeShape EntityType="InOutModel.SalaryDeduction" Width="1.5" PointX="7.625" PointY="15.625" />
+        <EntityTypeShape EntityType="InOutModel.Shift" Width="1.5" PointX="8.375" PointY="1.375" />
         <AssociationConnector Association="InOutModel.FK_AttDetail_Employee" />
+        <AssociationConnector Association="InOutModel.FK_CompanyShift_Company1" />
         <AssociationConnector Association="InOutModel.FK_Employee_Company" />
-        <AssociationConnector Association="InOutModel.FK_Employee_CompanyShift" />
+        <AssociationConnector Association="InOutModel.FK_SalaryDeduction_Company" />
+        <AssociationConnector Association="InOutModel.FK_CompanyShift_Company" />
+        <AssociationConnector Association="InOutModel.FK_Employee_Shift" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

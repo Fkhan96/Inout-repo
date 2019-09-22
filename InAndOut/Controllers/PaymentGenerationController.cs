@@ -1,11 +1,14 @@
-﻿using InAndOut.Helper.Custom;
+﻿using DocumentFormat.OpenXml.Wordprocessing;
+using InAndOut.Helper.Custom;
 using InAndOut.Helper.General;
 using InAndOut.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace InAndOut.Controllers
 {
@@ -37,6 +40,21 @@ namespace InAndOut.Controllers
         }
         #endregion
         #endregion
+
+        public HttpResponseBase GeneratePaySlip(PaymentSearchViewModel model) {
+            
+            PdfGeneration pdfGeneration = new PdfGeneration();
+            var bytes = pdfGeneration.GenerateReport(model);
+            Response.Clear();
+            Response.ContentType = "application/pdf";
+            //Response.AddHeader("Content-Disposition", "attachment; filename=PaySlip.pdf");
+            Response.Buffer = true;
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.BinaryWrite(bytes);
+            Response.End();
+            Response.Close();
+            return Response;
+        }
 
     }
 }

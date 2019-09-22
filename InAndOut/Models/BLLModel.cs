@@ -167,25 +167,6 @@ namespace InAndOut.Models
 
         #region Setting
 
-        public static Object getlist_Setting(int FK_CompanyID)
-        {
-            var setting = new object();
-            using (DBContext db = new DBContext())
-            {
-                try
-                {
-                    setting = db.CompanyShifts.Join(db.SalaryDeductions,
-                         u => u.FK_CompanyID,
-                         x => x.FK_CompanyID,
-                         (u, x) => new { u, x }).
-                         Where(y => y.u.FK_CompanyID == FK_CompanyID).
-                         ToList();
-                }
-                catch (Exception ex) { }
-                return Common.Serialize(setting);
-            }
-        }
-
         #region Shift
         public static async Task add_shiftAsync(ShiftDTO data)
         {

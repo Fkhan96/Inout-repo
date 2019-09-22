@@ -18,9 +18,14 @@ namespace InAndOut.Controllers
             return View();
         }
 
-        public object GetList(int FK_CompanyID)
+        public object GetShift(int FK_CompanyID)
         {
-            return BLLModel.getlist_Setting(FK_CompanyID);
+            return SettingModel.getShiftSetting(FK_CompanyID);
+        }
+
+        public object GetSalaryDeduction(int FK_CompanyID)
+        {
+            return SettingModel.getSalaryDeductionSetting(FK_CompanyID);
         }
 
         #region Shift Settings

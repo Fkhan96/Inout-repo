@@ -45,7 +45,6 @@
     <Property Name="Salary" Type="money" />
     <Property Name="JobType" Type="varchar" MaxLength="255" />
     <Property Name="BloodGroup" Type="varchar" MaxLength="255" />
-    <Property Name="Shift" Type="varchar" MaxLength="255" />
     <Property Name="Address" Type="varchar" MaxLength="255" />
     <Property Name="LateDeduction" Type="money" />
     <Property Name="JoiningDate" Type="datetimeoffset" Precision="7" />
@@ -55,6 +54,8 @@
     <Property Name="Bonus" Type="bit" />
     <Property Name="UserPictureUrl" Type="varbinary(max)" />
     <Property Name="SelfId" Type="int" />
+    <Property Name="FK_CompanyID" Type="int" Nullable="false" />
+    <Property Name="FK_ShiftID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="menuitem">
     <Key>
@@ -88,6 +89,7 @@
     <Property Name="FK_CompanyID" Type="int" Nullable="false" />
     <Property Name="NoOfDays" Type="int" />
     <Property Name="NoOfHalfDays" Type="int" />
+    <Property Name="NoOfLateDays" Type="int" />
   </EntityType>
   <EntityType Name="Shifts">
     <Key>
@@ -147,6 +149,34 @@
       </Principal>
       <Dependent Role="CompanyShift">
         <PropertyRef Name="FK_CompanyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_Company">
+    <End Role="Company" Type="Self.Company" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="CompanyID" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="FK_CompanyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_Shift">
+    <End Role="Shifts" Type="Self.Shifts" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shifts">
+        <PropertyRef Name="ShiftID" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="FK_ShiftID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -237,6 +267,14 @@
     <AssociationSet Name="FK_CompanyShift_Company1" Association="Self.FK_CompanyShift_Company1">
       <End Role="Company" EntitySet="Company" />
       <End Role="CompanyShift" EntitySet="CompanyShift" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_Company" Association="Self.FK_Employee_Company">
+      <End Role="Company" EntitySet="Company" />
+      <End Role="Employee" EntitySet="Employee" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_Shift" Association="Self.FK_Employee_Shift">
+      <End Role="Shifts" EntitySet="Shifts" />
+      <End Role="Employee" EntitySet="Employee" />
     </AssociationSet>
     <AssociationSet Name="FK_RoleAccess_MenuItem" Association="Self.FK_RoleAccess_MenuItem">
       <End Role="menuitem" EntitySet="menuitem" />

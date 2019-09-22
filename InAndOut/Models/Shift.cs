@@ -17,11 +17,13 @@ namespace InAndOut.Models
         public Shift()
         {
             this.CompanyShifts = new HashSet<CompanyShift>();
+            this.Employees = new HashSet<Employee>();
         }
     
         public int ShiftID { get; set; }
         public string ShiftName { get; set; }
     
         public virtual ICollection<CompanyShift> CompanyShifts { get; set; }
+        public virtual ICollection<Employee> Employees { get; set; }
     }
 }

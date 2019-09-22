@@ -162,7 +162,7 @@
                     </label>
                 </div>
                 <div class="col-lg-3">
-                    <input type="text" placeholder="i.e: 1" name="NoOfDays" />
+                    <input type="text" placeholder="i.e: 1" name="NoOfDays" style="text-align: center;" />
                 </div>
                 <div class="col-lg-3">
                     <label>
@@ -179,11 +179,27 @@
                     </label>
                 </div>
                 <div class="col-lg-3">
-                    <input type="text" placeholder="i.e: 1" name="NoOfHalfDays" />
+                    <input type="text" placeholder="i.e: 1" name="NoOfHalfDays" style="text-align: center;" />
                 </div>
                 <div class="col-lg-3">
                     <label>
                         No of half Days
+                    </label>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-3">
+                    <label>
+                        1 Day salary deduct =
+                    </label>
+                </div>
+                <div class="col-lg-3">
+                    <input type="text" placeholder="i.e: 1" name="NoOfLateDays" style="text-align: center;" />
+                </div>
+                <div class="col-lg-3">
+                    <label>
+                        No of Late Days
                     </label>
                 </div>
             </div>
@@ -207,7 +223,7 @@
     <script src="~/Scripts/Custom/Setting.js"></script>
     <script src="~/Scripts/Custom/uniquevalidation.js"></script>
     <script src="~/Scripts/Plugins/iCheck/icheck.min.js"></script>
-    
+    <script src="~/Scripts/Custom/constant.js"></script>
     <script>
         $(document).ready(function () {
             bindDateTime();
