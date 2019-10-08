@@ -32,6 +32,15 @@
     <Property Name="EndTime" Type="time" Precision="7" />
     <Property Name="IsSet" Type="bit" />
   </EntityType>
+  <EntityType Name="DocumentUpload">
+    <Key>
+      <PropertyRef Name="DocumentUploadID" />
+    </Key>
+    <Property Name="DocumentUploadID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DocumentName" Type="nvarchar" MaxLength="200" />
+    <Property Name="ContentType" Type="nvarchar" MaxLength="200" />
+    <Property Name="DocumentEncode" Type="varbinary(max)" />
+  </EntityType>
   <EntityType Name="Employee">
     <Key>
       <PropertyRef Name="EmpID" />
@@ -57,6 +66,13 @@
     <Property Name="FK_CompanyID" Type="int" Nullable="false" />
     <Property Name="FK_ShiftID" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="Expectation">
+    <Key>
+      <PropertyRef Name="ExpectationID" />
+    </Key>
+    <Property Name="ExpectationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="200" />
+  </EntityType>
   <EntityType Name="menuitem">
     <Key>
       <PropertyRef Name="menuitemid" />
@@ -64,6 +80,35 @@
     <Property Name="menuitemid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="menuitem_name" Type="varchar" MaxLength="255" Nullable="false" />
     <Property Name="menuitem_url" Type="varchar" MaxLength="255" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PerformanceReport">
+    <Key>
+      <PropertyRef Name="PerformanceReportID" />
+    </Key>
+    <Property Name="PerformanceReportID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FK_EmpID" Type="int" />
+    <Property Name="FK_ReportTypeID" Type="int" />
+    <Property Name="FK_QuarterID" Type="int" />
+    <Property Name="FK_DocumentUploadID" Type="int" />
+    <Property Name="FK_ExpectationID" Type="int" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="notes" Type="nvarchar" MaxLength="350" />
+    <Property Name="year" Type="int" />
+  </EntityType>
+  <EntityType Name="Quarter">
+    <Key>
+      <PropertyRef Name="QuarterId" />
+    </Key>
+    <Property Name="QuarterId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="ReportType">
+    <Key>
+      <PropertyRef Name="ReportTypeId" />
+    </Key>
+    <Property Name="ReportTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="200" />
   </EntityType>
   <EntityType Name="role">
     <Key>
@@ -110,6 +155,18 @@
     <Property Name="type" Type="int" Nullable="false" />
     <Property Name="roleID" Type="int" />
   </EntityType>
+  <Association Name="fk__ExpectationID_performancereport">
+    <End Role="Expectation" Type="Self.Expectation" Multiplicity="0..1" />
+    <End Role="PerformanceReport" Type="Self.PerformanceReport" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Expectation">
+        <PropertyRef Name="ExpectationID" />
+      </Principal>
+      <Dependent Role="PerformanceReport">
+        <PropertyRef Name="FK_ExpectationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_AttDetail_Employee">
     <End Role="Employee" Type="Self.Employee" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -152,6 +209,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="fk_EmpID_performancereport">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+    <End Role="PerformanceReport" Type="Self.PerformanceReport" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmpID" />
+      </Principal>
+      <Dependent Role="PerformanceReport">
+        <PropertyRef Name="FK_EmpID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Employee_Company">
     <End Role="Company" Type="Self.Company" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -177,6 +246,30 @@
       </Principal>
       <Dependent Role="Employee">
         <PropertyRef Name="FK_ShiftID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_QuarterID_performancereport">
+    <End Role="Quarter" Type="Self.Quarter" Multiplicity="0..1" />
+    <End Role="PerformanceReport" Type="Self.PerformanceReport" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Quarter">
+        <PropertyRef Name="QuarterId" />
+      </Principal>
+      <Dependent Role="PerformanceReport">
+        <PropertyRef Name="FK_QuarterID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ReportTypeID_performancereport">
+    <End Role="ReportType" Type="Self.ReportType" Multiplicity="0..1" />
+    <End Role="PerformanceReport" Type="Self.PerformanceReport" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ReportType">
+        <PropertyRef Name="ReportTypeId" />
+      </Principal>
+      <Dependent Role="PerformanceReport">
+        <PropertyRef Name="FK_ReportTypeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -249,13 +342,22 @@
     <EntitySet Name="AttDetail" EntityType="Self.AttDetail" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CompanyShift" EntityType="Self.CompanyShift" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DocumentUpload" EntityType="Self.DocumentUpload" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Expectation" EntityType="Self.Expectation" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="menuitem" EntityType="Self.menuitem" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PerformanceReport" EntityType="Self.PerformanceReport" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Quarter" EntityType="Self.Quarter" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ReportType" EntityType="Self.ReportType" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="role" EntityType="Self.role" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="role_access" EntityType="Self.role_access" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SalaryDeduction" EntityType="Self.SalaryDeduction" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Shifts" EntityType="Self.Shifts" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="fk__ExpectationID_performancereport" Association="Self.fk__ExpectationID_performancereport">
+      <End Role="Expectation" EntitySet="Expectation" />
+      <End Role="PerformanceReport" EntitySet="PerformanceReport" />
+    </AssociationSet>
     <AssociationSet Name="FK_AttDetail_Employee" Association="Self.FK_AttDetail_Employee">
       <End Role="Employee" EntitySet="Employee" />
       <End Role="AttDetail" EntitySet="AttDetail" />
@@ -268,6 +370,10 @@
       <End Role="Company" EntitySet="Company" />
       <End Role="CompanyShift" EntitySet="CompanyShift" />
     </AssociationSet>
+    <AssociationSet Name="fk_EmpID_performancereport" Association="Self.fk_EmpID_performancereport">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="PerformanceReport" EntitySet="PerformanceReport" />
+    </AssociationSet>
     <AssociationSet Name="FK_Employee_Company" Association="Self.FK_Employee_Company">
       <End Role="Company" EntitySet="Company" />
       <End Role="Employee" EntitySet="Employee" />
@@ -275,6 +381,14 @@
     <AssociationSet Name="FK_Employee_Shift" Association="Self.FK_Employee_Shift">
       <End Role="Shifts" EntitySet="Shifts" />
       <End Role="Employee" EntitySet="Employee" />
+    </AssociationSet>
+    <AssociationSet Name="fk_QuarterID_performancereport" Association="Self.fk_QuarterID_performancereport">
+      <End Role="Quarter" EntitySet="Quarter" />
+      <End Role="PerformanceReport" EntitySet="PerformanceReport" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ReportTypeID_performancereport" Association="Self.fk_ReportTypeID_performancereport">
+      <End Role="ReportType" EntitySet="ReportType" />
+      <End Role="PerformanceReport" EntitySet="PerformanceReport" />
     </AssociationSet>
     <AssociationSet Name="FK_RoleAccess_MenuItem" Association="Self.FK_RoleAccess_MenuItem">
       <End Role="menuitem" EntitySet="menuitem" />

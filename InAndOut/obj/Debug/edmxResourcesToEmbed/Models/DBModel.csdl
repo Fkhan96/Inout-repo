@@ -29,20 +29,11 @@
     <EntitySet Name="AttDetails" EntityType="InOutModel.AttDetail" />
     <EntitySet Name="Companies" EntityType="InOutModel.Company" />
     <EntitySet Name="CompanyShifts" EntityType="InOutModel.CompanyShift" />
-    <EntitySet Name="Employees" EntityType="InOutModel.Employee" />
     <EntitySet Name="SalaryDeductions" EntityType="InOutModel.SalaryDeduction" />
     <EntitySet Name="Shifts" EntityType="InOutModel.Shift" />
-    <AssociationSet Name="FK_AttDetail_Employee" Association="InOutModel.FK_AttDetail_Employee">
-      <End Role="Employee" EntitySet="Employees" />
-      <End Role="AttDetail" EntitySet="AttDetails" />
-    </AssociationSet>
     <AssociationSet Name="FK_CompanyShift_Company1" Association="InOutModel.FK_CompanyShift_Company1">
       <End Role="Company" EntitySet="Companies" />
       <End Role="CompanyShift" EntitySet="CompanyShifts" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Employee_Company" Association="InOutModel.FK_Employee_Company">
-      <End Role="Company" EntitySet="Companies" />
-      <End Role="Employee" EntitySet="Employees" />
     </AssociationSet>
     <AssociationSet Name="FK_SalaryDeduction_Company" Association="InOutModel.FK_SalaryDeduction_Company">
       <End Role="Company" EntitySet="Companies" />
@@ -52,9 +43,39 @@
       <End Role="Shift" EntitySet="Shifts" />
       <End Role="CompanyShift" EntitySet="CompanyShifts" />
     </AssociationSet>
+    <EntitySet Name="DocumentUploads" EntityType="InOutModel.DocumentUpload" />
+    <EntitySet Name="Employees" EntityType="InOutModel.Employee" />
+    <EntitySet Name="Expectations" EntityType="InOutModel.Expectation" />
+    <EntitySet Name="PerformanceReports" EntityType="InOutModel.PerformanceReport" />
+    <EntitySet Name="Quarters" EntityType="InOutModel.Quarter" />
+    <EntitySet Name="ReportTypes" EntityType="InOutModel.ReportType" />
+    <AssociationSet Name="FK_AttDetail_Employee" Association="InOutModel.FK_AttDetail_Employee">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="AttDetail" EntitySet="AttDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_Company" Association="InOutModel.FK_Employee_Company">
+      <End Role="Company" EntitySet="Companies" />
+      <End Role="Employee" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="fk_EmpID_performancereport" Association="InOutModel.fk_EmpID_performancereport">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="PerformanceReport" EntitySet="PerformanceReports" />
+    </AssociationSet>
     <AssociationSet Name="FK_Employee_Shift" Association="InOutModel.FK_Employee_Shift">
       <End Role="Shift" EntitySet="Shifts" />
       <End Role="Employee" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="fk__ExpectationID_performancereport" Association="InOutModel.fk__ExpectationID_performancereport">
+      <End Role="Expectation" EntitySet="Expectations" />
+      <End Role="PerformanceReport" EntitySet="PerformanceReports" />
+    </AssociationSet>
+    <AssociationSet Name="fk_QuarterID_performancereport" Association="InOutModel.fk_QuarterID_performancereport">
+      <End Role="Quarter" EntitySet="Quarters" />
+      <End Role="PerformanceReport" EntitySet="PerformanceReports" />
+    </AssociationSet>
+    <AssociationSet Name="fk_ReportTypeID_performancereport" Association="InOutModel.fk_ReportTypeID_performancereport">
+      <End Role="ReportType" EntitySet="ReportTypes" />
+      <End Role="PerformanceReport" EntitySet="PerformanceReports" />
     </AssociationSet>
   </EntityContainer>
   <ComplexType Name="AttendanceDetails_Result">
@@ -181,8 +202,8 @@
     <Property Name="SelfId" Type="Int32" />
     <Property Name="PictureUrl" Type="Binary" MaxLength="Max" FixedLength="false" />
     <NavigationProperty Name="CompanyShifts" Relationship="InOutModel.FK_CompanyShift_Company1" FromRole="Company" ToRole="CompanyShift" />
-    <NavigationProperty Name="Employees" Relationship="InOutModel.FK_Employee_Company" FromRole="Company" ToRole="Employee" />
     <NavigationProperty Name="SalaryDeductions" Relationship="InOutModel.FK_SalaryDeduction_Company" FromRole="Company" ToRole="SalaryDeduction" />
+    <NavigationProperty Name="Employees" Relationship="InOutModel.FK_Employee_Company" FromRole="Company" ToRole="Employee" />
   </EntityType>
   <EntityType Name="CompanyShift">
     <Key>
@@ -196,34 +217,6 @@
     <Property Name="IsSet" Type="Boolean" />
     <NavigationProperty Name="Company" Relationship="InOutModel.FK_CompanyShift_Company1" FromRole="CompanyShift" ToRole="Company" />
     <NavigationProperty Name="Shift" Relationship="InOutModel.FK_CompanyShift_Company" FromRole="CompanyShift" ToRole="Shift" />
-  </EntityType>
-  <EntityType Name="Employee">
-    <Key>
-      <PropertyRef Name="EmpID" />
-    </Key>
-    <Property Name="EmpID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <Property Name="IsActive" Type="Boolean" Nullable="false" />
-    <Property Name="FatherName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <Property Name="Emp_Biometrics" Type="Binary" MaxLength="Max" FixedLength="false" />
-    <Property Name="Designation" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <Property Name="Salary" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="JobType" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <Property Name="BloodGroup" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <Property Name="LateDeduction" Type="Decimal" Precision="19" Scale="4" />
-    <Property Name="JoiningDate" Type="DateTimeOffset" Precision="7" />
-    <Property Name="ContactNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <Property Name="EmergencyContact" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <Property Name="OverTime" Type="Boolean" />
-    <Property Name="Bonus" Type="Boolean" />
-    <Property Name="UserPictureUrl" Type="Binary" MaxLength="Max" FixedLength="false" />
-    <Property Name="SelfId" Type="Int32" />
-    <Property Name="FK_CompanyID" Type="Int32" Nullable="false" />
-    <Property Name="FK_ShiftID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="AttDetails" Relationship="InOutModel.FK_AttDetail_Employee" FromRole="Employee" ToRole="AttDetail" />
-    <NavigationProperty Name="Company" Relationship="InOutModel.FK_Employee_Company" FromRole="Employee" ToRole="Company" />
-    <NavigationProperty Name="Shift" Relationship="InOutModel.FK_Employee_Shift" FromRole="Employee" ToRole="Shift" />
   </EntityType>
   <EntityType Name="SalaryDeduction">
     <Key>
@@ -245,20 +238,6 @@
     <NavigationProperty Name="CompanyShifts" Relationship="InOutModel.FK_CompanyShift_Company" FromRole="Shift" ToRole="CompanyShift" />
     <NavigationProperty Name="Employees" Relationship="InOutModel.FK_Employee_Shift" FromRole="Shift" ToRole="Employee" />
   </EntityType>
-  <Association Name="FK_AttDetail_Employee">
-    <End Type="InOutModel.Employee" Role="Employee" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Type="InOutModel.AttDetail" Role="AttDetail" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Employee">
-        <PropertyRef Name="EmpID" />
-      </Principal>
-      <Dependent Role="AttDetail">
-        <PropertyRef Name="FK_EmpID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_CompanyShift_Company1">
     <End Type="InOutModel.Company" Role="Company" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -269,20 +248,6 @@
         <PropertyRef Name="CompanyID" />
       </Principal>
       <Dependent Role="CompanyShift">
-        <PropertyRef Name="FK_CompanyID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Employee_Company">
-    <End Type="InOutModel.Company" Role="Company" Multiplicity="1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Type="InOutModel.Employee" Role="Employee" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Company">
-        <PropertyRef Name="CompanyID" />
-      </Principal>
-      <Dependent Role="Employee">
         <PropertyRef Name="FK_CompanyID" />
       </Dependent>
     </ReferentialConstraint>
@@ -315,6 +280,127 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="DocumentUpload">
+    <Key>
+      <PropertyRef Name="DocumentUploadID" />
+    </Key>
+    <Property Name="DocumentUploadID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DocumentName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ContentType" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="DocumentEncode" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="EmpID" />
+    </Key>
+    <Property Name="EmpID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
+    <Property Name="FatherName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Emp_Biometrics" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="Designation" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Salary" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="JobType" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="BloodGroup" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="LateDeduction" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="JoiningDate" Type="DateTimeOffset" Precision="7" />
+    <Property Name="ContactNumber" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="EmergencyContact" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="OverTime" Type="Boolean" />
+    <Property Name="Bonus" Type="Boolean" />
+    <Property Name="UserPictureUrl" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="SelfId" Type="Int32" />
+    <Property Name="FK_CompanyID" Type="Int32" Nullable="false" />
+    <Property Name="FK_ShiftID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="AttDetails" Relationship="InOutModel.FK_AttDetail_Employee" FromRole="Employee" ToRole="AttDetail" />
+    <NavigationProperty Name="Company" Relationship="InOutModel.FK_Employee_Company" FromRole="Employee" ToRole="Company" />
+    <NavigationProperty Name="PerformanceReports" Relationship="InOutModel.fk_EmpID_performancereport" FromRole="Employee" ToRole="PerformanceReport" />
+    <NavigationProperty Name="Shift" Relationship="InOutModel.FK_Employee_Shift" FromRole="Employee" ToRole="Shift" />
+  </EntityType>
+  <EntityType Name="Expectation">
+    <Key>
+      <PropertyRef Name="ExpectationID" />
+    </Key>
+    <Property Name="ExpectationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="PerformanceReports" Relationship="InOutModel.fk__ExpectationID_performancereport" FromRole="Expectation" ToRole="PerformanceReport" />
+  </EntityType>
+  <EntityType Name="PerformanceReport">
+    <Key>
+      <PropertyRef Name="PerformanceReportID" />
+    </Key>
+    <Property Name="PerformanceReportID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FK_EmpID" Type="Int32" />
+    <Property Name="FK_ReportTypeID" Type="Int32" />
+    <Property Name="FK_QuarterID" Type="Int32" />
+    <Property Name="FK_DocumentUploadID" Type="Int32" />
+    <Property Name="FK_ExpectationID" Type="Int32" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <Property Name="notes" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+    <Property Name="year" Type="Int32" />
+    <NavigationProperty Name="Employee" Relationship="InOutModel.fk_EmpID_performancereport" FromRole="PerformanceReport" ToRole="Employee" />
+    <NavigationProperty Name="Expectation" Relationship="InOutModel.fk__ExpectationID_performancereport" FromRole="PerformanceReport" ToRole="Expectation" />
+    <NavigationProperty Name="Quarter" Relationship="InOutModel.fk_QuarterID_performancereport" FromRole="PerformanceReport" ToRole="Quarter" />
+    <NavigationProperty Name="ReportType" Relationship="InOutModel.fk_ReportTypeID_performancereport" FromRole="PerformanceReport" ToRole="ReportType" />
+  </EntityType>
+  <EntityType Name="Quarter">
+    <Key>
+      <PropertyRef Name="QuarterId" />
+    </Key>
+    <Property Name="QuarterId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="PerformanceReports" Relationship="InOutModel.fk_QuarterID_performancereport" FromRole="Quarter" ToRole="PerformanceReport" />
+  </EntityType>
+  <EntityType Name="ReportType">
+    <Key>
+      <PropertyRef Name="ReportTypeId" />
+    </Key>
+    <Property Name="ReportTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="PerformanceReports" Relationship="InOutModel.fk_ReportTypeID_performancereport" FromRole="ReportType" ToRole="PerformanceReport" />
+  </EntityType>
+  <Association Name="FK_AttDetail_Employee">
+    <End Type="InOutModel.Employee" Role="Employee" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="InOutModel.AttDetail" Role="AttDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmpID" />
+      </Principal>
+      <Dependent Role="AttDetail">
+        <PropertyRef Name="FK_EmpID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_Company">
+    <End Type="InOutModel.Company" Role="Company" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="InOutModel.Employee" Role="Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="CompanyID" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="FK_CompanyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_EmpID_performancereport">
+    <End Type="InOutModel.Employee" Role="Employee" Multiplicity="0..1" />
+    <End Type="InOutModel.PerformanceReport" Role="PerformanceReport" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmpID" />
+      </Principal>
+      <Dependent Role="PerformanceReport">
+        <PropertyRef Name="FK_EmpID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Employee_Shift">
     <End Type="InOutModel.Shift" Role="Shift" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -326,6 +412,42 @@
       </Principal>
       <Dependent Role="Employee">
         <PropertyRef Name="FK_ShiftID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk__ExpectationID_performancereport">
+    <End Type="InOutModel.Expectation" Role="Expectation" Multiplicity="0..1" />
+    <End Type="InOutModel.PerformanceReport" Role="PerformanceReport" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Expectation">
+        <PropertyRef Name="ExpectationID" />
+      </Principal>
+      <Dependent Role="PerformanceReport">
+        <PropertyRef Name="FK_ExpectationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_QuarterID_performancereport">
+    <End Type="InOutModel.Quarter" Role="Quarter" Multiplicity="0..1" />
+    <End Type="InOutModel.PerformanceReport" Role="PerformanceReport" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Quarter">
+        <PropertyRef Name="QuarterId" />
+      </Principal>
+      <Dependent Role="PerformanceReport">
+        <PropertyRef Name="FK_QuarterID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_ReportTypeID_performancereport">
+    <End Type="InOutModel.ReportType" Role="ReportType" Multiplicity="0..1" />
+    <End Type="InOutModel.PerformanceReport" Role="PerformanceReport" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ReportType">
+        <PropertyRef Name="ReportTypeId" />
+      </Principal>
+      <Dependent Role="PerformanceReport">
+        <PropertyRef Name="FK_ReportTypeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

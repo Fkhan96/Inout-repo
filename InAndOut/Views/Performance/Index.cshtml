@@ -6,7 +6,9 @@
     <div class="box-header">
         <div class="row">
             <div class="col-xs-2"> <h3 class="box-title"><i class="fa fa-group"></i> Performance Report</h3></div>
-            <div class="col-xs-10"></div>
+            <div class="col-xs-10">
+
+            </div>
         </div><!-- /.box-header -->
     </div>
     <!-- form start -->
@@ -16,6 +18,142 @@
             <div class="col-sm-3 text-center">
             </div>
         </div><!-- row -->
+
+        <div class="modal fade admin-modal" id="ModalPerformanceAdd" tabindex="-1" role="basic" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <h4 class="modal-title"> Add Performance</h4>
+                    </div>
+                    <div class="modal-body" data-type="modal">
+
+                        <div class="row rowmargin">
+                            <div class="col-lg-4">
+                                Year *
+                                <select name="year" class="form-control" required>
+                                    <option value="2008">2008</option>
+                                    <option value="2009">2009</option>
+                                    <option value="2010">2010</option>
+                                    <option value="2011">2011</option>
+                                    <option value="2012">2012</option>
+                                    <option value="2013">2013</option>
+                                    <option value="2014">2014</option>
+                                    <option value="2015">2015</option>
+                                    <option value="2016">2016</option>
+                                    <option value="2017">2017</option>
+                                    <option value="2018">2018</option>
+                                    <option value="2019" selected>2019</option>
+                                    <option value="2020">2020</option>
+                                    <option value="2021">2021</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-4">
+                                Quarter *
+                                <select name="FK_QuarterID" class="form-control" required>
+                                    <option value="1">1st</option>
+                                    <option value="2">2nd</option>
+                                    <option value="3">3rd</option>
+                                    <option value="4">4th</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row rowmargin">
+                            <div class="col-lg-4">
+                                Self Id
+                                <input type="text" class="form-control" name="SelfId" disabled/>
+                            </div>
+                        </div>
+                        <div class="row rowmargin">
+                            <div class="col-lg-4">
+                                Emp Id
+                                <input type="text" class="form-control" name="FK_EmpID"  disabled/>
+                            </div>
+                            <div class="col-lg-4">
+                                Name
+                                <input type="text" class="form-control" name="Name" disabled/>
+                            </div>
+                        </div>
+                        <div class="row rowmargin">
+                          
+                            <div class="col-lg-4">
+                                CompanyID
+                                <input type="text" class="form-control" name="FK_CompanyID" disabled />
+                            </div>
+                        </div>
+                        <div class="row rowmargin">
+                            <div class="col-md-3 col-lg-3">
+                                <label>Report Type</label>
+                            </div>
+                            <div class="col-md-3 col-lg-3">
+                                <input type="radio" value="1" name="FK_ReportTypeID" class="ReportTypeID" />
+                                Document
+                            </div>
+                            <div class="col-md-3 col-lg-3">
+                                <input type="radio" value="2" name="FK_ReportTypeID" class="ReportTypeID" />
+                                manual
+                            </div>
+                        </div>
+                        <div class="row rowmargin">
+                            <div class="col-md-3 col-lg-3">
+                                <label>Expectation</label>
+                                </div>
+                                <div class="col-md-3 col-lg-3">
+                                    <input type="radio" value="1" name="FK_ExpectationID" />
+                                    High
+                                </div>
+                                <div class="col-md-3  col-lg-3">
+                                    <input type="radio" value="2" name="FK_ExpectationID" />
+                                    Average
+                                </div>
+                                <div class="col-md-3 col-lg-3">
+                                    <input type="radio" value="3" name="FK_ExpectationID" />
+                                    Below
+                                </div>
+                            </div>
+                            <div class="row rowmargin hidden" id="UploadFile">
+                                <div class="container">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <span class="btn btn-default btn-file">
+                                                        Browse… <input type="file" id="txtUploadFile">
+                                                    </span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row rowmargin">
+                                <div class="container">
+                                    <div class="col-md-1">
+                                        <label>
+                                            Notes
+                                        </label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <span class="input-group-btn">
+                                                    <textarea name="notes" rows="5" class="form-control"></textarea>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @*<embed src="/Performance/GetPerformanceReportDocument?id=1" type="application/pdf" width="100%" height="600px" />*@
+
+                            <div class="modal-footer">
+                                <input type="submit" class="btn btn-default Addtbt" onclick="return Submit(this)" value="Save" />
+                                @*<a href="#" class="btn btn-default Addtbt" onclick="return Submit(this)">OK</a>*@
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div><!-- /.Peformance  -->
         <table id="listtb" class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
@@ -29,12 +167,17 @@
         </table>
     </div><!-- Body -->
 </div> <!-- /.box -->
+<script src="~/Scripts/Plugins/clockPicker/clockpicker.js"></script>
+
 
 @section scripts {
-<script src="~/Scripts/Custom/Performance.js"></script>
+    <script src="~/Scripts/Custom/Performance.js"></script>
     <script>
         $(document).ready(function () {
             Trigger();
+            $('.clockpicker').clockpicker({
+                donetext: 'Done', 'default': 'now'
+            });
         });
     </script>
 }

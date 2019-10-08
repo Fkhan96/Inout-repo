@@ -17,6 +17,7 @@ namespace InAndOut.Models
         public Employee()
         {
             this.AttDetails = new HashSet<AttDetail>();
+            this.PerformanceReports = new HashSet<PerformanceReport>();
         }
     
         public int EmpID { get; set; }
@@ -42,6 +43,7 @@ namespace InAndOut.Models
     
         public virtual ICollection<AttDetail> AttDetails { get; set; }
         public virtual Company Company { get; set; }
+        public virtual ICollection<PerformanceReport> PerformanceReports { get; set; }
         public virtual Shift Shift { get; set; }
     }
 }

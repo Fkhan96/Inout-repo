@@ -102,6 +102,35 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="SalaryDeductions">
+      <EntityTypeMapping TypeName="InOutModel.SalaryDeduction">
+        <MappingFragment StoreEntitySet="SalaryDeduction">
+          <ScalarProperty Name="NoOfLateDays" ColumnName="NoOfLateDays" />
+          <ScalarProperty Name="NoOfHalfDays" ColumnName="NoOfHalfDays" />
+          <ScalarProperty Name="NoOfDays" ColumnName="NoOfDays" />
+          <ScalarProperty Name="FK_CompanyID" ColumnName="FK_CompanyID" />
+          <ScalarProperty Name="SalaryDeductionID" ColumnName="SalaryDeductionID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Shifts">
+      <EntityTypeMapping TypeName="InOutModel.Shift">
+        <MappingFragment StoreEntitySet="Shifts">
+          <ScalarProperty Name="ShiftName" ColumnName="ShiftName" />
+          <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DocumentUploads">
+      <EntityTypeMapping TypeName="InOutModel.DocumentUpload">
+        <MappingFragment StoreEntitySet="DocumentUpload">
+          <ScalarProperty Name="DocumentEncode" ColumnName="DocumentEncode" />
+          <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+          <ScalarProperty Name="DocumentName" ColumnName="DocumentName" />
+          <ScalarProperty Name="DocumentUploadID" ColumnName="DocumentUploadID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Employees">
       <EntityTypeMapping TypeName="InOutModel.Employee">
         <MappingFragment StoreEntitySet="Employee">
@@ -128,22 +157,43 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="SalaryDeductions">
-      <EntityTypeMapping TypeName="InOutModel.SalaryDeduction">
-        <MappingFragment StoreEntitySet="SalaryDeduction">
-          <ScalarProperty Name="NoOfLateDays" ColumnName="NoOfLateDays" />
-          <ScalarProperty Name="NoOfHalfDays" ColumnName="NoOfHalfDays" />
-          <ScalarProperty Name="NoOfDays" ColumnName="NoOfDays" />
-          <ScalarProperty Name="FK_CompanyID" ColumnName="FK_CompanyID" />
-          <ScalarProperty Name="SalaryDeductionID" ColumnName="SalaryDeductionID" />
+    <EntitySetMapping Name="Expectations">
+      <EntityTypeMapping TypeName="InOutModel.Expectation">
+        <MappingFragment StoreEntitySet="Expectation">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ExpectationID" ColumnName="ExpectationID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Shifts">
-      <EntityTypeMapping TypeName="InOutModel.Shift">
-        <MappingFragment StoreEntitySet="Shifts">
-          <ScalarProperty Name="ShiftName" ColumnName="ShiftName" />
-          <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
+    <EntitySetMapping Name="PerformanceReports">
+      <EntityTypeMapping TypeName="InOutModel.PerformanceReport">
+        <MappingFragment StoreEntitySet="PerformanceReport">
+          <ScalarProperty Name="year" ColumnName="year" />
+          <ScalarProperty Name="notes" ColumnName="notes" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="FK_ExpectationID" ColumnName="FK_ExpectationID" />
+          <ScalarProperty Name="FK_DocumentUploadID" ColumnName="FK_DocumentUploadID" />
+          <ScalarProperty Name="FK_QuarterID" ColumnName="FK_QuarterID" />
+          <ScalarProperty Name="FK_ReportTypeID" ColumnName="FK_ReportTypeID" />
+          <ScalarProperty Name="FK_EmpID" ColumnName="FK_EmpID" />
+          <ScalarProperty Name="PerformanceReportID" ColumnName="PerformanceReportID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Quarters">
+      <EntityTypeMapping TypeName="InOutModel.Quarter">
+        <MappingFragment StoreEntitySet="Quarter">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="QuarterId" ColumnName="QuarterId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReportTypes">
+      <EntityTypeMapping TypeName="InOutModel.ReportType">
+        <MappingFragment StoreEntitySet="ReportType">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ReportTypeId" ColumnName="ReportTypeId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

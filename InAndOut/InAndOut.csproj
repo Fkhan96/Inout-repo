@@ -175,6 +175,7 @@
     <Compile Include="Controllers\PaymentGenerationController.cs" />
     <Compile Include="Controllers\PerformanceController.cs" />
     <Compile Include="Controllers\SettingController.cs" />
+    <Compile Include="DTO\PerformanceReportDTO.cs" />
     <Compile Include="DTO\ShiftDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -221,7 +222,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DBModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\DocumentUpload.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Employee.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Expectation.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GetPaymentDetailsByEmpId_Result.cs">
@@ -236,6 +243,15 @@
     <Compile Include="Models\PaymentModel.cs" />
     <Compile Include="Models\PdfGeneration.cs" />
     <Compile Include="Models\PerformanceModel.cs" />
+    <Compile Include="Models\PerformanceReport.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Quarter.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ReportType.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\role.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
@@ -310,6 +326,7 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Custom\PaymentGenerationDetail.js" />
     <Content Include="Scripts\Custom\Performance.js" />
+    <Content Include="Scripts\Custom\PerformanceDetails.js" />
     <Content Include="Scripts\Plugins\clockPicker\clockpicker.js" />
     <Content Include="Scripts\Custom\AttendanceList.js" />
     <Content Include="Scripts\Custom\AttendenceDetail.js" />
@@ -395,6 +412,7 @@
     <Content Include="Views\PaymentGeneration\Index.cshtml" />
     <Content Include="Views\PaymentGeneration\Details.cshtml" />
     <Content Include="Views\Performance\Index.cshtml" />
+    <Content Include="Views\Performance\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

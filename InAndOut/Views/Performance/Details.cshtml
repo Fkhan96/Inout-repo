@@ -1,0 +1,150 @@
+﻿
+@{
+    ViewBag.Title = "Details";
+}
+
+<link href="~/css/custom/File.css" rel="stylesheet" />
+<br />
+<table id="performanceTable" class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Year</th>
+            <th>Quarter</th>
+            <th>EmpID</th>
+            <th>ReportType</th>
+            <th>Expectation</th>
+            <th>notes</th>
+            <th>Document Download</th>
+            <th class="">Action</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+<embed id="PreviewDocument" src="" type="" width="80%" height="600px" />
+
+<div class="modal fade admin-modal" id="ModalPerformanceEdit" tabindex="-1" role="basic" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title"> Edit Performance</h4>
+            </div>
+            <div class="modal-body" data-type="modal">
+
+                <div class="row rowmargin">
+                    <div class="col-lg-4">
+                        Year *
+                            <input type="text" class="form-control" name="year" disabled />
+                    </div>
+                    <div class="col-lg-4">
+                        Quarter *
+                        <input type="text" class="form-control" name="FK_QuarterID" disabled />
+                    </div>
+                </div>
+                <div class="row rowmargin">
+                    <div class="col-lg-4">
+                        Self Id
+                        <input type="text" class="form-control" name="SelfId" disabled />
+                    </div>
+                </div>
+                <div class="row rowmargin">
+                    <div class="col-lg-4">
+                        Emp Id
+                        <input type="text" class="form-control" name="FK_EmpID" disabled />
+                    </div>
+                    <div class="col-lg-4">
+                        Name
+                        <input type="text" class="form-control" name="Name" disabled />
+                    </div>
+                </div>
+                <div class="row rowmargin">
+
+                    <div class="col-lg-4">
+                        CompanyID
+                        <input type="text" class="form-control" name="FK_CompanyID" disabled />
+                    </div>
+                </div>
+                <div class="row rowmargin">
+                    <div class="col-md-3 col-lg-3">
+                        <label>Report Type</label>
+                    </div>
+                    <div class="col-md-3 col-lg-3">
+                        <input type="radio" value="1" name="FK_ReportTypeID" class="ReportTypeID" />
+                        Document
+                    </div>
+                    <div class="col-md-3 col-lg-3">
+                        <input type="radio" value="2" name="FK_ReportTypeID" class="ReportTypeID" />
+                        manual
+                    </div>
+                </div>
+                <div class="row rowmargin">
+                    <div class="col-md-3 col-lg-3">
+                        <label>Expectation</label>
+                    </div>
+                    <div class="col-md-3 col-lg-3">
+                        <input type="radio" value="1" name="FK_ExpectationID" />
+                        High
+                    </div>
+                    <div class="col-md-3  col-lg-3">
+                        <input type="radio" value="2" name="FK_ExpectationID" />
+                        Average
+                    </div>
+                    <div class="col-md-3 col-lg-3">
+                        <input type="radio" value="3" name="FK_ExpectationID" />
+                        Below
+                    </div>
+                </div>
+                <div class="row rowmargin hidden" id="UploadFile">
+                    <div class="container">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <span class="btn btn-default btn-file">
+                                            Browse… <input type="file" id="txtUploadFile">
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row rowmargin">
+                    <div class="container">
+                        <div class="col-md-1">
+                            <label>
+                                Notes
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <textarea name="notes" rows="5" class="form-control"></textarea>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-default Addtbt" onclick="return Submit(this)" value="Update" />
+                </div>
+            </div>
+        </div>
+    </div>
+    </di
+
+    @section scripts{
+        <script src="~/Scripts/Custom/PerformanceDetails.js"></script>
+        <script src="~/Scripts/Plugins/datepicker/bootstrap-datepicker.js"></script>
+        <script src="~/Scripts/Custom/File.js"></script>
+        <script>
+            $(document).ready(function () {
+                Trigger();
+            });
+        </script>
+    }
+

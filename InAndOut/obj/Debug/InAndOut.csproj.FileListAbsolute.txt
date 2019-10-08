@@ -62,7 +62,6 @@ C:\Users\HP\websites\Inout_repo\InAndOut\bin\Antlr3.Runtime.dll
 C:\Users\HP\websites\Inout_repo\InAndOut\bin\DocumentFormat.OpenXml.dll
 C:\Users\HP\websites\Inout_repo\InAndOut\bin\EntityFramework.dll
 C:\Users\HP\websites\Inout_repo\InAndOut\bin\EntityFramework.SqlServer.dll
-C:\Users\HP\websites\Inout_repo\InAndOut\bin\itextsharp.dll
 C:\Users\HP\websites\Inout_repo\InAndOut\bin\Microsoft.AspNet.Identity.Core.dll
 C:\Users\HP\websites\Inout_repo\InAndOut\bin\Microsoft.AspNet.Identity.EntityFramework.dll
 C:\Users\HP\websites\Inout_repo\InAndOut\bin\Microsoft.AspNet.Identity.Owin.dll
