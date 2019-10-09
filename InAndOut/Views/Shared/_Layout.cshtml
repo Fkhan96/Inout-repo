@@ -73,7 +73,7 @@
                     <span class="nav-label">Settings</span>
                 </a>
             </li>
-            
+
             <li><a href="#"><i class="fa fa-line-chart" aria-hidden="true"></i> Nav Items</a></li>
         </ul>
     </nav>
@@ -94,8 +94,10 @@
     </div>
 
     <div class="container body-content">
-        @RenderBody()
-        <hr />
+        <div class="renderBody">
+            @RenderBody()
+        </div>
+            <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
