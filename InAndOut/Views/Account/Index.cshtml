@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Legal | Login</title>
-
+    <!--
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/font-awesome/css/font-awesome.css" rel="stylesheet">
 
@@ -21,15 +21,232 @@
     <script src="/js/bootstrap.min.js"></script>
     @*<script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>*@
     <script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-    <!-- Data Tables -->
+    <!-- Data Tables
     <script src="/js/plugins/dataTables/jquery.dataTables.js"></script>
     <script src="/js/plugins/dataTables/dataTables.bootstrap.js"></script>
     <script src="/js/plugins/dataTables/dataTables.responsive.js"></script>
-    <script src="/js/plugins/dataTables/dataTables.tableTools.min.js"></script>
+    <script src="/js/plugins/dataTables/dataTables.tableTools.min.js"></script>-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-3.3.7.css" />
+    <link rel="stylesheet" type="text/css" href="css/aos.css" />
+    <link rel="stylesheet" type="text/css" href="css/camera.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="css/style.css" />
+    @*<link rel="stylesheet" type="text/css" media="all" href="/responsive.css" />*@
 
 </head>
+<div class="clear" style="clear:both"></div>
+<body class="login">
 
-<body class="gray-bg">
+    <span class="formOverlaySide"></span>
+
+    <!-- -----------------------Push Responsive Menu   ---------------------- -->
+
+    <pushmenu>
+        <a id="hamburg" href="#">
+            <div class="nav-cross">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </a>
+        <div id="menuoverlay"></div>
+        <nav class="nav1">
+            <div class="container">
+                <div class="row">
+                    <formobile>
+                        <div class="push-logo"><img src="/images/logo.png"> </div>
+                        <div class="search-nav">
+                            <form method="get" id="searchform" action="">
+                                <input type="submit" id="searchsubmit" value="Search" />
+                                <input type="text" value="" name="s" id="s" placeholder="Search" required />
+                            </form>
+                        </div>
+
+                    </formobile>
+                    <div>
+                        <ul>
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </pushmenu>
+
+
+
+    <main>
+
+        <!--
+        <header class="sign-in">
+          <div class="container" >
+            <div class="row">
+              <div class="col-md-12 logo text-center">
+                <a href="#"><img class="logo-fix" src="images/logo-fixed.png"></a>
+              </div>
+
+            </div>
+          </div>
+        </header> -->
+
+
+
+        <section class="sec-1 slider-area slider-one clearfix" data-wow-duration="2s">
+            <div class="slider" id="mainslider1">
+
+                <div data-src="images/ban-1.jpg">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="slide-cont">
+                                    <div class="content">
+                                        <!-- <h2>About Company</h2>
+                                          <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is</p> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div data-src="images/ban-2.jpg">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="slide-cont">
+                                    <div class="content">
+                                        <!-- <h2>About Company</h2>
+                                          <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is</p> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div data-src="images/ban-3.jpg">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="slide-cont">
+                                    <div class="content">
+                                        <!-- <h2>About Company</h2>
+                                          <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is</p> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </section>
+        <section class="sign-in-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 logo text-center">
+                        <a href="/"><img class="logo-fix" src="images/logo-fixed.png"></a>
+                    </div>
+
+
+                    <form class="m-t loginform" role="form" method="post" action="@Url.Action("Index","Account")">
+                        <div class="col-md-12">
+                            <label>Email Address</label>
+                            <input type="text" class="form-control" name="Usernametxt" placeholder="Username" required="">
+                        </div>
+                        <div class="col-md-12">
+                            <label>Password</label>
+                            <input type="password" class="form-control" name="Passwordtxt" placeholder="Password" required="">
+                            <a class="eye" id="chngType" href="javascript:;">
+                                <span class="rz-eye"><i class="fa fa-eye" aria-hidden="true"></i></span>
+                            </a>
+                        </div>
+                        <div class="col-md-12">
+                            <button type="submit" class="">Login</button>
+                        </div>
+                        @if (ViewBag.Validation != null)
+                        {
+                            <label id="error" class="error" style="color:red" for="">@Html.Raw(ViewBag.Validation).</label>
+                        }
+                    </form>
+               
+
+                    <div class="col-md-12 more">
+                        <div class="pull-left">
+                            <p>Don't have an account? <a href="@Url.Action("Register","Account")">Sign Up</a></p>
+                        </div>
+                        <div class="pull-right">
+                            <a href="@Url.Action("Forget","Account")">Forget Password?</a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 more-info">
+                        <p>By signing in to your account, you agree to Rozee's Terms of Services and consent to our Cookie Policy and Privacy Policy.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+
+        <footer class="footer-login">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <p>Copyrights &copy; 2019.All rights reserved</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+
+
+
+
+
+
+        <!--<div id="winSize"></div>-->
+    </main>
+
+    <!------------------------ CSS Library ------------------------------------>
+    <link href="css/library.css" rel="stylesheet" />
+
+    <!------------------------ Jquery CDN ------------------------------------>
+
+    <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+    <script src="js/bootstrap-3.3.7.min.js"></script>
+    <!------------------------ Javascript ------------------------------------>
+    <script src="js/camera.min.js"></script>
+    <script src="js/jquery.easing.1.3.js"></script>
+    <script type="text/javascript" src="js/library.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+
+
+    <!------------------------ WOW Animation CDN------------------------------------>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css" rel="stylesheet" />
+    <script src="js/wow-1.1.2.min.js"></script>
+    <script src="js/aos-2.0.4.min.js"></script>
+
+    <script>new WOW().init();</script>
+    <script>
+        AOS.init({
+            easing: 'ease-out-back',
+            duration: 1000
+        });
+    </script>
+
+
+
+</body>
+<!--<body class="gray-bg">
 
     <div class="middle-box text-center loginscreen animated fadeInDown">
         <div>
@@ -61,9 +278,9 @@
         </div>
     </div>
 
-    <!-- Mainly scripts -->
+   
     <script src="/js/jquery-2.1.1.js"></script>
     <script src="/js/bootstrap.min.js"></script>
-</body>
+</body>-->
 </html>
 

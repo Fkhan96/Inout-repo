@@ -8,17 +8,12 @@
         <EntityTypeShape EntityType="InOutModel.menuitem" Width="1.5" PointX="0.75" PointY="1.25" />
         <EntityTypeShape EntityType="InOutModel.role" Width="1.5" PointX="0.75" PointY="4.25" />
         <EntityTypeShape EntityType="InOutModel.role_access" Width="1.5" PointX="3" PointY="3" />
-        <EntityTypeShape EntityType="InOutModel.user" Width="1.5" PointX="3" PointY="6.75" />
         <AssociationConnector Association="InOutModel.FK_RoleAccess_MenuItem" />
         <AssociationConnector Association="InOutModel.FK_RoleAccess_Role" />
-        <AssociationConnector Association="InOutModel.FK_users_role" />
         <EntityTypeShape EntityType="InOutModel.AttDetail" Width="1.5" PointX="9.875" PointY="10" />
-        <EntityTypeShape EntityType="InOutModel.Company" Width="1.5" PointX="5.375" PointY="6" />
         <EntityTypeShape EntityType="InOutModel.CompanyShift" Width="1.5" PointX="10.625" PointY="6" />
         <EntityTypeShape EntityType="InOutModel.SalaryDeduction" Width="1.5" PointX="7.625" PointY="15.625" />
         <EntityTypeShape EntityType="InOutModel.Shift" Width="1.5" PointX="8.375" PointY="1.375" />
-        <AssociationConnector Association="InOutModel.FK_CompanyShift_Company1" />
-        <AssociationConnector Association="InOutModel.FK_SalaryDeduction_Company" />
         <AssociationConnector Association="InOutModel.FK_CompanyShift_Company" />
         <EntityTypeShape EntityType="InOutModel.DocumentUpload" Width="1.5" PointX="5.375" PointY="2.5" />
         <EntityTypeShape EntityType="InOutModel.Employee" Width="1.5" PointX="10.625" PointY="0.75" />
@@ -27,12 +22,20 @@
         <EntityTypeShape EntityType="InOutModel.Quarter" Width="1.5" PointX="10.625" PointY="21.625" />
         <EntityTypeShape EntityType="InOutModel.ReportType" Width="1.5" PointX="10.625" PointY="18.25" />
         <AssociationConnector Association="InOutModel.FK_AttDetail_Employee" />
-        <AssociationConnector Association="InOutModel.FK_Employee_Company" />
         <AssociationConnector Association="InOutModel.fk_EmpID_performancereport" />
         <AssociationConnector Association="InOutModel.FK_Employee_Shift" />
         <AssociationConnector Association="InOutModel.fk__ExpectationID_performancereport" />
         <AssociationConnector Association="InOutModel.fk_QuarterID_performancereport" />
         <AssociationConnector Association="InOutModel.fk_ReportTypeID_performancereport" />
+        <EntityTypeShape EntityType="InOutModel.Company" Width="1.5" PointX="5.625" PointY="5.25" />
+        <EntityTypeShape EntityType="InOutModel.Package" Width="1.5" PointX="0.75" PointY="7.75" />
+        <EntityTypeShape EntityType="InOutModel.user" Width="1.5" PointX="3.375" PointY="6.625" />
+        <AssociationConnector Association="InOutModel.FK__Company__Created__59C55456" />
+        <AssociationConnector Association="InOutModel.FK__users__FK_Compan__58D1301D" />
+        <AssociationConnector Association="InOutModel.FK_CompanyShift_Company1" />
+        <AssociationConnector Association="InOutModel.FK_Employee_Company" />
+        <AssociationConnector Association="InOutModel.FK_SalaryDeduction_Company" />
+        <AssociationConnector Association="InOutModel.FK_users_role" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

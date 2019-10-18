@@ -41,19 +41,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="users">
-      <EntityTypeMapping TypeName="InOutModel.user">
-        <MappingFragment StoreEntitySet="users">
-          <ScalarProperty Name="roleID" ColumnName="roleID" />
-          <ScalarProperty Name="type" ColumnName="type" />
-          <ScalarProperty Name="contact" ColumnName="contact" />
-          <ScalarProperty Name="password" ColumnName="password" />
-          <ScalarProperty Name="username" ColumnName="username" />
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="user_id" ColumnName="user_id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="GetPaymentDetailsByEmpId" FunctionName="InOutModel.Store.GetPaymentDetailsByEmpId">
       <ResultMapping>
         <ComplexTypeMapping TypeName="InOutModel.GetPaymentDetailsByEmpId_Result">
@@ -77,16 +64,6 @@
           <ScalarProperty Name="CheckinTime" ColumnName="CheckinTime" />
           <ScalarProperty Name="FK_EmpID" ColumnName="FK_EmpID" />
           <ScalarProperty Name="AttDetailsID" ColumnName="AttDetailsID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Companies">
-      <EntityTypeMapping TypeName="InOutModel.Company">
-        <MappingFragment StoreEntitySet="Company">
-          <ScalarProperty Name="PictureUrl" ColumnName="PictureUrl" />
-          <ScalarProperty Name="SelfId" ColumnName="SelfId" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -194,6 +171,54 @@
         <MappingFragment StoreEntitySet="ReportType">
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="ReportTypeId" ColumnName="ReportTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Companies">
+      <EntityTypeMapping TypeName="InOutModel.Company">
+        <MappingFragment StoreEntitySet="Company">
+          <ScalarProperty Name="CreatedById" ColumnName="CreatedById" />
+          <ScalarProperty Name="PackageType" ColumnName="PackageType" />
+          <ScalarProperty Name="ContactPhoneNumber" ColumnName="ContactPhoneNumber" />
+          <ScalarProperty Name="TypeOfIndustry" ColumnName="TypeOfIndustry" />
+          <ScalarProperty Name="IDCardNumber" ColumnName="IDCardNumber" />
+          <ScalarProperty Name="ServiceProviding" ColumnName="ServiceProviding" />
+          <ScalarProperty Name="WebsiteURL" ColumnName="WebsiteURL" />
+          <ScalarProperty Name="CreatedEmployersDesignation" ColumnName="CreatedEmployersDesignation" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="NoOfBranches" ColumnName="NoOfBranches" />
+          <ScalarProperty Name="NoOfEmployees" ColumnName="NoOfEmployees" />
+          <ScalarProperty Name="OperatingSince" ColumnName="OperatingSince" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="ContactEmail" ColumnName="ContactEmail" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="PictureUrl" ColumnName="PictureUrl" />
+          <ScalarProperty Name="SelfId" ColumnName="SelfId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Packages">
+      <EntityTypeMapping TypeName="InOutModel.Package">
+        <MappingFragment StoreEntitySet="Package">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="PackageId" ColumnName="PackageId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="users">
+      <EntityTypeMapping TypeName="InOutModel.user">
+        <MappingFragment StoreEntitySet="users">
+          <ScalarProperty Name="FK_CompanyID" ColumnName="FK_CompanyID" />
+          <ScalarProperty Name="roleID" ColumnName="roleID" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="contact" ColumnName="contact" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

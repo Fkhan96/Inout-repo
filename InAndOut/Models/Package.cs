@@ -12,16 +12,9 @@ namespace InAndOut.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class CompanyShift
+    public partial class Package
     {
-        public int CompanyShiftId { get; set; }
-        public int FK_CompanyID { get; set; }
-        public int FK_ShiftID { get; set; }
-        public Nullable<System.TimeSpan> StartTime { get; set; }
-        public Nullable<System.TimeSpan> EndTime { get; set; }
-        public Nullable<bool> IsSet { get; set; }
-    
-        public virtual Shift Shift { get; set; }
-        public virtual Company Company { get; set; }
+        public int PackageId { get; set; }
+        public string Name { get; set; }
     }
 }

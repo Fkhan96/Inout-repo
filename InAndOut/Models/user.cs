@@ -14,6 +14,11 @@ namespace InAndOut.Models
     
     public partial class user
     {
+        public user()
+        {
+            this.Companies = new HashSet<Company>();
+        }
+    
         public int user_id { get; set; }
         public string name { get; set; }
         public string username { get; set; }
@@ -21,7 +26,10 @@ namespace InAndOut.Models
         public string contact { get; set; }
         public int type { get; set; }
         public Nullable<int> roleID { get; set; }
+        public Nullable<int> FK_CompanyID { get; set; }
     
+        public virtual ICollection<Company> Companies { get; set; }
+        public virtual Company Company { get; set; }
         public virtual role role { get; set; }
     }
 }

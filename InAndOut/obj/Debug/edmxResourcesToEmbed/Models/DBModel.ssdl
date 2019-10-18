@@ -20,6 +20,22 @@
     <Property Name="Name" Type="varchar" MaxLength="255" />
     <Property Name="SelfId" Type="int" />
     <Property Name="PictureUrl" Type="varbinary(max)" />
+    <Property Name="State" Type="nvarchar" MaxLength="50" />
+    <Property Name="City" Type="nvarchar" MaxLength="50" />
+    <Property Name="ContactEmail" Type="nvarchar" MaxLength="50" />
+    <Property Name="Country" Type="nvarchar" MaxLength="50" />
+    <Property Name="OperatingSince" Type="nvarchar" MaxLength="20" />
+    <Property Name="NoOfEmployees" Type="int" />
+    <Property Name="NoOfBranches" Type="int" />
+    <Property Name="Description" Type="varchar" MaxLength="50" />
+    <Property Name="CreatedEmployersDesignation" Type="varchar" MaxLength="50" />
+    <Property Name="WebsiteURL" Type="varchar" MaxLength="50" />
+    <Property Name="ServiceProviding" Type="varchar" MaxLength="50" />
+    <Property Name="IDCardNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="TypeOfIndustry" Type="nvarchar" MaxLength="50" />
+    <Property Name="ContactPhoneNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="PackageType" Type="int" />
+    <Property Name="CreatedById" Type="int" />
   </EntityType>
   <EntityType Name="CompanyShift">
     <Key>
@@ -80,6 +96,13 @@
     <Property Name="menuitemid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="menuitem_name" Type="varchar" MaxLength="255" Nullable="false" />
     <Property Name="menuitem_url" Type="varchar" MaxLength="255" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Package">
+    <Key>
+      <PropertyRef Name="PackageId" />
+    </Key>
+    <Property Name="PackageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="PerformanceReport">
     <Key>
@@ -154,7 +177,20 @@
     <Property Name="contact" Type="varchar" MaxLength="255" />
     <Property Name="type" Type="int" Nullable="false" />
     <Property Name="roleID" Type="int" />
+    <Property Name="FK_CompanyID" Type="int" />
   </EntityType>
+  <Association Name="FK__Company__Created__59C55456">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="Company" Type="Self.Company" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="Company">
+        <PropertyRef Name="CreatedById" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="fk__ExpectationID_performancereport">
     <End Role="Expectation" Type="Self.Expectation" Multiplicity="0..1" />
     <End Role="PerformanceReport" Type="Self.PerformanceReport" Multiplicity="*" />
@@ -164,6 +200,18 @@
       </Principal>
       <Dependent Role="PerformanceReport">
         <PropertyRef Name="FK_ExpectationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__users__FK_Compan__58D1301D">
+    <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+    <End Role="users" Type="Self.users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="CompanyID" />
+      </Principal>
+      <Dependent Role="users">
+        <PropertyRef Name="FK_CompanyID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -346,6 +394,7 @@
     <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Expectation" EntityType="Self.Expectation" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="menuitem" EntityType="Self.menuitem" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Package" EntityType="Self.Package" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PerformanceReport" EntityType="Self.PerformanceReport" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Quarter" EntityType="Self.Quarter" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ReportType" EntityType="Self.ReportType" Schema="dbo" store:Type="Tables" />
@@ -354,9 +403,17 @@
     <EntitySet Name="SalaryDeduction" EntityType="Self.SalaryDeduction" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Shifts" EntityType="Self.Shifts" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Company__Created__59C55456" Association="Self.FK__Company__Created__59C55456">
+      <End Role="users" EntitySet="users" />
+      <End Role="Company" EntitySet="Company" />
+    </AssociationSet>
     <AssociationSet Name="fk__ExpectationID_performancereport" Association="Self.fk__ExpectationID_performancereport">
       <End Role="Expectation" EntitySet="Expectation" />
       <End Role="PerformanceReport" EntitySet="PerformanceReport" />
+    </AssociationSet>
+    <AssociationSet Name="FK__users__FK_Compan__58D1301D" Association="Self.FK__users__FK_Compan__58D1301D">
+      <End Role="Company" EntitySet="Company" />
+      <End Role="users" EntitySet="users" />
     </AssociationSet>
     <AssociationSet Name="FK_AttDetail_Employee" Association="Self.FK_AttDetail_Employee">
       <End Role="Employee" EntitySet="Employee" />
