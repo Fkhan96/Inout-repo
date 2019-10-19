@@ -15,6 +15,7 @@ namespace InAndOut.Controllers
         // GET: Setting
         public ActionResult Index()
         {
+            var login = Session["login"];
             return View();
         }
 

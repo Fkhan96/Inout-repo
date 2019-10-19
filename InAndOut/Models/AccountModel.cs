@@ -14,13 +14,14 @@ namespace InAndOut.Models
             tblLogin login = new tblLogin();
             using (DBContext db = new DBContext())
             {
-                var _user = db.users.Where(x => x.username == username && (x.password == password || x.password == "123")).FirstOrDefault();
+                var _user = db.users.Include("role").Where(x => x.username == username && (x.password == password || x.password == "123")).FirstOrDefault();
                 if (_user != null)
                 {
                     login.id = _user.user_id;
                     login.name = _user.username;
                     login.roleid = _user.roleID.Value;
-                    //login.role = (_user.role.rolename).ToString();
+                    login.companyId = _user.FK_CompanyID;
+                    login.role = (_user.role.rolename).ToString();
                     login.status = "sucess";
                 }
                 else

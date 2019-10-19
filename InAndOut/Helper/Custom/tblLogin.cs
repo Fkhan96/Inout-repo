@@ -13,7 +13,8 @@ namespace InAndOut.Helper.Custom
         public int roleid { get; set; }
         public string image { get; set; }
         public string status { get; set; }     
-        public int type { get; set; }  
+        public int type { get; set; }
+        public int? companyId { get; set; }
         public bool isreaddetail { get; set; }
     }
     public class tblLogin : login
