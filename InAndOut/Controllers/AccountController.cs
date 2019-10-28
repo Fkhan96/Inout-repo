@@ -113,6 +113,9 @@ namespace InAndOut.Controllers
             db.SaveChanges();
             user.FK_CompanyID = company.CompanyID;
             db.SaveChanges();
+            var helper = EmailHelper.instance;
+            helper.sendWelcomeEmail("InOutCompanys@gmail.com", registerDTO.ContactEmail, registerDTO.Name);
+            helper.sendRegisterEmail("InOutCompanys@gmail.com", "InOutCompanys@gmail.com", registerDTO.Name);
             return Common.Serialize(new { index = user.user_id});        }
         
             #endregion
