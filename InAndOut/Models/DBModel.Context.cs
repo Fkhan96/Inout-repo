@@ -36,7 +36,6 @@ namespace InAndOut.Models
         public virtual DbSet<SalaryDeduction> SalaryDeductions { get; set; }
         public virtual DbSet<Shift> Shifts { get; set; }
         public virtual DbSet<DocumentUpload> DocumentUploads { get; set; }
-        public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Expectation> Expectations { get; set; }
         public virtual DbSet<PerformanceReport> PerformanceReports { get; set; }
         public virtual DbSet<Quarter> Quarters { get; set; }
@@ -44,6 +43,7 @@ namespace InAndOut.Models
         public virtual DbSet<Company> Companies { get; set; }
         public virtual DbSet<Package> Packages { get; set; }
         public virtual DbSet<user> users { get; set; }
+        public virtual DbSet<Employee> Employees { get; set; }
     
         public virtual ObjectResult<AttendanceDetails_Result> AttendanceDetails(Nullable<System.DateTimeOffset> startDate, Nullable<System.DateTimeOffset> endDate)
         {

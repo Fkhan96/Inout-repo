@@ -18,8 +18,8 @@ namespace InAndOut.Models
         {
             this.users = new HashSet<user>();
             this.CompanyShifts = new HashSet<CompanyShift>();
-            this.Employees = new HashSet<Employee>();
             this.SalaryDeductions = new HashSet<SalaryDeduction>();
+            this.Employees = new HashSet<Employee>();
         }
     
         public int CompanyID { get; set; }
@@ -46,7 +46,7 @@ namespace InAndOut.Models
         public virtual user user { get; set; }
         public virtual ICollection<user> users { get; set; }
         public virtual ICollection<CompanyShift> CompanyShifts { get; set; }
-        public virtual ICollection<Employee> Employees { get; set; }
         public virtual ICollection<SalaryDeduction> SalaryDeductions { get; set; }
+        public virtual ICollection<Employee> Employees { get; set; }
     }
 }

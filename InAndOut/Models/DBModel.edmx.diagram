@@ -16,14 +16,10 @@
         <EntityTypeShape EntityType="InOutModel.Shift" Width="1.5" PointX="8.375" PointY="1.375" />
         <AssociationConnector Association="InOutModel.FK_CompanyShift_Company" />
         <EntityTypeShape EntityType="InOutModel.DocumentUpload" Width="1.5" PointX="5.375" PointY="2.5" />
-        <EntityTypeShape EntityType="InOutModel.Employee" Width="1.5" PointX="10.625" PointY="0.75" />
         <EntityTypeShape EntityType="InOutModel.Expectation" Width="1.5" PointX="10.625" PointY="15.875" />
         <EntityTypeShape EntityType="InOutModel.PerformanceReport" Width="1.5" PointX="12.875" PointY="1.75" />
         <EntityTypeShape EntityType="InOutModel.Quarter" Width="1.5" PointX="10.625" PointY="21.625" />
         <EntityTypeShape EntityType="InOutModel.ReportType" Width="1.5" PointX="10.625" PointY="18.25" />
-        <AssociationConnector Association="InOutModel.FK_AttDetail_Employee" />
-        <AssociationConnector Association="InOutModel.fk_EmpID_performancereport" />
-        <AssociationConnector Association="InOutModel.FK_Employee_Shift" />
         <AssociationConnector Association="InOutModel.fk__ExpectationID_performancereport" />
         <AssociationConnector Association="InOutModel.fk_QuarterID_performancereport" />
         <AssociationConnector Association="InOutModel.fk_ReportTypeID_performancereport" />
@@ -33,10 +29,14 @@
         <AssociationConnector Association="InOutModel.FK__Company__Created__59C55456" />
         <AssociationConnector Association="InOutModel.FK__users__FK_Compan__58D1301D" />
         <AssociationConnector Association="InOutModel.FK_CompanyShift_Company1" />
-        <AssociationConnector Association="InOutModel.FK_Employee_Company" />
         <AssociationConnector Association="InOutModel.FK_SalaryDeduction_Company" />
         <AssociationConnector Association="InOutModel.FK_users_role" />
-      </Diagram>
+        <EntityTypeShape EntityType="InOutModel.Employee" Width="1.5" PointX="13.625" PointY="6.375" />
+        <AssociationConnector Association="InOutModel.FK_AttDetail_Employee" />
+        <AssociationConnector Association="InOutModel.FK_Employee_Company" />
+        <AssociationConnector Association="InOutModel.fk_EmpID_performancereport" />
+        <AssociationConnector Association="InOutModel.FK_Employee_Shift" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

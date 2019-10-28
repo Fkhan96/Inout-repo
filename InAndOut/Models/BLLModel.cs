@@ -49,9 +49,13 @@ namespace InAndOut.Models
         {
             using (DBContext db = new DBContext())
             {
-                data.IsActive = true;
-                db.Employees.Add(data);
-                db.SaveChanges();
+                try
+                {
+                    data.IsActive = true;
+                    db.Employees.Add(data);
+                    db.SaveChanges();
+                }
+                catch (Exception ex) { }
             }
         }
 
@@ -91,6 +95,7 @@ namespace InAndOut.Models
                 entity.JoiningDate = data.JoiningDate;
                 entity.ContactNumber = data.ContactNumber;
                 entity.EmergencyContact = data.EmergencyContact;
+                entity.WorkingDays = data.WorkingDays;
                 db.SaveChanges();
             }
         }
@@ -124,12 +129,12 @@ namespace InAndOut.Models
                        .Select(i => new
                        {
                            EmpId = i.FK_EmpID,
-                           AttendanceId=i.AttDetailsID,
+                           AttendanceId = i.AttDetailsID,
                            EmpName = i.Employee.Name,
                            CheckinTime = i.CheckinTime,
                            CheckoutTime = i.CheckoutTime,
                            TimeOff = i.TimeOff,
-                           Status = i.Status == true ? "Active": "InActive"
+                           Status = i.Status == true ? "Active" : "InActive"
                        }).ToList();
                 }
                 catch (Exception ex) { }
@@ -158,7 +163,7 @@ namespace InAndOut.Models
                             Status = i.Status == true ? "Active" : "InActive"
                         }).ToList();
                 }
-                catch (Exception ex){ }
+                catch (Exception ex) { }
             }
             return attDetails;
         }
@@ -217,12 +222,12 @@ namespace InAndOut.Models
                     await db.SaveChangesAsync();
                 }
             }
-            catch (Exception ex) {  }
+            catch (Exception ex) { }
         }
         #endregion
 
         #region Salary Deduction
-        
+
         public static void add_Salary(SalaryDeduction data)
         {
             using (DBContext db = new DBContext())

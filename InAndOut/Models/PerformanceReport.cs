@@ -25,9 +25,9 @@ namespace InAndOut.Models
         public string notes { get; set; }
         public Nullable<int> year { get; set; }
     
-        public virtual Employee Employee { get; set; }
         public virtual Expectation Expectation { get; set; }
         public virtual Quarter Quarter { get; set; }
         public virtual ReportType ReportType { get; set; }
+        public virtual Employee Employee { get; set; }
     }
 }

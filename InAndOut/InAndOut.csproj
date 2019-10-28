@@ -178,6 +178,7 @@
     <Compile Include="DTO\PerformanceReportDTO.cs" />
     <Compile Include="DTO\RegisterDTO.cs" />
     <Compile Include="DTO\ShiftDTO.cs" />
+    <Compile Include="DTO\WorkingDayDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -226,6 +227,7 @@
     <Compile Include="Models\DocumentUpload.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EmailHelper.cs" />
     <Compile Include="Models\Employee.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>

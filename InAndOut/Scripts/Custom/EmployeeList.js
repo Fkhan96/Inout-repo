@@ -84,19 +84,38 @@ function Submit(e) {
         swal('Please Fill Required Fields');
         return false;
     }
+    var days = {
+        "Monday": 1,
+        "Tuesday": 2,
+        "Wednesday": 3,
+        "Thursday": 4,
+        "Friday": 5,
+        "Saturday": 6,
+        "Sunday": 7
+    }
     var callback = function () {
         var data = {};
-        $('[name]', parent).each(function () {
+        var workingDays = "";
+        $('[name]', parent).each(function () { 
             if ($(this).data('type') == "date") {
                 data[$(this).attr('name')] = moment($(this).val() || $(this).data('val'), 'DD/MM/YYYY').format('MM/DD/YYYY');
             }
             else if (this.name == "UserPictureUrl") {
                 data[$(this).attr('name')] = this.src.split(',')[1];
             }
+            else if (this.type == "checkbox") {
+                if ($(this).prop('checked')) {
+                    if (days[this.name] != undefined) {
+                        workingDays += this.value + ",";
+                    }
+                }
+            }
             else {
                 data[$(this).attr('name')] = $(this).val() || $(this).data('val');
             }
         });
+        data["WorkingDays"] = workingDays.slice(0, -1);
+
         var myurl = "/Employee/Add";
         if (activeid) {
             data["EmpDetailsID"] = activeid;

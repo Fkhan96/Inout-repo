@@ -42,7 +42,7 @@
     </div><!-- Body -->
 
     <div class="modal fade admin-modal" id="modalAdd" tabindex="-1" role="basic" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-lg employee-modal" style="width: min-content;">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
@@ -69,41 +69,41 @@
                     </div>
                     <div class="row rowmargin">
                         <div class="col-lg-4">
-                            Self Id *
-                            <input type="text" class="form-control" name="SelfId"/>
+                            <b>Self Id *</b>
+                            <input type="text" class="form-control" name="SelfId" />
                         </div>
                     </div>
                     <div class="row rowmargin">
                         <div class="col-lg-4">
-                            Name *
+                            <b>Name *</b>
                             <input type="text" class="form-control" name="Name" required />
                         </div>
                         <div class="col-lg-4">
-                            Father Name *
+                            <b>Father Name *</b>
                             <input type="text" class="form-control" name="FatherName" required />
                         </div>
                         <div class="col-lg-4">
-                            Designation *
+                            <b>Designation *</b>
                             <input type="text" class="form-control" name="Designation" required />
                         </div>
                     </div>
                     <div class="row rowmargin">
                         <div class="col-lg-4">
-                            Salary *
+                            <b>Salary *</b>
                             <input type="text" class="form-control" name="Salary" required />
                         </div>
                         <div class="col-lg-4">
-                            Job Type *
+                            <b>Job Type *</b>
                             <input type="text" class="form-control" name="JobType" required />
                         </div>
                         <div class="col-lg-4">
-                            Blood Group *
+                            <b>Blood Group *</b>
                             <input type="text" class="form-control" name="BloodGroup" required />
                         </div>
                     </div>
                     <div class="row rowmargin">
                         <div class="col-lg-4">
-                            Shift *
+                            <b>Shift *</b>
                             <select name="FK_ShiftID" class="form-control">
                                 <option value="1">Morning</option>
                                 <option value="2">Afternoon</option>
@@ -114,24 +114,44 @@
                             @*  <input type="text" class="form-control" name="Shift" required />*@
                         </div>
                         <div class="col-lg-4">
-                            Company *
+                            <b>Company *</b>
                             <select name="FK_CompanyID" class="form-control">
                                 <option value="1">abc</option>
                             </select>
                             @*  <input type="text" class="form-control" name="Shift" required />*@
                         </div>
                         <div class="col-lg-4">
-                            Address *
+                            <b>Address *</b>
                             <input type="text" class="form-control" name="Address" required />
                         </div>
+                        
+                    </div>
+                    <div class="row rowmargin">
                         <div class="col-lg-4">
-                            Late Deduction *
+                            <b>Late Deduction *</b>
                             <input type="text" class="form-control" name="LateDeduction" required />
+                        </div>
+                        <div class="col-lg-8">
+                            <b>Working Days *</b><br />
+                            <input type="checkbox" name="Monday" value="0"/>
+                            Monday
+                            <input type="checkbox" name="Tuesday" value="1"/>
+                            Tuesday
+                            <input type="checkbox" name="Wednesday" value="2"/>
+                            Wednesday
+                            <input type="checkbox" name="Thursday" value="3"/>
+                            Thursday
+                            <input type="checkbox" name="Friday" value="4"/>
+                            Friday
+                            <input type="checkbox" name="Saturday" value="5"/>
+                            Saturday
+                            <input type="checkbox" name="Sunday" value="6"/>
+                            Sunday
                         </div>
                     </div>
                     <div class="row rowmargin">
                         <div class="col-lg-4">
-                            Joining Date *
+                            <b>Joining Date *</b>
                             <div class="input-group date JoiningDate" data-provide="datepicker">
                                 <input type="text" name="JoiningDate" data-type="date" required class="form-control">
                                 <div class="input-group-addon">
@@ -140,11 +160,11 @@
                             </div>
                         </div>
                         <div class="col-lg-4">
-                            Contact Number *
+                            <b>Contact Number *</b>
                             <input type="text" class="form-control" name="ContactNumber" required />
                         </div>
                         <div class="col-lg-4">
-                            Emergency Contact *
+                            <b>Emergency Contact *</b>
                             <input type="text" class="form-control" name="EmergencyContact" required />
                         </div>
                     </div>
@@ -189,7 +209,7 @@
     <script src="~/scripts/plugins/datepicker/bootstrap-datepicker.js"></script>
     <script src="~/Scripts/Custom/uniquevalidation.js"></script>
     <script src="~/Scripts/Custom/File.js"></script>
-
+    
     <script>
         $(document).ready(function () {
             Trigger();

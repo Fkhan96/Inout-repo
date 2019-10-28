@@ -40,10 +40,11 @@ namespace InAndOut.Models
         public Nullable<int> SelfId { get; set; }
         public int FK_CompanyID { get; set; }
         public int FK_ShiftID { get; set; }
+        public string WorkingDays { get; set; }
     
         public virtual ICollection<AttDetail> AttDetails { get; set; }
+        public virtual Company Company { get; set; }
         public virtual ICollection<PerformanceReport> PerformanceReports { get; set; }
         public virtual Shift Shift { get; set; }
-        public virtual Company Company { get; set; }
     }
 }
