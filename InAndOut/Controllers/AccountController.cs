@@ -13,6 +13,7 @@ using InAndOut.Helper.Custom;
 using System.Web.Security;
 using InAndOut.DTO;
 using InAndOut.Helper.General;
+using InAndOut.AppCode;
 
 namespace InAndOut.Controllers
 {
@@ -37,14 +38,12 @@ namespace InAndOut.Controllers
                         cookie.Expires = ticket.Expiration;
                     }
                     Response.Cookies.Add(cookie);
-                    //
-                    Response.Redirect(FormsAuthentication.GetRedirectUrl(Username, false));
+                    Response.Redirect("Employee/Index");
                 }
                 else
                 {
                     ViewBag.Validation = "Invalid Credational!";
                 }
-
             }
             return View();
         }
@@ -56,9 +55,16 @@ namespace InAndOut.Controllers
         }
         public void Logout()
         {
-            FormsAuthentication.SignOut();
-            Session.Clear();
-            Response.Redirect("~/Account/Index");
+            try
+            {
+                FormsAuthentication.SignOut();
+                Session.Clear();
+                Response.Redirect("~/");
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         #region Account commented code
@@ -69,7 +75,11 @@ namespace InAndOut.Controllers
         {
             return View();
         }
-
+        [AllowAnonymous]
+        public ActionResult NotAuthorize()
+        {
+            return View();
+        }
         ////
         // POST: /Account/Register
         [HttpPost]
@@ -106,7 +116,8 @@ namespace InAndOut.Controllers
                 Description = registerDTO.Description,
                 CreatedEmployersDesignation = registerDTO.CreatedEmployersDesignation,
                 TypeOfIndustry = registerDTO.TypeOfIndustry,
-                NoOfEmployees = registerDTO.NoOfEmployees
+                NoOfEmployees = registerDTO.NoOfEmployees,
+                PackageType = registerDTO.PackageType
 
             };
             db.Companies.Add(company);

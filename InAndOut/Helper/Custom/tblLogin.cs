@@ -15,10 +15,12 @@ namespace InAndOut.Helper.Custom
         public string status { get; set; }     
         public int type { get; set; }
         public int? companyId { get; set; }
+        public string CompanyName { get; set; }
+        public string PackageType { get; set; }
         public bool isreaddetail { get; set; }
     }
     public class tblLogin : login
     {
-        public List<UserAuthenticate> MenuRightList { get; set; }
+        //public List<UserAuthenticate> MenuRightList { get; set; }
     }
 }

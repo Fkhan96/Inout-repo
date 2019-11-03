@@ -131,17 +131,6 @@ namespace InAndOut.Models
             }
 
         }
-        public static List<tblAcessRight> getRoleRights(int id, tblLogin login)
-        {
-            return login.MenuRightList.Where(x => x.roleid == id && x.hasaccess.Value).Select(x => new tblAcessRight { controller = x.menuitem_url, action = x.menuitem_name, ischecked = x.hasaccess.Value }).ToList();
-            //using (DBContext db = new DBContext())
-            //{
-            //    //if (db.roles.Any(x => x.roleid == id))
-            //    //    return db.role_access.Where(x => x.roleid == id && x.has_access).Select(x => new tblAcessRight { controller = x.menuitem.menuitem_url, action = x.menuitem.menuitem_name, ischecked = x.has_access }).ToList();
-            //    //else
-            //    //    return null;
-            //}
-        }
         public static List<tblAcessRight> getRoleRights_forroleAccess(int id, tblLogin login)
         {
             //return login.MenuRightList.Where(x => x.roleid == id && x.hasaccess.Value).Select(x => new tblAcessRight { controller = x.menuitem_url, action = x.menuitem_name, ischecked = x.hasaccess.Value }).ToList();

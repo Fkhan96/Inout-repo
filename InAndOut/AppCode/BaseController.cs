@@ -14,6 +14,12 @@ namespace InAndOut.AppCode
         // GET: Base
         public tblLogin login { get; set; }
         string SESSION_USERKEY = "login";
+        Dictionary<string, List<string>> PackageType = new Dictionary<string, List<string>>() {
+            { "Silver", new List<string>() { "Employee", "Attendance", "PaymentGeneration" } },
+            {"Bronze", new List<string>() { "Employee","Attendance" } },
+            { "Gold", new List<string>() { "Employee", "Attendance", "PaymentGeneration","Setting","Performance" } }
+        } ;
+        
         protected override void Initialize(RequestContext requestContext)
         {
             string RequestPath = requestContext.HttpContext.Request.FilePath;
@@ -55,33 +61,9 @@ namespace InAndOut.AppCode
                 ViewBag.roleid = login.roleid;
                 ViewBag.userid = login.id;
                 ViewBag.type = login.type;
-                ViewBag.roleacess = RoleModel.getRoleRights(login.roleid, login);
-                ViewBag.HaveAcessToPages = login.MenuRightList.Where(x => x.hasaccess.Value == true).Select(x => new String2 { val1 = x.menuitem_url, val2 = x.menuitem_name }).Distinct().ToList();
-                List<UserAuthenticate> MenuRightList = login.MenuRightList;
-                string path = "";
-                if (MenuRightList != null)
-                {
-                    foreach (var item in MenuRightList)
-                    {
-                        if (Convert.ToBoolean(item.hasaccess) && controllerName.ToLower() == item.menuitem_url.ToLower() && actionName.ToLower() == item.menuitem_name.ToLower())
-                        {
-                            bit = true;
-                        }
-                    }
-                    bit = true;
-                    base.Initialize(requestContext);
-                    if (bit == false && controllerName.ToLower() != "dashboard")
-                    {
-                        requestContext.HttpContext.Response.Clear();
-                        requestContext.HttpContext.Response.Redirect(Url.Action("Index", "Account"));
-                        requestContext.HttpContext.Response.End();
-                        return;
-                    }
-                    else
-                    {
-                        //ViewBag.pages
-                        //var flatlist = MenuRightList.Where(x=>x.menuitem_url!="Payment").Select(x => x.menuitem_url).Distinct().Select(x => new tblPageDetail { page = x, name = Common.getPageName(x), icon = Common.getTextIcon(x), order=Common.getPageOrder(x),parenttitle=Common.ParentTitle(x)}).OrderBy(x=>x.order).ToList();
-                    }
+                var package = login.PackageType;
+                if (!PackageType[package].Contains(controllerName)) {
+                    requestContext.HttpContext.Response.Redirect(Url.Action("NotAuthorize", "Account"));
                 }
             }
         }

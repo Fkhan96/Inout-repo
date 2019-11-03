@@ -1,4 +1,5 @@
-﻿using InAndOut.Helper.Custom;
+﻿using InAndOut.AppCode;
+using InAndOut.Helper.Custom;
 using InAndOut.Helper.General;
 using InAndOut.Models;
 using System;
@@ -9,7 +10,7 @@ using System.Web.Mvc;
 
 namespace InAndOut.Controllers
 {
-    public class AttendanceController : Controller
+    public class AttendanceController : BaseController
     {
         // GET: Attendance
         public ActionResult Index()

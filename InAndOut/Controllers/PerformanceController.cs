@@ -1,4 +1,5 @@
-﻿using InAndOut.DTO;
+﻿using InAndOut.AppCode;
+using InAndOut.DTO;
 using InAndOut.Helper.General;
 using InAndOut.Models;
 using System;
@@ -13,7 +14,7 @@ using System.Web.Mvc;
 
 namespace InAndOut.Controllers
 {
-    public class PerformanceController : Controller
+    public class PerformanceController : BaseController
     {
         DBContext db;
 

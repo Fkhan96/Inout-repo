@@ -1,4 +1,5 @@
-﻿using InAndOut.DTO;
+﻿using InAndOut.AppCode;
+using InAndOut.DTO;
 using InAndOut.Helper.General;
 using InAndOut.Models;
 using System;
@@ -10,7 +11,7 @@ using System.Web.Mvc;
 
 namespace InAndOut.Controllers
 {
-    public class SettingController : Controller
+    public class SettingController : BaseController
     {
         // GET: Setting
         public ActionResult Index()

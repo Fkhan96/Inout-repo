@@ -28,6 +28,7 @@ namespace InAndOut.DTO
         public string IDCardNumber { get; set; }
         public string TypeOfIndustry { get; set; }
         public string ContactPhoneNumber { get; set; }
+        public int PackageType { get; set; }
 
     }
 }

@@ -178,7 +178,6 @@
     <Compile Include="DTO\PerformanceReportDTO.cs" />
     <Compile Include="DTO\RegisterDTO.cs" />
     <Compile Include="DTO\ShiftDTO.cs" />
-    <Compile Include="DTO\WorkingDayDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

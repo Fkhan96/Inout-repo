@@ -1,4 +1,5 @@
 ﻿using DocumentFormat.OpenXml.Wordprocessing;
+using InAndOut.AppCode;
 using InAndOut.Helper.Custom;
 using InAndOut.Helper.General;
 using InAndOut.Models;
@@ -12,7 +13,7 @@ using System.Web.UI;
 
 namespace InAndOut.Controllers
 {
-    public class PaymentGenerationController : Controller
+    public class PaymentGenerationController : BaseController
     {
         // GET: PaymentGeneration
         public ActionResult Index()
