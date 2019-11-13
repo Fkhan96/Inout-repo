@@ -41,6 +41,9 @@ namespace InAndOut.Models
         public int FK_CompanyID { get; set; }
         public int FK_ShiftID { get; set; }
         public string WorkingDays { get; set; }
+        public Nullable<int> EmploymentStatus { get; set; }
+        public Nullable<int> WageType { get; set; }
+        public string Rate { get; set; }
     
         public virtual ICollection<AttDetail> AttDetails { get; set; }
         public virtual Company Company { get; set; }

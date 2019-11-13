@@ -9,12 +9,13 @@
     <title>In & Out</title>
     <link href="~/Content/animate.css" rel="stylesheet" />
     <link href="~/Content/datatables.min.css" rel="stylesheet" />
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    @*<link href="~/Content/bootstrap.min.css" rel="stylesheet" />*@
     <link href="~/Content/library.css" rel="stylesheet" />
     <link href="~/Content/Site.css" rel="stylesheet" />
     <link href="~/Content/style.css" rel="stylesheet" />
     <link href="~/css/plugin/toastr/toastr.min.css" rel="stylesheet" />
     <link href="~/css/plugin/sweetalert/sweetalert.css" rel="stylesheet" />
+    <link href="~/css/bootstrap-3.3.7.css" rel="stylesheet" />
 
     <script src="@Url.Content("~/Scripts/jquery-3.4.1.min.js")"></script>
     <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
@@ -103,7 +104,7 @@
         </footer>
     </div>
     <script src="~/Scripts/library.js"></script>
-
+    <script src="~/Scripts/Custom/side-menu.js"></script>
     @RenderSection("scripts", required: false)
 
 </body>

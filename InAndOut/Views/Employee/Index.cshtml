@@ -168,6 +168,27 @@
                             <input type="text" class="form-control" name="EmergencyContact" required />
                         </div>
                     </div>
+                    <div class="row rowmargin"> 
+                        <div class="col-lg-4">
+                            <b>Employment Status *</b><br />
+                            <select class="form-control" name="EmploymentStatus">
+                                <option value="0">Full-Time</option>
+                                <option value="1">Part-Time</option>
+                            </select>
+                        </div> 
+                        <div class="col-lg-4">
+                            <b>Wage Type*</b><br />
+                            <div name="WageType" class="radio">
+                                <label><input type="radio" checked value="0" name="wage" class="wage"/> Per Day</label>
+                                <label><input type="radio" value="1" name="wage" class="wage"/> Per Hour</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <b>Rate *</b>
+                                <input type="text" class="form-control" name="Rate"/>
+                        </div>
+                    </div>
+
                     <div class="modal-footer">
                         <a href="#" class="btn btn-default Addtbt" onclick="return Submit(this)">OK</a>
                     </div>

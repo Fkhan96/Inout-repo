@@ -370,6 +370,7 @@
     <Content Include="Scripts\Custom\Performance.js" />
     <Content Include="Scripts\Custom\PerformanceDetails.js" />
     <Content Include="Scripts\Custom\Register.js" />
+    <Content Include="Scripts\Custom\side-menu.js" />
     <Content Include="Scripts\jquery-1.11.3.min.js" />
     <Content Include="Scripts\jquery.min.js" />
     <Content Include="Scripts\main.js" />

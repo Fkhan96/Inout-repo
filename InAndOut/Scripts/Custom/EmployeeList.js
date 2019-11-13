@@ -96,25 +96,38 @@ function Submit(e) {
     var callback = function () {
         var data = {};
         var workingDays = "";
-        $('[name]', parent).each(function () { 
-            if ($(this).data('type') == "date") {
-                data[$(this).attr('name')] = moment($(this).val() || $(this).data('val'), 'DD/MM/YYYY').format('MM/DD/YYYY');
-            }
-            else if (this.name == "UserPictureUrl") {
-                data[$(this).attr('name')] = this.src.split(',')[1];
-            }
-            else if (this.type == "checkbox") {
-                if ($(this).prop('checked')) {
-                    if (days[this.name] != undefined) {
-                        workingDays += this.value + ",";
+        $('[name]', parent).each(function () {
+            var attrName = $(this).attr('name');
+            switch (attrName) {
+                case "JoiningDate":
+                    data[$(this).attr('name')] = moment($(this).val() || $(this).data('val'), 'DD/MM/YYYY').format('MM/DD/YYYY');
+                    break;
+                case "UserPictureUrl":
+                    data[attrName] = this.src.split(',')[1];
+                    break;
+                case "Monday":
+                case "Tuesday":
+                case "Wednesday":
+                case "Thursday":
+                case "Friday":
+                case "Saturday":
+                case "Sunday":
+                    if ($(this).prop('checked')) {
+                        if (days[attrName] != undefined) {
+                            workingDays += this.value + ",";
+                        }
                     }
-                }
-            }
-            else {
-                data[$(this).attr('name')] = $(this).val() || $(this).data('val');
+                    break;
+                case "WageType":
+                    data[attrName] = $("[name=WageType]").find('.wage:checked').val();
+                    break;
+                case "wage":
+                    break;
+                default:
+                    data[$(this).attr('name')] = $(this).val() || $(this).data('val');
             }
         });
-        data["WorkingDays"] = workingDays.slice(0, -1);
+        data["WorkingDays"] = workingDays.slice(0, -1); debugger
 
         var myurl = "/Employee/Add";
         if (activeid) {
@@ -153,6 +166,7 @@ function isFillRequired(parentTelemnt) {
 function Add(e) { 
     $('.JoiningDate').datepicker().datepicker("setDate", new Date());
     $("#modalAdd").modal('show');
+    getCompany();
     return false;
 }
 
@@ -169,4 +183,9 @@ function imageUploader() {
 function ResetFields() {
     $('#modalAdd input[type=text],input[type=password],select,textarea').val('');
 
+}
+
+function getCompany() {
+    //When session is created create a get call to get company name against the login companyId or
+    //create session and log company name in the session.
 }
