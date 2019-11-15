@@ -18,8 +18,8 @@ namespace InAndOut.Models
         {
             this.users = new HashSet<user>();
             this.CompanyShifts = new HashSet<CompanyShift>();
-            this.SalaryDeductions = new HashSet<SalaryDeduction>();
             this.Employees = new HashSet<Employee>();
+            this.SalaryDeductions = new HashSet<SalaryDeduction>();
         }
     
         public int CompanyID { get; set; }
@@ -42,11 +42,12 @@ namespace InAndOut.Models
         public string ContactPhoneNumber { get; set; }
         public Nullable<int> PackageType { get; set; }
         public Nullable<int> CreatedById { get; set; }
+        public Nullable<int> Currency { get; set; }
     
         public virtual user user { get; set; }
         public virtual ICollection<user> users { get; set; }
         public virtual ICollection<CompanyShift> CompanyShifts { get; set; }
-        public virtual ICollection<SalaryDeduction> SalaryDeductions { get; set; }
         public virtual ICollection<Employee> Employees { get; set; }
+        public virtual ICollection<SalaryDeduction> SalaryDeductions { get; set; }
     }
 }

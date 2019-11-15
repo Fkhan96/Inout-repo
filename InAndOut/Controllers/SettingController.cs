@@ -57,5 +57,19 @@ namespace InAndOut.Controllers
             return Common.Serialize("success");
         }
         #endregion
+
+        #region Currency
+
+        public object GetCurrency(int CompanyID)
+        {
+            return SettingModel.getCurrencySetting(CompanyID);
+        }
+
+        public string EditCurrency(Company data)
+        {
+            SettingModel.editCurrency(data.CompanyID, data.Currency);
+            return Common.Serialize("success");
+        }
+        #endregion
     }
 }

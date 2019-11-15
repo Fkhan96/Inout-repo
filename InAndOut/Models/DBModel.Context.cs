@@ -40,10 +40,10 @@ namespace InAndOut.Models
         public virtual DbSet<PerformanceReport> PerformanceReports { get; set; }
         public virtual DbSet<Quarter> Quarters { get; set; }
         public virtual DbSet<ReportType> ReportTypes { get; set; }
-        public virtual DbSet<Company> Companies { get; set; }
         public virtual DbSet<Package> Packages { get; set; }
         public virtual DbSet<user> users { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
+        public virtual DbSet<Company> Companies { get; set; }
     
         public virtual ObjectResult<AttendanceDetails_Result> AttendanceDetails(Nullable<System.DateTimeOffset> startDate, Nullable<System.DateTimeOffset> endDate)
         {

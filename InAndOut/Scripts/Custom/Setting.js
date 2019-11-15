@@ -1,6 +1,7 @@
 ﻿function Trigger() {
     getShift();
     getSalaryDeduction();
+    getCurrency();
 }
 
 function bindDateTime() {
@@ -92,6 +93,18 @@ function getSalaryDeduction() {
     });
 }
 
+function getCurrency() {
+    var myurl = "/Setting/GetCurrency";
+    var myData = {};
+    myData["CompanyID"] = JSON.parse(localStorage.getItem('loginDetails')).companyId;
+
+    XHRGETRequest(myurl, myData, function (result) {
+        if (result != null) {
+            $('.selectedCurrency option[value=' + result + ']').attr('selected', 'selected');
+        }
+    });
+}
+
 function isRecordAlreadyExists(tableName, columnName, columnValue, ignorecondition) {
     var mydata = {};
     var exists;
@@ -106,9 +119,9 @@ function isRecordAlreadyExists(tableName, columnName, columnValue, ignoreconditi
     return exists;
 }
 
-function UpdateSetting(e) {
+function UpdateSetting() {
     var parent = $('#updateSettingdiv');
-    var FK_CompanyID = e.id;
+    var FK_CompanyID = JSON.parse(localStorage.getItem('loginDetails')).companyId;
     var _id = 0;
 
     var isRecordExists = isRecordAlreadyExists("CompanyShift", "FK_CompanyID", FK_CompanyID, "FK_ShiftID in (1,2,3,4)", function (data) {
@@ -145,11 +158,9 @@ function UpdateSetting(e) {
                         shiftSetting['IsSet'] = false;
                         //data[this.name] = false;
                         ShiftSettingDTO.push(shiftSetting);
-
                     }
                 }
             }
-
         });
         data["FK_CompanyID"] = FK_CompanyID;
         data["shiftSetting"] = ShiftSettingDTO;
@@ -167,9 +178,8 @@ function UpdateSetting(e) {
     return false;
 }
 
-function UpdateSalarySetting(e) {
-    var parent = $('#updateSalarySetting');
-    var FK_CompanyID = e.id;
+function UpdateSalarySetting() {
+    var FK_CompanyID = JSON.parse(localStorage.getItem('loginDetails')).companyId;
     var _id = 0;
     var isRecordExists = isRecordAlreadyExists("SalaryDeduction", "FK_CompanyID", FK_CompanyID, "SalaryDeductionID!=" + _id, function (data) {
         return data
@@ -194,6 +204,27 @@ function UpdateSalarySetting(e) {
     }
     callback();
     return false;
+}
+
+function UpdateCurrencySetting() {
+    var data = {};
+    var Currency = $('.selectedCurrency').val();
+    var loginDetails = JSON.parse(localStorage.getItem('loginDetails'));
+    var CompanyId = loginDetails.companyId;
+    loginDetails.Currency = Currency;
+
+    data["CompanyID"] = CompanyId;
+    data["Currency"] = Currency;
+
+    var myurl = "/Setting/EditCurrency";
+    ShowAjaxLoader();
+    XHRPOSTRequest(myurl, data, function (result) {
+        HideAjaxLoader();
+        showNotification("Update Successfully", "success");
+        if (result == "success") {
+            localStorage.setItem('loginDetails', JSON.stringify(loginDetails));
+        }
+    });
 }
 
 

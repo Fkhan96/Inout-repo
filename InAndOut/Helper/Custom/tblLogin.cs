@@ -18,6 +18,7 @@ namespace InAndOut.Helper.Custom
         public string CompanyName { get; set; }
         public string PackageType { get; set; }
         public bool isreaddetail { get; set; }
+        public int Currency { get; set; }
     }
     public class tblLogin : login
     {

@@ -26,6 +26,8 @@ namespace InAndOut.Models
                     login.status = "sucess";
                     login.CompanyName = _user.Company.Name;
                     login.PackageType = _packageType.Name;
+                    login.Currency = (int)_user.Company.Currency;
+                    //login.Currency = Enum.GetName(typeof(Currency), _user.Company.Currency);
                 }
                 else
                 {

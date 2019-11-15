@@ -46,8 +46,8 @@ namespace InAndOut.Models
         public string Rate { get; set; }
     
         public virtual ICollection<AttDetail> AttDetails { get; set; }
-        public virtual Company Company { get; set; }
         public virtual ICollection<PerformanceReport> PerformanceReports { get; set; }
         public virtual Shift Shift { get; set; }
+        public virtual Company Company { get; set; }
     }
 }

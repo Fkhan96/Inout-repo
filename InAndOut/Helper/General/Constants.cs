@@ -44,4 +44,10 @@ namespace InAndOut.Helper.General
         Warning = 400,
         InProcess = 500
     }
+    public enum Currency
+    {
+        Pkr = 1,
+        USDollar = 2,
+        Euro = 3
+    }
 }

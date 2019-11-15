@@ -140,14 +140,14 @@
 
                     </div>
                     <div class="col-lg-3">
-                        <input type="button" class="btn btn-success" value="Update Shift Settings" id="1" onclick="return UpdateSetting(this)" />
+                        <input type="button" class="btn btn-success" value="Update Shift Settings" onclick="return UpdateSetting()" />
                     </div>
                 </div>
             </div>
         </div>
         <br />
         <div class="row">
-            <div class="col-lg-2">
+            <div class="col-lg-4">
                 <h3>
                     <span>Salary Deduction</span>
                 </h3>
@@ -203,18 +203,52 @@
                     </label>
                 </div>
             </div>
+            <br />
+            <div class="row">
+                <div class="col-lg-1">
+
+                </div>
+                <div class="col-lg-3">
+                    <input type="button" class="btn btn-success" value="Update Salary Deduction Settings" onclick="return UpdateSalarySetting()" />
+                </div>
+            </div>
+        </div>
+
+        <br />
+        <div class="row">
+            <div class="col-lg-4">
+                <h3>
+                    <span>Currency</span>
+                </h3>
+            </div>
+        </div>
+        <br />
+        <div id="updateCurrencySetting">
+            <div class="row">
+                <div class="col-lg-4">
+                    <select class="form-control selectedCurrency">
+                        <option value="1">Pkr</option>
+                        <option value="2">US Dollar</option>
+                        <option value="3">Euro</option>
+                    </select>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                @*<div class="col-lg-1">
+
+                </div>*@
+                <div class="col-lg-3">
+                    <div class="col-lg-3"></div>
+                    <div class="col-lg-9">
+                        <input type="button" class="btn btn-success" value="Update Currency Settings" onclick="return UpdateCurrencySetting()" />
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="box-footer">
         <br />
-        <div class="row">
-            <div class="col-lg-1">
-
-            </div>
-            <div class="col-lg-3">
-                <input type="button" class="btn btn-success" value="Update Salary Deduction Settings" id="1" onclick="return UpdateSalarySetting(this)" />
-            </div>
-        </div>
     </div>
 </div>
 

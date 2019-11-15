@@ -83,7 +83,12 @@
     <div id="main-body">
         <div class="header">
             <div class="menu-trigger"></div>
-            <div class="logo"><img src="~/images/logo-fixed.png" /></div>
+            <div class="logo">
+                <img src="~/images/logo-fixed.png" />
+                <a href="/account/logout" onclick="localStorage.clear()">
+                    <i class="fa fa-sign-out" style="font-size:40px;margin-left:25px;vertical-align: bottom;" aria-hidden="true"></i>
+                </a>
+            </div>
         </div>
         <div class="content-area">
             <ul class="nav navbar-top-links navbar-left">
@@ -98,7 +103,7 @@
         <div class="renderBody">
             @RenderBody()
         </div>
-            <hr />
+        <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
@@ -106,6 +111,48 @@
     <script src="~/Scripts/library.js"></script>
     <script src="~/Scripts/Custom/side-menu.js"></script>
     @RenderSection("scripts", required: false)
+
+    <script>
+        $(document).ready(function () {
+       
+            @{
+                var login = @Session["login"] as tblLogin;
+                var id = login.id;
+                var name = login.name.ToString();
+                var companyId = login.companyId.ToString();
+                var CompanyName = login.CompanyName.ToString();
+                var role = login.role.ToString();
+                var roleid = login.roleid.ToString();
+                var status = login.status.ToString();
+                var type = login.type.ToString();
+                var packageType = login.PackageType.ToString();
+                var Currency = login.Currency.ToString();
+                var isReadDetail = login.isreaddetail.ToString(); 
+                //var currency = login.Currency
+
+            }
+            var loginDetails = {
+                userId: '@id.ToString()',
+                userName: '@name.ToString()',
+                companyName: '@CompanyName.ToString()',
+                companyId: '@companyId.ToString()',
+                roleName: '@role.ToString()',
+                roleId: '@roleid.ToString()',
+                status: '@status.ToString()',
+                type: '@type.ToString()',
+                packageType: '@packageType.ToString()',
+                Currency: '@Currency.ToString()',
+                isReadDetail: '@isReadDetail.ToString()',
+                @*//currency: '@currency'*@
+            };
+            if (localStorage.getItem('loginDetails') === null || JSON.parse(localStorage.getItem('loginDetails')).userId !== loginDetails.userId) {
+                localStorage.setItem('loginDetails', JSON.stringify(loginDetails))
+            }
+            
+        });
+    </script>
+
+
 
 </body>
 

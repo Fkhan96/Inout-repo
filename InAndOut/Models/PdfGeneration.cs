@@ -245,7 +245,9 @@ namespace InAndOut.Models
             }
             foreach (var attdetail in attDetails)
             {
-                if (attdetail.CheckinTime.Value.Hour > companyShift.StartTime.Value.Hours) continue;
+                if (attdetail.CheckinTime.Value.Hour <= companyShift.StartTime.Value.Hours)
+                    if(attdetail.CheckinTime.Value.Minute <= companyShift.StartTime.Value.Minutes)
+                    continue;
                 noOfLateDay++;
             }
             var calculatedSalaryPerday = basicSalary / 30;

@@ -28,8 +28,8 @@ namespace InAndOut.Models
         public Nullable<int> roleID { get; set; }
         public Nullable<int> FK_CompanyID { get; set; }
     
+        public virtual role role { get; set; }
         public virtual ICollection<Company> Companies { get; set; }
         public virtual Company Company { get; set; }
-        public virtual role role { get; set; }
     }
 }

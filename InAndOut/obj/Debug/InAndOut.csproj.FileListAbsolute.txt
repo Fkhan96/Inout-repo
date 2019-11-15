@@ -111,4 +111,3 @@ C:\Users\HP\websites\Inout_repo\InAndOut\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\HP\websites\Inout_repo\InAndOut\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Users\HP\websites\Inout_repo\InAndOut\obj\Debug\InAndOut.dll
 C:\Users\HP\websites\Inout_repo\InAndOut\obj\Debug\InAndOut.pdb
-C:\Users\HP\websites\Inout_repo\InAndOut\obj\Debug\InAndOut.csprojResolveAssemblyReference.cache

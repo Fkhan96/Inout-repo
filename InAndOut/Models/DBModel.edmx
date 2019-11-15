@@ -41,6 +41,7 @@
           <Property Name="ContactPhoneNumber" Type="nvarchar" MaxLength="50" />
           <Property Name="PackageType" Type="int" />
           <Property Name="CreatedById" Type="int" />
+          <Property Name="Currency" Type="int" />
         </EntityType>
         <EntityType Name="CompanyShift">
           <Key>
@@ -523,9 +524,26 @@
             <End Role="ReportType" EntitySet="ReportTypes" />
             <End Role="PerformanceReport" EntitySet="PerformanceReports" />
           </AssociationSet>
-          <EntitySet Name="Companies" EntityType="InOutModel.Company" />
           <EntitySet Name="Packages" EntityType="InOutModel.Package" />
           <EntitySet Name="users" EntityType="InOutModel.user" />
+          <AssociationSet Name="FK_users_role" Association="InOutModel.FK_users_role">
+            <End Role="role" EntitySet="roles" />
+            <End Role="user" EntitySet="users" />
+          </AssociationSet>
+          <EntitySet Name="Employees" EntityType="InOutModel.Employee" />
+          <AssociationSet Name="FK_AttDetail_Employee" Association="InOutModel.FK_AttDetail_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="AttDetail" EntitySet="AttDetails" />
+          </AssociationSet>
+          <AssociationSet Name="fk_EmpID_performancereport" Association="InOutModel.fk_EmpID_performancereport">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="PerformanceReport" EntitySet="PerformanceReports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Shift" Association="InOutModel.FK_Employee_Shift">
+            <End Role="Shift" EntitySet="Shifts" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <EntitySet Name="Companies" EntityType="InOutModel.Company" />
           <AssociationSet Name="FK__Company__Created__59C55456" Association="InOutModel.FK__Company__Created__59C55456">
             <End Role="user" EntitySet="users" />
             <End Role="Company" EntitySet="Companies" />
@@ -538,30 +556,13 @@
             <End Role="Company" EntitySet="Companies" />
             <End Role="CompanyShift" EntitySet="CompanyShifts" />
           </AssociationSet>
-          <AssociationSet Name="FK_SalaryDeduction_Company" Association="InOutModel.FK_SalaryDeduction_Company">
-            <End Role="Company" EntitySet="Companies" />
-            <End Role="SalaryDeduction" EntitySet="SalaryDeductions" />
-          </AssociationSet>
-          <AssociationSet Name="FK_users_role" Association="InOutModel.FK_users_role">
-            <End Role="role" EntitySet="roles" />
-            <End Role="user" EntitySet="users" />
-          </AssociationSet>
-          <EntitySet Name="Employees" EntityType="InOutModel.Employee" />
-          <AssociationSet Name="FK_AttDetail_Employee" Association="InOutModel.FK_AttDetail_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="AttDetail" EntitySet="AttDetails" />
-          </AssociationSet>
           <AssociationSet Name="FK_Employee_Company" Association="InOutModel.FK_Employee_Company">
             <End Role="Company" EntitySet="Companies" />
             <End Role="Employee" EntitySet="Employees" />
           </AssociationSet>
-          <AssociationSet Name="fk_EmpID_performancereport" Association="InOutModel.fk_EmpID_performancereport">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="PerformanceReport" EntitySet="PerformanceReports" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Employee_Shift" Association="InOutModel.FK_Employee_Shift">
-            <End Role="Shift" EntitySet="Shifts" />
-            <End Role="Employee" EntitySet="Employees" />
+          <AssociationSet Name="FK_SalaryDeduction_Company" Association="InOutModel.FK_SalaryDeduction_Company">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="SalaryDeduction" EntitySet="SalaryDeductions" />
           </AssociationSet>
           </EntityContainer>
         <ComplexType Name="AttendanceDetails_Result">
@@ -787,36 +788,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Company">
-          <Key>
-            <PropertyRef Name="CompanyID" />
-          </Key>
-          <Property Name="CompanyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="SelfId" Type="Int32" />
-          <Property Name="PictureUrl" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ContactEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="OperatingSince" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="NoOfEmployees" Type="Int32" />
-          <Property Name="NoOfBranches" Type="Int32" />
-          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedEmployersDesignation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="WebsiteURL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ServiceProviding" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IDCardNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="TypeOfIndustry" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ContactPhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PackageType" Type="Int32" />
-          <Property Name="CreatedById" Type="Int32" />
-          <NavigationProperty Name="user" Relationship="InOutModel.FK__Company__Created__59C55456" FromRole="Company" ToRole="user" />
-          <NavigationProperty Name="users" Relationship="InOutModel.FK__users__FK_Compan__58D1301D" FromRole="Company" ToRole="user" />
-          <NavigationProperty Name="CompanyShifts" Relationship="InOutModel.FK_CompanyShift_Company1" FromRole="Company" ToRole="CompanyShift" />
-          <NavigationProperty Name="SalaryDeductions" Relationship="InOutModel.FK_SalaryDeduction_Company" FromRole="Company" ToRole="SalaryDeduction" />
-          <NavigationProperty Name="Employees" Relationship="InOutModel.FK_Employee_Company" FromRole="Company" ToRole="Employee" />
-        </EntityType>
         <EntityType Name="Package">
           <Key>
             <PropertyRef Name="PackageId" />
@@ -836,62 +807,10 @@
           <Property Name="type" Type="Int32" Nullable="false" />
           <Property Name="roleID" Type="Int32" />
           <Property Name="FK_CompanyID" Type="Int32" />
+          <NavigationProperty Name="role" Relationship="InOutModel.FK_users_role" FromRole="user" ToRole="role" />
           <NavigationProperty Name="Companies" Relationship="InOutModel.FK__Company__Created__59C55456" FromRole="user" ToRole="Company" />
           <NavigationProperty Name="Company" Relationship="InOutModel.FK__users__FK_Compan__58D1301D" FromRole="user" ToRole="Company" />
-          <NavigationProperty Name="role" Relationship="InOutModel.FK_users_role" FromRole="user" ToRole="role" />
         </EntityType>
-        <Association Name="FK__Company__Created__59C55456">
-          <End Type="InOutModel.user" Role="user" Multiplicity="0..1" />
-          <End Type="InOutModel.Company" Role="Company" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="user">
-              <PropertyRef Name="user_id" />
-            </Principal>
-            <Dependent Role="Company">
-              <PropertyRef Name="CreatedById" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__users__FK_Compan__58D1301D">
-          <End Type="InOutModel.Company" Role="Company" Multiplicity="0..1" />
-          <End Type="InOutModel.user" Role="user" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Company">
-              <PropertyRef Name="CompanyID" />
-            </Principal>
-            <Dependent Role="user">
-              <PropertyRef Name="FK_CompanyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CompanyShift_Company1">
-          <End Type="InOutModel.Company" Role="Company" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="InOutModel.CompanyShift" Role="CompanyShift" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Company">
-              <PropertyRef Name="CompanyID" />
-            </Principal>
-            <Dependent Role="CompanyShift">
-              <PropertyRef Name="FK_CompanyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SalaryDeduction_Company">
-          <End Type="InOutModel.Company" Role="Company" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="InOutModel.SalaryDeduction" Role="SalaryDeduction" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Company">
-              <PropertyRef Name="CompanyID" />
-            </Principal>
-            <Dependent Role="SalaryDeduction">
-              <PropertyRef Name="FK_CompanyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_users_role">
           <End Type="InOutModel.role" Role="role" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -935,9 +854,9 @@
           <Property Name="WageType" Type="Int32" />
           <Property Name="Rate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AttDetails" Relationship="InOutModel.FK_AttDetail_Employee" FromRole="Employee" ToRole="AttDetail" />
-          <NavigationProperty Name="Company" Relationship="InOutModel.FK_Employee_Company" FromRole="Employee" ToRole="Company" />
           <NavigationProperty Name="PerformanceReports" Relationship="InOutModel.fk_EmpID_performancereport" FromRole="Employee" ToRole="PerformanceReport" />
           <NavigationProperty Name="Shift" Relationship="InOutModel.FK_Employee_Shift" FromRole="Employee" ToRole="Shift" />
+          <NavigationProperty Name="Company" Relationship="InOutModel.FK_Employee_Company" FromRole="Employee" ToRole="Company" />
         </EntityType>
         <Association Name="FK_AttDetail_Employee">
           <End Type="InOutModel.Employee" Role="Employee" Multiplicity="1">
@@ -950,20 +869,6 @@
             </Principal>
             <Dependent Role="AttDetail">
               <PropertyRef Name="FK_EmpID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Employee_Company">
-          <End Type="InOutModel.Company" Role="Company" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="InOutModel.Employee" Role="Employee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Company">
-              <PropertyRef Name="CompanyID" />
-            </Principal>
-            <Dependent Role="Employee">
-              <PropertyRef Name="FK_CompanyID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -990,6 +895,103 @@
             </Principal>
             <Dependent Role="Employee">
               <PropertyRef Name="FK_ShiftID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="CompanyID" />
+          </Key>
+          <Property Name="CompanyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="SelfId" Type="Int32" />
+          <Property Name="PictureUrl" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ContactEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OperatingSince" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="NoOfEmployees" Type="Int32" />
+          <Property Name="NoOfBranches" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedEmployersDesignation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WebsiteURL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ServiceProviding" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IDCardNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TypeOfIndustry" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ContactPhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PackageType" Type="Int32" />
+          <Property Name="CreatedById" Type="Int32" />
+          <Property Name="Currency" Type="Int32" />
+          <NavigationProperty Name="user" Relationship="InOutModel.FK__Company__Created__59C55456" FromRole="Company" ToRole="user" />
+          <NavigationProperty Name="users" Relationship="InOutModel.FK__users__FK_Compan__58D1301D" FromRole="Company" ToRole="user" />
+          <NavigationProperty Name="CompanyShifts" Relationship="InOutModel.FK_CompanyShift_Company1" FromRole="Company" ToRole="CompanyShift" />
+          <NavigationProperty Name="Employees" Relationship="InOutModel.FK_Employee_Company" FromRole="Company" ToRole="Employee" />
+          <NavigationProperty Name="SalaryDeductions" Relationship="InOutModel.FK_SalaryDeduction_Company" FromRole="Company" ToRole="SalaryDeduction" />
+        </EntityType>
+        <Association Name="FK__Company__Created__59C55456">
+          <End Type="InOutModel.user" Role="user" Multiplicity="0..1" />
+          <End Type="InOutModel.Company" Role="Company" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Company">
+              <PropertyRef Name="CreatedById" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__users__FK_Compan__58D1301D">
+          <End Type="InOutModel.Company" Role="Company" Multiplicity="0..1" />
+          <End Type="InOutModel.user" Role="user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyID" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="FK_CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CompanyShift_Company1">
+          <End Type="InOutModel.Company" Role="Company" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="InOutModel.CompanyShift" Role="CompanyShift" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyID" />
+            </Principal>
+            <Dependent Role="CompanyShift">
+              <PropertyRef Name="FK_CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Company">
+          <End Type="InOutModel.Company" Role="Company" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="InOutModel.Employee" Role="Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="FK_CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SalaryDeduction_Company">
+          <End Type="InOutModel.Company" Role="Company" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="InOutModel.SalaryDeduction" Role="SalaryDeduction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyID" />
+            </Principal>
+            <Dependent Role="SalaryDeduction">
+              <PropertyRef Name="FK_CompanyID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1146,32 +1148,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Companies">
-            <EntityTypeMapping TypeName="InOutModel.Company">
-              <MappingFragment StoreEntitySet="Company">
-                <ScalarProperty Name="CreatedById" ColumnName="CreatedById" />
-                <ScalarProperty Name="PackageType" ColumnName="PackageType" />
-                <ScalarProperty Name="ContactPhoneNumber" ColumnName="ContactPhoneNumber" />
-                <ScalarProperty Name="TypeOfIndustry" ColumnName="TypeOfIndustry" />
-                <ScalarProperty Name="IDCardNumber" ColumnName="IDCardNumber" />
-                <ScalarProperty Name="ServiceProviding" ColumnName="ServiceProviding" />
-                <ScalarProperty Name="WebsiteURL" ColumnName="WebsiteURL" />
-                <ScalarProperty Name="CreatedEmployersDesignation" ColumnName="CreatedEmployersDesignation" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="NoOfBranches" ColumnName="NoOfBranches" />
-                <ScalarProperty Name="NoOfEmployees" ColumnName="NoOfEmployees" />
-                <ScalarProperty Name="OperatingSince" ColumnName="OperatingSince" />
-                <ScalarProperty Name="Country" ColumnName="Country" />
-                <ScalarProperty Name="ContactEmail" ColumnName="ContactEmail" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="PictureUrl" ColumnName="PictureUrl" />
-                <ScalarProperty Name="SelfId" ColumnName="SelfId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Packages">
             <EntityTypeMapping TypeName="InOutModel.Package">
               <MappingFragment StoreEntitySet="Package">
@@ -1221,6 +1197,33 @@
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Companies">
+            <EntityTypeMapping TypeName="InOutModel.Company">
+              <MappingFragment StoreEntitySet="Company">
+                <ScalarProperty Name="Currency" ColumnName="Currency" />
+                <ScalarProperty Name="CreatedById" ColumnName="CreatedById" />
+                <ScalarProperty Name="PackageType" ColumnName="PackageType" />
+                <ScalarProperty Name="ContactPhoneNumber" ColumnName="ContactPhoneNumber" />
+                <ScalarProperty Name="TypeOfIndustry" ColumnName="TypeOfIndustry" />
+                <ScalarProperty Name="IDCardNumber" ColumnName="IDCardNumber" />
+                <ScalarProperty Name="ServiceProviding" ColumnName="ServiceProviding" />
+                <ScalarProperty Name="WebsiteURL" ColumnName="WebsiteURL" />
+                <ScalarProperty Name="CreatedEmployersDesignation" ColumnName="CreatedEmployersDesignation" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="NoOfBranches" ColumnName="NoOfBranches" />
+                <ScalarProperty Name="NoOfEmployees" ColumnName="NoOfEmployees" />
+                <ScalarProperty Name="OperatingSince" ColumnName="OperatingSince" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="ContactEmail" ColumnName="ContactEmail" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="PictureUrl" ColumnName="PictureUrl" />
+                <ScalarProperty Name="SelfId" ColumnName="SelfId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
